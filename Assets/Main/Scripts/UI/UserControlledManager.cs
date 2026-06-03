@@ -1,6 +1,7 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 public class UserControlledManager : MonoBehaviour
 {
     [Header("UI")]
@@ -19,6 +20,15 @@ public class UserControlledManager : MonoBehaviour
     [SerializeField] private Transform outsideLocation;
     [SerializeField] private GameObject GameManager; //Move it to teleport the player
     private int currentFacadeID;
+
+
+    [Header("UI Transforms")]
+    [SerializeField] private Transform Outside_Center;
+    [SerializeField] private Transform Outside_Left;
+    [SerializeField] private Transform Outside_Right;
+    [SerializeField] private Transform Inside_Center;
+    [SerializeField] private Transform Inside_Left;
+    [SerializeField] private Transform Inside_Right;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,21 +79,58 @@ public class UserControlledManager : MonoBehaviour
         GameManager.transform.rotation = transform.rotation;
     }
 
-    public void OpenAndCloseFacadeSelection()
+    // 0 = center, 1 = left, 2 = right
+    int currentPlace = 0;
+    public void OpenAndCloseFacade(int place)
     {
-        if (FacadeSelectionOpened)
+        OpenAndCloseGameObject(place, FacadeSelection);
+    }
+    public void OpenAndCloseGameObject(int place, GameObject toScale)
+    {
+        Vector3 pos;
+        switch (place)
         {
-            FacadeSelectionOpened = false;
-            if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
+            case 0:
+                pos = Outside_Center.position;
+                break;
+            case 1:
+                pos = Outside_Left.position;
+                break;
+            case 2:
+                pos = Outside_Right.position;
+                break;
+            default:
+                pos = Outside_Center.position;
+                break;
+        }
+        if (toScale.activeSelf)
+        {
+            if (currentPlace == place)
+            {
+                if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
+            }
+            else
+            {
+                scaleCoroutine = StartCoroutine(AnimateCloseOpen(pos, FacadeSelection));
+            }
         }
         else
         {
-            FacadeSelectionOpened = true;
+            FacadeSelection.transform.position = pos;
             FacadeSelection.SetActive(true);
             if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
             scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
         }
+        currentPlace = place;
+    }
+    private IEnumerator AnimateCloseOpen(Vector3 position, GameObject toScale)
+    {
+        yield return StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, toScale));
+        yield return null;
+        toScale.transform.position = position;
+        yield return null;
+        yield return StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, toScale));
     }
     private IEnumerator AnimateScale(Vector3 targetScale, bool isOpening, GameObject toScale)
     {

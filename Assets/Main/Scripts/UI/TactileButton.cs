@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -107,7 +108,7 @@ public class TactileButton : MonoBehaviour
         }
     }
 
-    private void EmulatePressDown()
+    private void EmulatePressDown(int i = 0)
     {
         if (targetButton != null)
         {
@@ -141,4 +142,12 @@ public class TactileButton : MonoBehaviour
             targetButton.onClick.Invoke();
         }
     }
+}
+
+[Serializable]
+public class InoutAndFunctionPair
+{
+    public InputActionReference Action;
+    public bool isVector;
+
 }
