@@ -8012,8 +8012,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5479389129553495531, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
-      propertyPath: maxSlideDistance
-      value: -1
+      propertyPath: speedOfAnim
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8029,23 +8029,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9841089
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.17756616
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 20.456
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357392349846104654, guid: 7d8f7e747eb3af84d8fe2798f8a3151e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

@@ -158,9 +158,7 @@ public class WindowDoor : MonoBehaviour
     {
         float deg = GetOpenedDegreeOfWindow();
         yield return StartCoroutine(SetOpenedDegreeOfWindow(0f));
-        yield return null;
         SetJointSlide();
-        yield return null;
         yield return StartCoroutine(SetOpenedDegreeOfWindow(deg));
     }
     [SerializeField] float speedOfAnim = 1f; 
