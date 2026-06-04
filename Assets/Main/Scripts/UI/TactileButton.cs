@@ -1,5 +1,8 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,9 +10,9 @@ using UnityEngine.UI;
 public class TactileButton : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public InputActionReference ButtonAction;
-    public InputActionReference VectorAction;
-    public Vector2 vectorMoveTreshold;
+    [SerializeField] List<InputAndFunctionPair> inputAndFunctionPairs = new List<InputAndFunctionPair>();
+    private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> startCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
+    private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> cancelCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
     Button targetButton;
     public float clickCooldown = 0.5f;
     private float lastClickTime = 0f;
@@ -21,94 +24,141 @@ public class TactileButton : MonoBehaviour
 
     private void OnEnable()
     {
-        if (ButtonAction != null)
+        startCallbacks.Clear();
+        cancelCallbacks.Clear();
+
+        foreach (InputAndFunctionPair iafp in inputAndFunctionPairs)
         {
-            ButtonAction.action.started += PressButton;
-            ButtonAction.action.canceled += UnPressButton;
-        }
-        if (VectorAction != null)
-        {
-            VectorAction.action.started += MoveVector;
-            VectorAction.action.canceled += StopVector;
+            if (iafp.Action != null && iafp.Action.action != null)
+            {
+                if (iafp.isVector)
+                {
+                    Action<InputAction.CallbackContext> start = (InputAction.CallbackContext context) => {
+                        Vector2 stickValue = context.ReadValue<Vector2>();
+                        if (iafp.vectorMoveTreshold.x < 0)
+                        {
+                            if (stickValue.x < iafp.vectorMoveTreshold.x)
+                            {
+                                if (targetButton != null && Time.time - lastClickTime >= clickCooldown)
+                                {
+                                    lastClickTime = Time.time;
+                                    isPhysicallyPressed = true;
+                                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                                    targetButton.OnPointerDown(pointerData);
+                                    iafp.OnActionTriggered?.Invoke();
+                                }
+                            }
+                        }
+                        else if (iafp.vectorMoveTreshold.x > 0)
+                        {
+                            if (stickValue.x > iafp.vectorMoveTreshold.x)
+                            {
+                                if (targetButton != null && Time.time - lastClickTime >= clickCooldown)
+                                {
+                                    lastClickTime = Time.time;
+                                    isPhysicallyPressed = true;
+                                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                                    targetButton.OnPointerDown(pointerData);
+                                    iafp.OnActionTriggered?.Invoke();
+                                }
+                            }
+                        }
+                        if (iafp.vectorMoveTreshold.y < 0)
+                        {
+                            if (stickValue.y < iafp.vectorMoveTreshold.y)
+                            {
+                                if (targetButton != null && Time.time - lastClickTime >= clickCooldown)
+                                {
+                                    lastClickTime = Time.time;
+                                    isPhysicallyPressed = true;
+                                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                                    targetButton.OnPointerDown(pointerData);
+                                    iafp.OnActionTriggered?.Invoke();
+                                }
+                            }
+                        }
+                        else if (iafp.vectorMoveTreshold.y > 0)
+                        {
+                            if (stickValue.y > iafp.vectorMoveTreshold.y)
+                            {
+                                if (targetButton != null && Time.time - lastClickTime >= clickCooldown)
+                                {
+                                    lastClickTime = Time.time;
+                                    isPhysicallyPressed = true;
+                                    PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                                    targetButton.OnPointerDown(pointerData);
+                                    iafp.OnActionTriggered?.Invoke();
+                                }
+                            }
+                        }
+                    };
+
+                    Action<InputAction.CallbackContext> cancel = (InputAction.CallbackContext context) => {
+                        if (targetButton != null)
+                        {
+                            isPhysicallyPressed = false;
+                            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                            targetButton.OnPointerUp(pointerData);
+                            EventSystem.current.SetSelectedGameObject(null);
+                        }
+                    };
+                    iafp.Action.action.started += start;
+                    iafp.Action.action.canceled += cancel;
+                    startCallbacks.Add(iafp, start);
+                    cancelCallbacks.Add(iafp, cancel);
+                }
+                else
+                {
+                    Action<InputAction.CallbackContext> start = (InputAction.CallbackContext context) => {
+                        if (targetButton != null && Time.time - lastClickTime >= clickCooldown)
+                        {
+                            lastClickTime = Time.time;
+                            isPhysicallyPressed = true;
+                            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                            targetButton.OnPointerDown(pointerData);
+                            iafp.OnActionTriggered?.Invoke();
+                        }
+                    };
+
+                    Action<InputAction.CallbackContext> cancel = (InputAction.CallbackContext context) => {
+                        if (targetButton != null)
+                        {
+                            isPhysicallyPressed = false;
+                            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                            targetButton.OnPointerUp(pointerData);
+                            EventSystem.current.SetSelectedGameObject(null);
+                        }
+                    };
+                    iafp.Action.action.started += start;
+                    iafp.Action.action.canceled += cancel;
+                    startCallbacks.Add(iafp, start);
+                    cancelCallbacks.Add(iafp, cancel);
+                }
+            }
         }
     }
 
     private void OnDisable()
     {
-        if (ButtonAction != null)
+        foreach (InputAndFunctionPair iafp in inputAndFunctionPairs)
         {
-            ButtonAction.action.started -= PressButton;
-            ButtonAction.action.canceled -= UnPressButton;
-        }
-        if (VectorAction != null)
-        {
-            VectorAction.action.started -= MoveVector;
-            VectorAction.action.canceled -= StopVector;
-        }
-    }
-
-    private void PressButton(InputAction.CallbackContext context)
-    {
-        EmulatePressDown();
-    }
-    private void UnPressButton(InputAction.CallbackContext context)
-    {
-        EmulatePressUp();
-    }
-
-    private void MoveVector(InputAction.CallbackContext context)
-    {
-        Vector2 stickValue = context.ReadValue<Vector2>();
-        if(vectorMoveTreshold.x < 0)
-        {
-            if (stickValue.x < vectorMoveTreshold.x)
+            if (iafp.Action != null && iafp.Action.action != null)
             {
-                EmulatePressDown();
+                if (startCallbacks.TryGetValue(iafp, out Action<InputAction.CallbackContext> start))
+                {
+                    iafp.Action.action.started -= start;
+                }
+                if (cancelCallbacks.TryGetValue(iafp, out Action<InputAction.CallbackContext> cancel))
+                {
+                    iafp.Action.action.canceled -= cancel;
+                }
             }
         }
-        else if (vectorMoveTreshold.x > 0)
-        {
-            if (stickValue.x > vectorMoveTreshold.x)
-            {
-                EmulatePressDown();
-            }
-        }
-        if (vectorMoveTreshold.y < 0)
-        {
-            if (stickValue.y < vectorMoveTreshold.y)
-            {
-                EmulatePressDown();
-            }
-        }
-        else if (vectorMoveTreshold.y > 0)
-        {
-            if (stickValue.y > vectorMoveTreshold.y)
-            {
-                EmulatePressDown();
-            }
-        }
-    }
-    private void StopVector(InputAction.CallbackContext context)
-    {
-        EmulatePressUp();
+        startCallbacks.Clear();
+        cancelCallbacks.Clear();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            EmulatePressDown();
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && isPhysicallyPressed)
-        {
-            EmulatePressUp();
-        }
-    }
-
-    private void EmulatePressDown(int i = 0)
+    private void EmulatePressDown()
     {
         if (targetButton != null)
         {
@@ -133,6 +183,21 @@ public class TactileButton : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            EmulatePressDown();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && isPhysicallyPressed)
+        {
+            EmulatePressUp();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -145,9 +210,10 @@ public class TactileButton : MonoBehaviour
 }
 
 [Serializable]
-public class InoutAndFunctionPair
+public class InputAndFunctionPair
 {
     public InputActionReference Action;
     public bool isVector;
-
+    public Vector2 vectorMoveTreshold;
+    public UnityEvent OnActionTriggered;
 }

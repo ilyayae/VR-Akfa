@@ -8,6 +8,7 @@ public class UserControlledManager : MonoBehaviour
     [SerializeField] private GameObject FacadeSelection;
     [SerializeField] private GameObject OutsideMenu;
     [SerializeField] private GameObject InsideMenu;
+    [SerializeField] private GameObject WindowSelection;
     public float scaleDuration = 0.3f;
     private bool FacadeSelectionOpened = false;
     private Coroutine scaleCoroutine;
@@ -80,12 +81,9 @@ public class UserControlledManager : MonoBehaviour
     }
 
     // 0 = center, 1 = left, 2 = right
-    int currentPlace = 0;
-    public void OpenAndCloseFacade(int place)
-    {
-        OpenAndCloseGameObject(place, FacadeSelection);
-    }
-    public void OpenAndCloseGameObject(int place, GameObject toScale)
+    int currentPlaceFacade = 0;
+    int currentPlaceWindow = 0;
+    public void OpenAndCloseFacadeSelection(int place)
     {
         Vector3 pos;
         switch (place)
@@ -103,9 +101,9 @@ public class UserControlledManager : MonoBehaviour
                 pos = Outside_Center.position;
                 break;
         }
-        if (toScale.activeSelf)
+        if (FacadeSelection.activeSelf)
         {
-            if (currentPlace == place)
+            if (currentPlaceFacade == place)
             {
                 if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
                 scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
@@ -122,7 +120,46 @@ public class UserControlledManager : MonoBehaviour
             if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
             scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
         }
-        currentPlace = place;
+        currentPlaceFacade = place;
+    }
+    public void OpenAndCloseWindowSelection(int place)
+    {
+        Vector3 pos;
+        switch (place)
+        {
+            case 0:
+                pos = Inside_Center.position;
+                break;
+            case 1:
+                pos = Inside_Left.position;
+                break;
+            case 2:
+                pos = Inside_Right.position;
+                break;
+            default:
+                pos = Inside_Center.position;
+                break;
+        }
+        if (WindowSelection.activeSelf)
+        {
+            if (currentPlaceWindow == place)
+            {
+                if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
+            }
+            else
+            {
+                scaleCoroutine = StartCoroutine(AnimateCloseOpen(pos, WindowSelection));
+            }
+        }
+        else
+        {
+            WindowSelection.transform.position = pos;
+            WindowSelection.SetActive(true);
+            if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, WindowSelection));
+        }
+        currentPlaceWindow = place;
     }
     private IEnumerator AnimateCloseOpen(Vector3 position, GameObject toScale)
     {

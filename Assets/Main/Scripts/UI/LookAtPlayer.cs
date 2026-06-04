@@ -13,6 +13,23 @@ public class LookAtPlayer : MonoBehaviour
         startRotationZ = transform.eulerAngles.z;
     }
 
+    private void OnEnable()
+    {
+        if (player != null)
+        {
+            Vector3 direction = player.transform.position - transform.position;
+            direction.y = 0;
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                direction *= -1f;
+                Quaternion targetHorizontalRotation = Quaternion.LookRotation(direction);
+                float targetRotationY = targetHorizontalRotation.eulerAngles.y;
+                Quaternion targetRotation = Quaternion.Euler(startRotationX, targetRotationY, startRotationZ);
+                transform.rotation = targetRotation;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
