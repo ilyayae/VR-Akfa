@@ -1,16 +1,52 @@
+using System.Collections;
 using UnityEngine;
 
 public class WindowBrain : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public WindowDoor myDoor;
+    public WindowHandle myHandle;
+
+    float originalLow;
+
+    private void Start()
     {
-        
+        myHandle.onClose += OnHandleClosed;
+        myHandle.onOpen += OnHandleOpened;
+        originalLow = myDoor.myBody.xDrive.lowerLimit;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void NewHandle()
     {
-        
+
+    }
+
+    public void OnHandleClosed()
+    {
+        if (myDoor.GetOpenedDegreeOfWindow() > myDoor.openDegree)
+        {
+            myDoor.BlockWindowFromClosing();
+        }
+        else
+        {
+            StartCoroutine(closeSequence());
+        }
+    }
+
+    public IEnumerator closeSequence()
+    {
+        yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0));
+        myDoor.SetJointLocked();
+    }
+
+    public void OnHandleOpened()
+    {
+        if (myDoor.GetOpenedDegreeOfWindow() > myDoor.openDegree)
+        {
+            myDoor.UnblockWindowFromClosing();
+        }
+        else
+        {
+            myDoor.SetJointUnlocked();
+        }
     }
 }

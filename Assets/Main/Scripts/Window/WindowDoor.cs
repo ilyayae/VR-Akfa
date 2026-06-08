@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.UI.Image;
-
 
 public enum doorState
 {
@@ -11,6 +9,7 @@ public enum doorState
     ERROR
 }
 
+[RequireComponent(typeof(ArticulationBody))]
 public class WindowDoor : MonoBehaviour
 {
     [Header("Window Settings")]
@@ -18,244 +17,351 @@ public class WindowDoor : MonoBehaviour
     public float maxTiltAngle = 15f;
     public float maxSlideDistance = 1f;
     public doorState state = doorState.SWING;
+
+    [Header("Handle Mechanical Simulation")]
+    [Tooltip("Is the handle physically turned to the locked position?")]
+    public bool isHandleLocked = false;
+
     [HideInInspector]
-    public ConfigurableJoint myJoint;
-    private Rigidbody myRigidbody;
-    private Vector3 originalConnectedAnchor;
+    public ArticulationBody myBody;
 
+    [Tooltip("Mechanical block offset percentage (e.g., stops at 10% open)")]
+    public float openDegree = 0.1f;
 
-    private Vector3 initialDirectionInBaseSpace;
-    private Quaternion initialRotation;
-    private Vector3 initialLocation;
-    // The direction we use to measure the swing (the "clock hand")
-    private Vector3 measureDirection = Vector3.up;
+    private Vector3 originalAnchorPosition;
+    private Quaternion initialLocalRotation;
+    private Vector3 initialLocalPosition;
+
+    [SerializeField] float speedOfAnim = 1f;
+
+    void Awake()
+    {
+        if (myBody == null) myBody = GetComponent<ArticulationBody>();
+        if (transform.parent != null)
+        {
+            initialLocalRotation = transform.localRotation;
+            initialLocalPosition = transform.localPosition;
+        }
+        else
+        {
+            initialLocalRotation = transform.rotation;
+            initialLocalPosition = transform.position;
+        }
+    }
 
     void Start()
     {
-        if (myJoint == null) myJoint = GetComponent<ConfigurableJoint>();
-
-        myRigidbody = GetComponent<Rigidbody>();
-        originalConnectedAnchor = myJoint.connectedAnchor;
-        myJoint.autoConfigureConnectedAnchor = false;
-        SetJointSwing();
-        if (myJoint.axis == Vector3.right) measureDirection = Vector3.up;
-        else if (myJoint.axis == Vector3.up) measureDirection = Vector3.forward;
-        else if (myJoint.axis == Vector3.forward) measureDirection = Vector3.up;
-        Vector3 worldDir = transform.TransformDirection(measureDirection);
-
-        if (myJoint.connectedBody != null)
+        originalAnchorPosition = myBody.anchorPosition;
+        SetJointSwingDirect();
+        if (isHandleLocked) SetJointLocked();
+    }
+    public void SetHandleLockedState(bool locked)
+    {
+        isHandleLocked = locked;
+        if (isHandleLocked)
         {
-            initialDirectionInBaseSpace = myJoint.connectedBody.transform.InverseTransformDirection(worldDir);
-            initialLocation = transform.position;
-            initialRotation = transform.rotation;
-        }
-        else
-        {
-            initialDirectionInBaseSpace = worldDir;
-        }
-    }
-
-    [ContextMenu("Run SetJointSwing")]
-    public void SetJointSwing()
-    {
-        state = doorState.SWING;
-        myJoint.connectedAnchor = originalConnectedAnchor;
-        myJoint.xMotion = ConfigurableJointMotion.Locked;
-        myJoint.yMotion = ConfigurableJointMotion.Locked;
-        myJoint.zMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularXMotion = ConfigurableJointMotion.Limited;
-        myJoint.angularYMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularZMotion = ConfigurableJointMotion.Locked;
-        myJoint.axis = new Vector3(0, 1, 0);
-        SetAngularLimits(0f, maxSwingAngle);
-        myRigidbody.WakeUp();
-    }
-    [ContextMenu("Run SetJointTilt")]
-    public void SetJointTilt()
-    {
-        state = doorState.TILT;
-        myJoint.connectedAnchor = originalConnectedAnchor;
-        myJoint.xMotion = ConfigurableJointMotion.Locked;
-        myJoint.yMotion = ConfigurableJointMotion.Locked;
-        myJoint.zMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularXMotion = ConfigurableJointMotion.Limited;
-        myJoint.angularYMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularZMotion = ConfigurableJointMotion.Locked;
-        myJoint.axis = new Vector3(-1, 0, 0);
-
-        SetAngularLimits(0f, maxTiltAngle);
-
-        myRigidbody.WakeUp();
-    }
-    [ContextMenu("Run SetJointSlide")]
-    public void SetJointSlide()
-    {
-        state = doorState.SLIDE;
-        myJoint.angularXMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularYMotion = ConfigurableJointMotion.Locked;
-        myJoint.angularZMotion = ConfigurableJointMotion.Locked;
-
-        myJoint.xMotion = ConfigurableJointMotion.Limited;
-        myJoint.yMotion = ConfigurableJointMotion.Locked;
-        myJoint.zMotion = ConfigurableJointMotion.Locked;
-
-        myJoint.axis = new Vector3(1, 0, 0);
-
-        float halfDistance = maxSlideDistance / 2f;
-
-        SoftJointLimit slideLimit = new SoftJointLimit();
-        slideLimit.limit = halfDistance;
-        myJoint.linearLimit = slideLimit;
-        myJoint.connectedAnchor = originalConnectedAnchor - (myJoint.axis * halfDistance);
-        myRigidbody.WakeUp();
-    }
-
-    private void SetAngularLimits(float low, float high)
-    {
-        SoftJointLimit lowLimit = new SoftJointLimit();
-        lowLimit.limit = low;
-        myJoint.lowAngularXLimit = lowLimit;
-
-        SoftJointLimit highLimit = new SoftJointLimit();
-        highLimit.limit = high;
-        myJoint.highAngularXLimit = highLimit;
-    }
-
-    public float GetCurrentAngle()
-    {
-        Vector3 zeroDegreeDir;
-        if (myJoint.connectedBody != null)
-            zeroDegreeDir = myJoint.connectedBody.transform.TransformDirection(initialDirectionInBaseSpace);
-        else
-            zeroDegreeDir = initialDirectionInBaseSpace;
-        Vector3 currentDir = transform.TransformDirection(measureDirection);
-        Vector3 worldAxis = transform.TransformDirection(myJoint.axis);
-        float angle = Vector3.SignedAngle(zeroDegreeDir, currentDir, worldAxis);
-        return angle;
-    }
-    public float GetCurrentDistance()
-    {
-        return Vector3.Distance(initialLocation, transform.position);
-    }
-
-    public float GetOpenedDegreeOfWindow()
-    {
-        switch (state)
-        {
-            case doorState.SWING:
-                return Mathf.Clamp01(Mathf.Abs(GetCurrentAngle()) / maxSwingAngle);
-            case doorState.TILT:
-                return Mathf.Clamp01(Mathf.Abs(GetCurrentAngle()) / maxTiltAngle);
-            case doorState.SLIDE:
-                return Mathf.Clamp01(GetCurrentDistance() / maxSlideDistance);
-        }
-        Debug.Log("Unknown type of door state in GetOpenedDegreeOfWindow");
-        return -1f;
-    }
-
-    [ContextMenu("Run test")]
-    public IEnumerator test()
-    {
-        float deg = GetOpenedDegreeOfWindow();
-        yield return StartCoroutine(SetOpenedDegreeOfWindow(0f));
-        SetJointSlide();
-        yield return StartCoroutine(SetOpenedDegreeOfWindow(deg));
-    }
-    [SerializeField] float speedOfAnim = 1f; 
-    public IEnumerator SetOpenedDegreeOfWindow(float degree)
-    {
-        degree = Mathf.Clamp01(degree);
-        myRigidbody.isKinematic = true;
-
-        Quaternion startingRotation = transform.rotation;
-        Vector3 startingPosition = transform.position;
-
-        Quaternion targetRotation = initialRotation;
-        Vector3 targetPosition = initialLocation;
-        Vector3 worldAnchorPoint = transform.TransformPoint(myJoint.anchor);
-
-        switch (state)
-        {
-            case doorState.SWING:
-                float targetSwingAngle = maxSwingAngle * degree;
-                targetRotation = initialRotation * Quaternion.AngleAxis(targetSwingAngle, myJoint.axis);
-                break;
-
-            case doorState.TILT:
-                float targetTiltAngle = maxTiltAngle * degree;
-                targetRotation = initialRotation * Quaternion.AngleAxis(targetTiltAngle, myJoint.axis);
-                break;
-
-            case doorState.SLIDE:
-                float targetDist = maxSlideDistance * degree;
-                Vector3 slideDirection = initialRotation * -myJoint.axis;
-                targetPosition = initialLocation + (slideDirection.normalized * targetDist);
-                break;
-        }
-        float elapsedTime = 0f;
-        float duration = 1f / speedOfAnim;
-
-        transform.rotation = startingRotation;
-        transform.position = startingPosition;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
-
-            if (state == doorState.SLIDE)
+            UnblockWindowFromClosing();
+            float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
+            if (Mathf.Approximately(currentVal, 0f))
             {
-                transform.position = Vector3.Lerp(startingPosition, targetPosition, t);
+                SetJointLocked();
+            }
+        }
+        else
+        {
+            BlockWindowFromClosing();
+        }
+    }
+
+    private IEnumerator TransitionStateRoutine(doorState newState)
+    {
+        float previousOpenDegree = GetOpenedDegreeOfWindow();
+        bool wasLocked = Mathf.Approximately(myBody.xDrive.lowerLimit, myBody.xDrive.upperLimit) || isHandleLocked;
+        float targetCloseDegree = isHandleLocked ? 0f : openDegree;
+
+        if (previousOpenDegree > targetCloseDegree)
+        {
+            yield return StartCoroutine(SetOpenedDegreeOfWindow(targetCloseDegree));
+        }
+
+        ResetToClosedPosition();
+
+        switch (newState)
+        {
+            case doorState.SWING: SetJointSwingDirect(); break;
+            case doorState.TILT: SetJointTiltDirect(); break;
+            case doorState.SLIDE: SetJointSlideDirect(); break;
+        }
+
+        yield return new WaitForFixedUpdate();
+
+        if (wasLocked && isHandleLocked)
+        {
+            SetJointLocked();
+        }
+        else if (previousOpenDegree > targetCloseDegree)
+        {
+            yield return StartCoroutine(SetOpenedDegreeOfWindow(previousOpenDegree));
+        }
+        else
+        {
+            if (!isHandleLocked)
+            {
+                BlockWindowFromClosing();
             }
             else
             {
-                Quaternion currentTargetRot = Quaternion.Slerp(startingRotation, targetRotation, t);
-                transform.rotation = currentTargetRot;
-                Vector3 currentAnchorOffset = transform.TransformPoint(myJoint.anchor) - worldAnchorPoint;
-                transform.position -= currentAnchorOffset;
+                ArticulationDrive drive = myBody.xDrive;
+                drive.target = 0f;
+                myBody.xDrive = drive;
             }
-
-            yield return null;
-        }
-        if (state == doorState.SLIDE)
-            transform.position = targetPosition;
-        else
-        {
-            transform.rotation = targetRotation;
-            Vector3 finalAnchorOffset = transform.TransformPoint(myJoint.anchor) - worldAnchorPoint;
-            transform.position -= finalAnchorOffset;
-        }
-
-        UpdateJointTargets(transform.localPosition, transform.localRotation);
-        myRigidbody.isKinematic = false;
-        myRigidbody.WakeUp();
-    }
-
-    private void UpdateJointTargets(Vector3 localTargetPos, Quaternion localTargetRot)
-    {
-        Vector3 localInitialLocation = transform.parent != null ?
-            transform.parent.InverseTransformPoint(initialLocation) : initialLocation;
-
-        if (state == doorState.SLIDE)
-        {
-            myJoint.targetPosition = localInitialLocation - localTargetPos;
-            myJoint.targetRotation = Quaternion.identity;
-        }
-        else
-        {
-            myJoint.targetPosition = Vector3.zero;
-            myJoint.targetRotation = Quaternion.Inverse(localTargetRot) * initialRotation;
         }
     }
-    void Update()
+
+    [ContextMenu("Run SetJointSwing")] public void SetJointSwing() => SwitchState(doorState.SWING);
+    [ContextMenu("Run SetJointTilt")] public void SetJointTilt() => SwitchState(doorState.TILT);
+    [ContextMenu("Run SetJointSlide")] public void SetJointSlide() => SwitchState(doorState.SLIDE);
+
+    public void SwitchState(doorState newState)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (state == newState) return;
+        StartCoroutine(TransitionStateRoutine(newState));
+    }
+
+    private void SetJointSwingDirect()
+    {
+        state = doorState.SWING;
+        myBody.jointType = ArticulationJointType.RevoluteJoint;
+        SetDofLocks(ArticulationDofLock.LimitedMotion, ArticulationDofLock.LockedMotion);
+        UpdateJointAnchors(Quaternion.Euler(0, 0, -90));
+        SetLimits(0f, maxSwingAngle);
+        UnlockDrive();
+    }
+
+    private void SetJointTiltDirect()
+    {
+        state = doorState.TILT;
+        myBody.jointType = ArticulationJointType.RevoluteJoint;
+        SetDofLocks(ArticulationDofLock.LimitedMotion, ArticulationDofLock.LockedMotion);
+        UpdateJointAnchors(Quaternion.Euler(0, 0, 0));
+        SetLimits(0f, maxTiltAngle);
+        UnlockDrive();
+    }
+
+    private void SetJointSlideDirect()
+    {
+        state = doorState.SLIDE;
+        myBody.jointType = ArticulationJointType.PrismaticJoint;
+        SetDofLocks(ArticulationDofLock.LockedMotion, ArticulationDofLock.LimitedMotion);
+        UpdateJointAnchors(Quaternion.Euler(0, 180, 0));
+        SetLimits(0f, maxSlideDistance);
+        UnlockDrive();
+    }
+
+    private void SetDofLocks(ArticulationDofLock rotationLock, ArticulationDofLock linearLock)
+    {
+        myBody.twistLock = rotationLock;
+        myBody.swingYLock = ArticulationDofLock.LockedMotion;
+        myBody.swingZLock = ArticulationDofLock.LockedMotion;
+        myBody.linearLockX = linearLock;
+        myBody.linearLockY = ArticulationDofLock.LockedMotion;
+        myBody.linearLockZ = ArticulationDofLock.LockedMotion;
+    }
+
+    public void SetLimits(float low, float high)
+    {
+        ArticulationDrive drive = myBody.xDrive;
+        drive.lowerLimit = low;
+        drive.upperLimit = high;
+        myBody.xDrive = drive;
+    }
+
+    public float GetCurrentAngle() => (myBody.jointType == ArticulationJointType.RevoluteJoint && myBody.jointPosition.dofCount > 0) ? myBody.jointPosition[0] * Mathf.Rad2Deg : 0f;
+    public float GetCurrentDistance() => (myBody.jointType == ArticulationJointType.PrismaticJoint && myBody.jointPosition.dofCount > 0) ? myBody.jointPosition[0] : 0f;
+
+    public float GetOpenedDegreeOfWindow()
+    {
+        if (myBody.jointPosition.dofCount == 0) return 0f;
+        switch (state)
         {
-            StartCoroutine(test());
+            case doorState.SWING: return Mathf.Clamp01(Mathf.Abs(GetCurrentAngle()) / maxSwingAngle);
+            case doorState.TILT: return Mathf.Clamp01(Mathf.Abs(GetCurrentAngle()) / maxTiltAngle);
+            case doorState.SLIDE: return Mathf.Clamp01(Mathf.Abs(GetCurrentDistance()) / maxSlideDistance);
         }
-        float currentRotation = GetCurrentAngle();
-        if(state == doorState.SWING || state == doorState.TILT)
-            Debug.Log($"Object is currently rotated: {currentRotation:F1} degrees");
-        if(state == doorState.SLIDE)
-            Debug.Log($"Object is currently at distance: {GetCurrentDistance():F1} meters");
+        return 0f;
+    }
+
+    public IEnumerator SetOpenedDegreeOfWindow(float degree)
+    {
+        degree = Mathf.Clamp01(degree);
+        float targetVal = 0f;
+        switch (state)
+        {
+            case doorState.SWING: targetVal = maxSwingAngle * degree; break;
+            case doorState.TILT: targetVal = maxTiltAngle * degree; break;
+            case doorState.SLIDE: targetVal = maxSlideDistance * degree; break;
+        }
+
+        float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
+
+        ArticulationDrive drive = myBody.xDrive;
+        drive.stiffness = 100000f;
+        drive.damping = 10000f;
+        myBody.xDrive = drive;
+
+        float elapsedTime = 0f;
+        float duration = 1f / speedOfAnim;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            drive = myBody.xDrive;
+            drive.target = Mathf.Lerp(currentVal, targetVal, t);
+            myBody.xDrive = drive;
+            yield return new WaitForFixedUpdate();
+        }
+
+        drive = myBody.xDrive;
+        drive.target = targetVal;
+        myBody.xDrive = drive;
+
+        UnlockDrive();
+    }
+
+    [ContextMenu("Run SetJointLocked")]
+    public void SetJointLocked()
+    {
+        float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
+        SetLimits(currentVal, currentVal);
+
+        ArticulationDrive drive = myBody.xDrive;
+        drive.stiffness = 100000f;
+        drive.damping = 10000f;
+        drive.target = currentVal;
+        myBody.xDrive = drive;
+    }
+
+    [ContextMenu("Run SetJointUnlocked")]
+    public void SetJointUnlocked()
+    {
+        float highLimit = 0f;
+        switch (state)
+        {
+            case doorState.SWING: highLimit = maxSwingAngle; break;
+            case doorState.TILT: highLimit = maxTiltAngle; break;
+            case doorState.SLIDE: highLimit = maxSlideDistance; break;
+        }
+        SetLimits(0f, highLimit);
+        UnlockDrive();
+        if (!isHandleLocked) BlockWindowFromClosing();
+    }
+
+    public void BlockWindowFromClosing()
+    {
+        float highLimit = 0f;
+        float blockedLimit = 0f;
+
+        switch (state)
+        {
+            case doorState.SWING: highLimit = maxSwingAngle; blockedLimit = maxSwingAngle * openDegree; break;
+            case doorState.TILT: highLimit = maxTiltAngle; blockedLimit = maxTiltAngle * openDegree; break;
+            case doorState.SLIDE: highLimit = maxSlideDistance; blockedLimit = maxSlideDistance * openDegree; break;
+        }
+
+        float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
+        float safeLowLimit = Mathf.Min(blockedLimit, currentVal - 0.01f);
+
+        if (safeLowLimit >= highLimit) safeLowLimit = highLimit - 0.05f;
+        if (safeLowLimit < 0f) safeLowLimit = 0f;
+
+        if (state == doorState.SLIDE)
+            myBody.linearLockX = ArticulationDofLock.LimitedMotion;
+        else
+            myBody.twistLock = ArticulationDofLock.LimitedMotion;
+
+        SetLimits(safeLowLimit, highLimit);
+
+        ArticulationDrive drive = myBody.xDrive;
+        if (state == doorState.TILT)
+        {
+            drive.stiffness = 5f;
+            drive.damping = 2f;
+            drive.target = Mathf.Max(currentVal, safeLowLimit);
+        }
+        else
+        {
+            drive.stiffness = 0f;
+            drive.damping = 10f;
+            drive.target = currentVal;
+        }
+        myBody.xDrive = drive;
+    }
+
+    public void UnblockWindowFromClosing()
+    {
+        if (state == doorState.SLIDE)
+            myBody.linearLockX = ArticulationDofLock.LimitedMotion;
+        else
+            myBody.twistLock = ArticulationDofLock.LimitedMotion;
+
+        float highLimit = 0f;
+        switch (state)
+        {
+            case doorState.SWING: highLimit = maxSwingAngle; break;
+            case doorState.TILT: highLimit = maxTiltAngle; break;
+            case doorState.SLIDE: highLimit = maxSlideDistance; break;
+        }
+        SetLimits(0f, highLimit);
+        UnlockDrive();
+    }
+
+    private void UnlockDrive()
+    {
+        ArticulationDrive drive = myBody.xDrive;
+        float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : (myBody.jointPosition.dofCount > 0 ? myBody.jointPosition[0] : 0f);
+
+        if (state == doorState.TILT)
+        {
+            drive.stiffness = 5f;
+            drive.damping = 2f;
+            drive.target = currentVal;
+        }
+        else
+        {
+            drive.stiffness = 0f;
+            drive.damping = 10f;
+            drive.target = currentVal;
+        }
+
+        myBody.xDrive = drive;
+    }
+
+    public void ResetToClosedPosition()
+    {
+        if (transform.parent != null)
+        {
+            transform.localPosition = initialLocalPosition;
+            transform.localRotation = initialLocalRotation;
+        }
+        else
+        {
+            transform.position = initialLocalPosition;
+            transform.rotation = initialLocalRotation;
+        }
+
+        myBody.jointPosition = new ArticulationReducedSpace(0f);
+        myBody.jointVelocity = new ArticulationReducedSpace(0f);
+    }
+
+    private void UpdateJointAnchors(Quaternion newAnchorRotation)
+    {
+        myBody.anchorPosition = originalAnchorPosition;
+        myBody.anchorRotation = newAnchorRotation;
+        myBody.parentAnchorPosition = initialLocalPosition + (initialLocalRotation * originalAnchorPosition);
+        myBody.parentAnchorRotation = initialLocalRotation * newAnchorRotation;
+
+        myBody.jointPosition = new ArticulationReducedSpace(0f);
+        myBody.jointVelocity = new ArticulationReducedSpace(0f);
     }
 }
