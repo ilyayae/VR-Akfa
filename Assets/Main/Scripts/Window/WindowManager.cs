@@ -1,7 +1,39 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WindowManager : MonoBehaviour
 {
+    [SerializeField] private WindowBrain LeftWindow;
+    [SerializeField] private WindowBrain RightWindow;
+    [SerializeField] private List<WindowSet> sets = new();
+    [SerializeField] private List<GameObject> handles = new();
+    [SerializeField] private List<Texture> Textures = new();
+
+    private void Start()
+    {
+        RightWindow.NewHandle(handles[0]);
+        RightWindow.NewWindow(sets[0].doorModel, sets[0].frameModel);
+        SetTextureToId(0);
+    }
+
+    public void SetTextureToId(int id)
+    {
+        if(RightWindow != null && RightWindow.gameObject.activeSelf == true)
+        {
+            RightWindow.changers[0].ChangeTexture(Textures[id]);
+        }
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+        {
+            LeftWindow.changers[0].ChangeTexture(Textures[id]);
+        }
+
+    }
+
+    private void Update()
+    {
+        
+    }
     /*
      * This manager will be the core of the modular window editing system of this project
      * it will store the two window states (for one window and dual window showcase)

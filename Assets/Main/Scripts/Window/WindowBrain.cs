@@ -1,23 +1,39 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WindowBrain : MonoBehaviour
 {
+    public GameObject myFrame;
     public WindowDoor myDoor;
-    public WindowHandle myHandle;
-
+    public GameObject myHandle;
+    public WindowHandle handleScript;
+    public List<TextureChanger> changers = new();
     float originalLow;
 
     private void Start()
     {
-        myHandle.onClose += OnHandleClosed;
-        myHandle.onOpen += OnHandleOpened;
+    }
+
+    public void NewHandle(GameObject newHandle)
+    {
+        if(handleScript  != null)
+        {
+            handleScript.onClose -= OnHandleClosed;
+            handleScript.onOpen -= OnHandleOpened;
+        }
+        handleScript = Instantiate(newHandle, myHandle.transform).GetComponent<HandlePointer>().handle;
+        handleScript.onClose += OnHandleClosed;
+        handleScript.onOpen += OnHandleOpened;
         originalLow = myDoor.myBody.xDrive.lowerLimit;
     }
 
-    public void NewHandle()
+    public void NewWindow(GameObject newDoor, GameObject newFrame)
     {
-
+        GameObject frame = Instantiate(newFrame,myFrame.transform);
+        GameObject door = Instantiate(newDoor, myDoor.transform);
+        changers.Add(frame.GetComponent<TextureChanger>());
+        changers.Add(door.GetComponent<TextureChanger>());
     }
 
     public void OnHandleClosed()
