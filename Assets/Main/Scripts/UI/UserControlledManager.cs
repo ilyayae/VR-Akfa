@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 public class UserControlledManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject FacadeSelection;
-    [SerializeField] private GameObject OutsideMenu;
-    [SerializeField] private GameObject InsideMenu;
     [SerializeField] private GameObject WindowSelection;
+    [SerializeField] private GameObject outsideMenu;
+    [SerializeField] private GameObject insideMenu;
     public float scaleDuration = 0.3f;
     private bool FacadeSelectionOpened = false;
     private Coroutine scaleCoroutine;
@@ -24,13 +24,14 @@ public class UserControlledManager : MonoBehaviour
 
 
     [Header("UI Transforms")]
-    [SerializeField] private Transform Outside_Center;
     [SerializeField] private Transform Outside_Left;
     [SerializeField] private Transform Outside_Right;
-    [SerializeField] private Transform Inside_Center;
     [SerializeField] private Transform Inside_Left;
     [SerializeField] private Transform Inside_Right;
 
+    [Header("Fade Settings")]
+    public Image fadeImage;
+    public float fadeDuration = 0.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -63,21 +64,43 @@ public class UserControlledManager : MonoBehaviour
     {
         StartCoroutine(TeleportTo(insideLocation.transform));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, OutsideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, InsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, outsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, insideMenu));
     }
     public void goOutside()
     {
         StartCoroutine(TeleportTo(outsideLocation.transform));
-        //StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowConstructorMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, InsideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, OutsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, outsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, insideMenu));
     }
-    public IEnumerator TeleportTo(Transform transform)
+
+    public IEnumerator TeleportTo(Transform targetTransform)
     {
-        yield return null;
-        GameManager.transform.position = transform.position;
-        GameManager.transform.rotation = transform.rotation;
+        float timer = 0f;
+        Color fadeColor = fadeImage.color;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeColor.a = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            fadeImage.color = fadeColor;
+            yield return null;
+        }
+        fadeColor.a = 1f;
+        fadeImage.color = fadeColor;
+        GameManager.transform.position = targetTransform.position;
+        GameManager.transform.rotation = targetTransform.rotation;
+        yield return new WaitForSeconds(0.1f);
+        timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeColor.a = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+            fadeImage.color = fadeColor;
+            yield return null;
+        }
+        fadeColor.a = 0f;
+        fadeImage.color = fadeColor;
     }
 
     // 0 = center, 1 = left, 2 = right
@@ -88,17 +111,14 @@ public class UserControlledManager : MonoBehaviour
         Vector3 pos;
         switch (place)
         {
-            case 0:
-                pos = Outside_Center.position;
-                break;
             case 1:
                 pos = Outside_Left.position;
                 break;
-            case 2:
+            case 0:
                 pos = Outside_Right.position;
                 break;
             default:
-                pos = Outside_Center.position;
+                pos = Outside_Left.position;
                 break;
         }
         if (FacadeSelection.activeSelf)
@@ -127,17 +147,14 @@ public class UserControlledManager : MonoBehaviour
         Vector3 pos;
         switch (place)
         {
-            case 0:
-                pos = Inside_Center.position;
-                break;
             case 1:
                 pos = Inside_Left.position;
                 break;
-            case 2:
+            case 0:
                 pos = Inside_Right.position;
                 break;
             default:
-                pos = Inside_Center.position;
+                pos = Inside_Left.position;
                 break;
         }
         if (WindowSelection.activeSelf)

@@ -98,6 +98,37 @@ ArticulationBody:
   m_Immovable: 0
   m_UseGravity: 1
   m_CollisionDetectionMode: 0
+--- !u!1 &1073303552401788748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7685413911415255907}
+  m_Layer: 0
+  m_Name: AttachTransformStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7685413911415255907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073303552401788748}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: 0.95, y: 0.75, z: -0.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875483255589611878}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4454213480088129123
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +260,37 @@ ArticulationBody:
   m_Immovable: 1
   m_UseGravity: 1
   m_CollisionDetectionMode: 0
+--- !u!1 &7621452063366223395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3555246887404794259}
+  m_Layer: 0
+  m_Name: AttachTransformEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3555246887404794259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7621452063366223395}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: 0.95, y: -0.75, z: -0.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875483255589611878}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7931617308195553419
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,10 +336,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02766704d8495946ab9508a48a819fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowBrain
-  myFrame: {fileID: 0}
+  myGlass: {fileID: 4454213480088129123}
+  myFrame: {fileID: 5575346961119791435}
+  myHandle: {fileID: 1032405086750990116}
   myDoor: {fileID: 3429491873076109614}
-  myHandle: {fileID: 0}
   handleScript: {fileID: 0}
+  transforms:
+  - {fileID: 8076196907809169258}
+  - {fileID: 1073303552401788748}
+  - {fileID: 7621452063366223395}
+  changers: []
+--- !u!1 &8076196907809169258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4857546981468322475}
+  m_Layer: 0
+  m_Name: AttachTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4857546981468322475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076196907809169258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: 0.95, y: 0, z: -0.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875483255589611878}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8864608103243357832
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +413,9 @@ Transform:
   m_Children:
   - {fileID: 3741182424131673557}
   - {fileID: 9139640951974988088}
+  - {fileID: 4857546981468322475}
+  - {fileID: 7685413911415255907}
+  - {fileID: 3555246887404794259}
   m_Father: {fileID: 1842133680659642707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!171741748 &6852604196415187072
@@ -490,7 +592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe0abfbab923ba47b98eaffe62444bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArticulationPull
+  attach: {fileID: 4857546981468322475}
   pullStrength: 200
+  edgeStart: {fileID: 7685413911415255907}
+  edgeEnd: {fileID: 3555246887404794259}
 --- !u!114 &3429491873076109614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +613,7 @@ MonoBehaviour:
   maxSlideDistance: 0.4
   state: 0
   isHandleLocked: 1
+  left: 0
   myBody: {fileID: 6852604196415187072}
   openDegree: 0.01
   speedOfAnim: 1

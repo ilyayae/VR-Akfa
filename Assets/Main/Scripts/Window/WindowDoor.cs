@@ -21,7 +21,7 @@ public class WindowDoor : MonoBehaviour
     [Header("Handle Mechanical Simulation")]
     [Tooltip("Is the handle physically turned to the locked position?")]
     public bool isHandleLocked = false;
-
+    public bool left = false;
     [HideInInspector]
     public ArticulationBody myBody;
 
@@ -133,7 +133,10 @@ public class WindowDoor : MonoBehaviour
         state = doorState.SWING;
         myBody.jointType = ArticulationJointType.RevoluteJoint;
         SetDofLocks(ArticulationDofLock.LimitedMotion, ArticulationDofLock.LockedMotion);
-        UpdateJointAnchors(Quaternion.Euler(0, 0, -90));
+        if (left)
+            UpdateJointAnchors(Quaternion.Euler(0, 0, 90));
+        else
+            UpdateJointAnchors(Quaternion.Euler(0, 0, -90));
         SetLimits(0f, maxSwingAngle);
         UnlockDrive();
     }

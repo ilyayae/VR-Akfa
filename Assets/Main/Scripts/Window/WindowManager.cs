@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class WindowManager : MonoBehaviour
 {
-    [SerializeField] private WindowBrain LeftWindow;
-    [SerializeField] private WindowBrain RightWindow;
     [SerializeField] private List<WindowSet> sets = new();
-    [SerializeField] private List<GameObject> handles = new();
+    [SerializeField] private List<GameObject> handlesR = new();
+    [SerializeField] private List<GameObject> handlesL = new();
+    [SerializeField] private List<GameObject> glass = new();
     [SerializeField] private List<Texture> Textures = new();
 
+
+    [SerializeField] private WindowBrain LeftWindow;
+    [SerializeField] private WindowBrain RightWindow;
+    [Header("Blockers (Optional)")]
+    [Tooltip("Assign prefabs/models here. If left empty, simple cubes will be generated automatically.")]
+    [SerializeField] private GameObject leftBlocker;
+    [SerializeField] private GameObject rightBlocker;
+
+    private Vector3 originalLeftPos;
+    private Vector3 originalRightPos;
+    private bool isSingleWindowMode = false;
     private void Start()
     {
-        RightWindow.NewHandle(handles[0]);
-        RightWindow.NewWindow(sets[0].doorModel, sets[0].frameModel);
+        SetupBlockers();
+        SetHandleToId(0);
+        SetFrameToId(0);
         SetTextureToId(0);
+        SetGlassToId(0);
     }
 
     public void SetTextureToId(int id)
@@ -27,7 +40,89 @@ public class WindowManager : MonoBehaviour
         {
             LeftWindow.changers[0].ChangeTexture(Textures[id]);
         }
+    }
 
+    public void SetHandleToId(int id)
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+        {
+            RightWindow.NewHandle(handlesR[id]);
+        }
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+        {
+            LeftWindow.NewHandle(handlesL[id]);
+        }
+    }
+
+    public void SetFrameToId(int id)
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+        {
+            RightWindow.NewWindow(sets[id].doorModel, sets[id].frameModel, false);
+        }
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+        {
+            LeftWindow.NewWindow(sets[id].doorModel, sets[id].frameModel, true);
+        }
+    }
+    public void SetGlassToId(int id)
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+        {
+            RightWindow.NewGlass(glass[id]);
+        }
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+        {
+            LeftWindow.NewGlass(glass[id]);
+        }
+    }
+
+    public void SetSingleWindowMode()
+    {
+        if (isSingleWindowMode) return;
+        originalLeftPos = LeftWindow.transform.position;
+        originalRightPos = RightWindow.transform.position;
+        Vector3 centerPos = (originalLeftPos + originalRightPos) / 2f;
+        LeftWindow.gameObject.SetActive(false);
+        RightWindow.transform.position = centerPos;
+        leftBlocker.transform.position = originalLeftPos;
+        rightBlocker.transform.position = originalRightPos;
+
+        leftBlocker.SetActive(true);
+        rightBlocker.SetActive(true);
+
+        isSingleWindowMode = true;
+    }
+    public void SetDualWindowMode()
+    {
+        if (!isSingleWindowMode) return;
+        LeftWindow.gameObject.SetActive(true);
+        RightWindow.transform.position = originalRightPos;
+        leftBlocker.SetActive(false);
+        rightBlocker.SetActive(false);
+
+        isSingleWindowMode = false;
+    }
+    private void SetupBlockers()
+    {
+        Vector3 defaultBoxScale = new Vector3(0.3f, 3f, 0.1f);
+
+        if (leftBlocker == null)
+        {
+            leftBlocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            leftBlocker.name = "Left Space Blocker";
+            leftBlocker.transform.localScale = defaultBoxScale;
+        }
+
+        if (rightBlocker == null)
+        {
+            rightBlocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            rightBlocker.name = "Right Space Blocker";
+            rightBlocker.transform.localScale = defaultBoxScale;
+        }
+
+        leftBlocker.SetActive(false);
+        rightBlocker.SetActive(false);
     }
 
     private void Update()
