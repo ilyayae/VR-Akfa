@@ -13,37 +13,41 @@ public class WindowManager : MonoBehaviour
 
     [SerializeField] private WindowBrain LeftWindow;
     [SerializeField] private WindowBrain RightWindow;
-    [Header("Blockers (Optional)")]
-    [Tooltip("Assign prefabs/models here. If left empty, simple cubes will be generated automatically.")]
-    [SerializeField] private GameObject leftBlocker;
-    [SerializeField] private GameObject rightBlocker;
+
+    private bool isSingleWindowMode = false;
+    private int currentSetId = 0;
+    private GameObject currentInstantiatedFrame;
 
     private Vector3 originalLeftPos;
     private Vector3 originalRightPos;
-    private bool isSingleWindowMode = false;
     private void Start()
     {
-        SetupBlockers();
         SetHandleToId(0);
         SetFrameToId(0);
         SetTextureToId(0);
         SetGlassToId(0);
     }
-
+    int currentTexture = 0;
     public void SetTextureToId(int id)
     {
+        currentTexture = id;
+        if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf == true)
+        {
+            currentInstantiatedFrame.GetComponent<TextureChanger>().ChangeTextureBoth(Textures[id]);
+        }
         if(RightWindow != null && RightWindow.gameObject.activeSelf == true)
         {
-            RightWindow.changers[0].ChangeTexture(Textures[id]);
+            RightWindow.changers[0].ChangeTextureBoth(Textures[id]);
         }
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
         {
-            LeftWindow.changers[0].ChangeTexture(Textures[id]);
+            LeftWindow.changers[0].ChangeTextureBoth(Textures[id]);
         }
     }
-
+    int currentHandle = 0;
     public void SetHandleToId(int id)
     {
+        currentHandle = id;
         if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
         {
             RightWindow.NewHandle(handlesR[id]);
@@ -56,13 +60,36 @@ public class WindowManager : MonoBehaviour
 
     public void SetFrameToId(int id)
     {
-        if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+        currentSetId = id;
+        if (currentInstantiatedFrame != null)
         {
-            RightWindow.NewWindow(sets[id].doorModel, sets[id].frameModel, false);
+            Destroy(currentInstantiatedFrame);
         }
-        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+
+        if (isSingleWindowMode)
         {
-            LeftWindow.NewWindow(sets[id].doorModel, sets[id].frameModel, true);
+            currentInstantiatedFrame = Instantiate(sets[id].frameModelSingular, transform);
+            currentInstantiatedFrame.transform.position = Vector3.zero;
+            currentInstantiatedFrame.transform.localPosition = Vector3.zero;
+
+            if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+            {
+                RightWindow.NewWindow(sets[id].doorModelSingular, false);
+            }
+        }
+        else
+        {
+            currentInstantiatedFrame = Instantiate(sets[id].frameModelDual, transform);
+            currentInstantiatedFrame.transform.position = Vector3.zero;
+            currentInstantiatedFrame.transform.localPosition = Vector3.zero;
+            if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+            {
+                RightWindow.NewWindow(sets[id].doorModelR, false);
+            }
+            if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+            {
+                LeftWindow.NewWindow(sets[id].doorModelL, true);
+            }
         }
     }
     public void SetGlassToId(int id)
@@ -77,52 +104,46 @@ public class WindowManager : MonoBehaviour
         }
     }
 
+
     public void SetSingleWindowMode()
     {
         if (isSingleWindowMode) return;
-        originalLeftPos = LeftWindow.transform.position;
-        originalRightPos = RightWindow.transform.position;
-        Vector3 centerPos = (originalLeftPos + originalRightPos) / 2f;
-        LeftWindow.gameObject.SetActive(false);
-        RightWindow.transform.position = centerPos;
-        leftBlocker.transform.position = originalLeftPos;
-        rightBlocker.transform.position = originalRightPos;
-
-        leftBlocker.SetActive(true);
-        rightBlocker.SetActive(true);
 
         isSingleWindowMode = true;
+
+        originalLeftPos = LeftWindow.transform.position;
+        originalRightPos = RightWindow.transform.position;
+        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
+
+        LeftWindow.gameObject.SetActive(false);
+        RightWindow.gameObject.SetActive(false);
+        RightWindow.transform.localPosition = centerPos;
+        RightWindow.gameObject.SetActive(true);
+        SetFrameToId(currentSetId);
+
+        RightWindow.SetHandleOneOrTwo(true);
+
+        SetTextureToId(currentTexture);
+        SetHandleToId(currentHandle);
     }
+
     public void SetDualWindowMode()
     {
         if (!isSingleWindowMode) return;
-        LeftWindow.gameObject.SetActive(true);
-        RightWindow.transform.position = originalRightPos;
-        leftBlocker.SetActive(false);
-        rightBlocker.SetActive(false);
 
         isSingleWindowMode = false;
-    }
-    private void SetupBlockers()
-    {
-        Vector3 defaultBoxScale = new Vector3(0.3f, 3f, 0.1f);
 
-        if (leftBlocker == null)
-        {
-            leftBlocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            leftBlocker.name = "Left Space Blocker";
-            leftBlocker.transform.localScale = defaultBoxScale;
-        }
+        LeftWindow.gameObject.SetActive(true);
+        RightWindow.gameObject.SetActive(false);
+        RightWindow.transform.position = originalRightPos;
+        RightWindow.gameObject.SetActive(true);
+        SetFrameToId(currentSetId);
 
-        if (rightBlocker == null)
-        {
-            rightBlocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            rightBlocker.name = "Right Space Blocker";
-            rightBlocker.transform.localScale = defaultBoxScale;
-        }
+        LeftWindow.SetHandleOneOrTwo(false);
+        RightWindow.SetHandleOneOrTwo(false);
 
-        leftBlocker.SetActive(false);
-        rightBlocker.SetActive(false);
+        SetTextureToId(currentTexture);
+        SetHandleToId(currentHandle);
     }
 
     private void Update()

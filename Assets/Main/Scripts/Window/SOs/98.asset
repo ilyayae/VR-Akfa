@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5c2d6458d94864a8bc627aae00b7f6, type: 3}
   m_Name: 98
   m_EditorClassIdentifier: Assembly-CSharp::WindowSet
-  frameModel: {fileID: 5927618099359548358, guid: c15677c11295b5c499c3374b4311356f, type: 3}
-  doorModel: {fileID: 778560294227383497, guid: ca51a0ded334b9a42bc0d773faf8b73e, type: 3}
+  frameModelDual: {fileID: 7375972042073593221, guid: eaaabad78b5e8104da660587fcfc0d7c, type: 3}
+  doorModelL: {fileID: 1439886962186875405, guid: 4ed1c5a8865586f4db6d26e76a47fb0c, type: 3}
+  doorModelR: {fileID: 3193747445324536500, guid: 4798d9aab14de2e41a0adf745a2a6d15, type: 3}
+  frameModelSingular: {fileID: 5946748726414207274, guid: 3df543f5f6cc83b47a6660a6d71aa960, type: 3}
+  doorModelSingular: {fileID: 2342882677102123433, guid: fa834bab400ad8943ac1e1bfb62ce56b, type: 3}

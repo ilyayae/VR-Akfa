@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors; // Added for XRRayInteractor
 
 [RequireComponent(typeof(XRSimpleInteractable))]
 [RequireComponent(typeof(ArticulationBody))]
@@ -8,13 +9,15 @@ public class ArticulationPull : MonoBehaviour
 {
     private XRSimpleInteractable simpleInteractable;
     private ArticulationBody artBody;
-    private Transform currentHand;
+    
+    // Changed from currentHand to pullTarget to better represent Rays and Hands
+    private Transform pullTarget; 
     private Vector3 localGrabPoint;
 
     [Header("Visual Snapping & Physics")]
-    [Tooltip("The transform the hand visual will snap to.")]
+    [Tooltip("The transform the hand/ray visual will snap to.")]
     public Transform attach;
-    [Tooltip("How strongly the object pulls towards your hand.")]
+    [Tooltip("How strongly the object pulls towards your hand/ray.")]
     public float pullStrength = 5000f;
 
     [Header("Dynamic Edge Grabbing")]
@@ -28,36 +31,60 @@ public class ArticulationPull : MonoBehaviour
         simpleInteractable = GetComponent<XRSimpleInteractable>();
         artBody = GetComponent<ArticulationBody>();
 
+        // Set the simple interactable's attach transform to our custom one
+        if (attach != null)
+        {
+            //simpleInteractable.attachTransform = attach;
+        }
+
         simpleInteractable.selectEntered.AddListener(OnGrab);
         simpleInteractable.selectExited.AddListener(OnRelease);
     }
 
     void OnGrab(SelectEnterEventArgs args)
     {
-        currentHand = args.interactorObject.transform;
-        // Ensure the attach point is calculated
-        UpdateAttachPosition(currentHand.position);
+        IXRSelectInteractor interactor = args.interactorObject;
+        Vector3 interactionPoint = interactor.transform.position;
+
+        // 1. If it's a Ray Interactor, get the exact point where the ray hit the handle
+        if (interactor is XRRayInteractor rayInteractor)
+        {
+            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+            {
+                interactionPoint = hit.point;
+            }
+        }
+
+        // 2. Calculate the attach point based on the hit point (or hand position)
+        UpdateAttachPosition(interactionPoint);
+
+        // 3. Get the interactors dynamic attach transform. 
+        // For a hand, this is the hand. For a ray, this is the end of the ray line.
+        pullTarget = interactor.GetAttachTransform(simpleInteractable);
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
-        currentHand = null;
+        pullTarget = null;
     }
 
     void FixedUpdate()
     {
-        if (currentHand != null)
+        if (pullTarget != null)
         {
+            // Pull towards the pullTarget (the hand or the end of the ray)
             Vector3 worldGrabPoint = transform.TransformPoint(localGrabPoint);
-            Vector3 pullVector = currentHand.position - worldGrabPoint;
+            Vector3 pullVector = pullTarget.position - worldGrabPoint;
+            
             artBody.AddForceAtPosition(pullVector * pullStrength, worldGrabPoint);
         }
     }
-    public void UpdateAttachPosition(Vector3 interactorPosition)
+
+    public void UpdateAttachPosition(Vector3 hitPosition)
     {
         if (attach != null && edgeStart != null && edgeEnd != null)
         {
-            Vector3 closestPoint = GetClosestPointOnLineSegment(edgeStart.position, edgeEnd.position, interactorPosition);
+            Vector3 closestPoint = GetClosestPointOnLineSegment(edgeStart.position, edgeEnd.position, hitPosition);
             attach.position = closestPoint;
             localGrabPoint = transform.InverseTransformPoint(attach.position);
         }
@@ -67,7 +94,7 @@ public class ArticulationPull : MonoBehaviour
         }
         else
         {
-            localGrabPoint = transform.InverseTransformPoint(interactorPosition);
+            localGrabPoint = transform.InverseTransformPoint(hitPosition);
         }
     }
 

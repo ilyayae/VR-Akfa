@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WindowBrain : MonoBehaviour
 {
-    public GameObject myGlass;
     public GameObject myFrame;
     public GameObject myHandle;
     public WindowDoor myDoor;
@@ -13,17 +12,53 @@ public class WindowBrain : MonoBehaviour
     public List<TextureChanger> changers = new();
     float originalLow;
 
+    public Transform twoWindowHandleTransform;
+    public Transform oneWindowHandleTransform;
+    public Vector3 twoWindowHandlePosition;
+    public Vector3 oneWindowHandlePosition;
+
     private void Start()
     {
+        twoWindowHandlePosition = twoWindowHandleTransform.localPosition;
+        oneWindowHandlePosition = oneWindowHandleTransform.localPosition;
     }
     private void ClearChildren(Transform parent)
     {
         for (int i = parent.childCount - 1; i >= 0; i--)
         {
             GameObject go = parent.GetChild(i).gameObject;
-            if (go == myGlass || go == myFrame || go == myHandle || go == myDoor.gameObject || transforms.Contains(go))
+            if (go == myFrame || go == myHandle || go == myDoor.gameObject || transforms.Contains(go))
                 return;
             Destroy(go);
+        }
+    }
+
+    public void MoveArticulationRoot(Vector3 newPosition)
+    {
+        ArticulationBody ab = GetComponentInChildren<ArticulationBody>();
+
+        if (ab != null)
+        {
+            ab.TeleportRoot(newPosition, transform.rotation);
+        }
+        else
+        {
+            transform.position = newPosition;
+        }
+    }
+    public void SetHandleOneOrTwo(bool one)
+    {
+        if (one)
+        {
+            myHandle.gameObject.SetActive(false);
+            myHandle.transform.localPosition = oneWindowHandlePosition;
+            myHandle.gameObject.SetActive(true);
+        }
+        else
+        {
+            myHandle.gameObject.SetActive(false);
+            myHandle.transform.localPosition = twoWindowHandlePosition;
+            myHandle.gameObject.SetActive(true);
         }
     }
 
@@ -50,7 +85,7 @@ public class WindowBrain : MonoBehaviour
         originalLow = myDoor.myBody.xDrive.lowerLimit;
     }
 
-    public void NewWindow(GameObject newDoor, GameObject newFrame, bool lefty)
+    public void NewWindow(GameObject newFrame, bool lefty)
     {
         RemoveOldChangers(myFrame.transform);
         RemoveOldChangers(myDoor.transform);
@@ -58,27 +93,20 @@ public class WindowBrain : MonoBehaviour
         ClearChildren(myFrame.transform);
         ClearChildren(myDoor.transform);
 
-        GameObject frame = Instantiate(newFrame, myFrame.transform);
-        GameObject door = Instantiate(newDoor, myDoor.transform);
+        GameObject frame = Instantiate(newFrame, myDoor.transform);
 
-        if(lefty)
-        {
-            frame.transform.localScale = new Vector3(-1, 1, 1);
-            door.transform.localScale = new Vector3(-1, 1, 1);
-        }
 
         TextureChanger frameChanger = frame.GetComponent<TextureChanger>();
         if (frameChanger != null) changers.Add(frameChanger);
-
-        TextureChanger doorChanger = door.GetComponent<TextureChanger>();
-        if (doorChanger != null) changers.Add(doorChanger);
     }
 
     public void NewGlass(GameObject newGlassPrefab)
     {
+        /*
         ClearChildren(myGlass.transform);
 
         GameObject glass = Instantiate(newGlassPrefab, myGlass.transform);
+        */
     }
 
     private void RemoveOldChangers(Transform parent)

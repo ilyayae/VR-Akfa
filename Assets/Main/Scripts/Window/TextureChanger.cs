@@ -4,26 +4,42 @@ using UnityEngine;
 public class TextureChanger : MonoBehaviour
 {
     [SerializeField] private List<Renderer> whatToChange;
-    public void ChangeTexture(Texture text)
+    private const int OUTDOORS_MAT_INDEX = 1;
+    private const int ROOM_MAT_INDEX = 2;
+
+    public void ChangeTextureOutdoors(Texture text)
+    {
+        UpdateTextures(text, updateOutdoors: true, updateRoom: false);
+    }
+
+    public void ChangeTextureRoom(Texture text)
+    {
+        UpdateTextures(text, updateOutdoors: false, updateRoom: true);
+    }
+
+    public void ChangeTextureBoth(Texture text)
+    {
+        UpdateTextures(text, updateOutdoors: true, updateRoom: true);
+    }
+
+    private void UpdateTextures(Texture text, bool updateOutdoors, bool updateRoom)
     {
         foreach (Renderer r in whatToChange)
         {
-            if (r != null && r.materials != null && r.materials.Length > 0)
+            if (r != null && r.sharedMaterials.Length >= 3)
             {
-                int lastIndex = r.materials.Length - 1;
-                r.materials[lastIndex].mainTexture = text;
+                Material[] mats = r.materials;
+
+                if (updateOutdoors)
+                {
+                    mats[OUTDOORS_MAT_INDEX].mainTexture = text;
+                }
+
+                if (updateRoom)
+                {
+                    mats[ROOM_MAT_INDEX].mainTexture = text;
+                }
             }
         }
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
