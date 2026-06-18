@@ -13,7 +13,7 @@ public enum doorState
 public class WindowDoor : MonoBehaviour
 {
     [Header("Window Settings")]
-    public float maxSwingAngle = 100f;
+    public float maxSwingAngle = 91f;
     public float maxTiltAngle = 15f;
     public float maxSlideDistance = 1f;
     public doorState state = doorState.SWING;

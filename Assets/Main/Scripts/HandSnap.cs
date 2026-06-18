@@ -57,6 +57,17 @@ public class HandSnap : MonoBehaviour
                 targetTransform = interactedObj.transform;
             }
         }
+        else if (interactedObj.TryGetComponent<ArticulationHandle>(out ArticulationHandle articulationHandle))
+        {
+            articulationHandle.UpdateAttachPosition(args.interactorObject.transform.position);
+
+            targetTransform = articulationHandle.attach;
+
+            if (targetTransform == null)
+            {
+                targetTransform = interactedObj.transform;
+            }
+        }
         else
         {
             targetTransform = interactedObj.transform;

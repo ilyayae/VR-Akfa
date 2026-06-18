@@ -8,11 +8,13 @@ public class WindowManager : MonoBehaviour
     [SerializeField] private List<GameObject> handlesR = new();
     [SerializeField] private List<GameObject> handlesL = new();
     [SerializeField] private List<GameObject> glass = new();
-    [SerializeField] private List<Texture> Textures = new();
+    [SerializeField] private List<WindowMaterialsBundle> materials = new();
 
 
     [SerializeField] private WindowBrain LeftWindow;
     [SerializeField] private WindowBrain RightWindow;
+
+    [SerializeField] private Renderer windowsill;
 
     private bool isSingleWindowMode = false;
     private int currentSetId = 0;
@@ -33,15 +35,37 @@ public class WindowManager : MonoBehaviour
         currentTexture = id;
         if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf == true)
         {
-            currentInstantiatedFrame.GetComponent<TextureChanger>().ChangeTextureBoth(Textures[id]);
+            TextureChanger texChanger = currentInstantiatedFrame.GetComponentInChildren<TextureChanger>();
+            if (texChanger != null) texChanger.ChangeTextureBoth(materials[id].window);
+
+            HingeChanger hingeChanger = currentInstantiatedFrame.GetComponentInChildren<HingeChanger>();
+            if (hingeChanger != null) hingeChanger.ChangeTextureBoth(materials[id].hinge);
+        }
+        if (windowsill != null)
+        {
+            windowsill.material = materials[id].windowsill;
         }
         if(RightWindow != null && RightWindow.gameObject.activeSelf == true)
         {
-            RightWindow.changers[0].ChangeTextureBoth(Textures[id]);
+            foreach (TextureChanger tchange in RightWindow.changers)
+            {
+                tchange.ChangeTextureBoth(materials[id].window);
+            }
+            foreach(HingeChanger tchange in RightWindow.hinges)
+            {
+                tchange.ChangeTextureBoth(materials[id].hinge);
+            }
         }
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
         {
-            LeftWindow.changers[0].ChangeTextureBoth(Textures[id]);
+            foreach (TextureChanger tchange in LeftWindow.changers)
+            {
+                tchange.ChangeTextureBoth(materials[id].window);
+            }
+            foreach (HingeChanger tchange in LeftWindow.hinges)
+            {
+                tchange.ChangeTextureBoth(materials[id].hinge);
+            }
         }
     }
     int currentHandle = 0;

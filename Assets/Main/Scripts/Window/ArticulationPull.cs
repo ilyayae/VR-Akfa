@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors; // Added for XRRayInteractor
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [RequireComponent(typeof(XRSimpleInteractable))]
 [RequireComponent(typeof(ArticulationBody))]
@@ -9,33 +9,24 @@ public class ArticulationPull : MonoBehaviour
 {
     private XRSimpleInteractable simpleInteractable;
     private ArticulationBody artBody;
-    
-    // Changed from currentHand to pullTarget to better represent Rays and Hands
-    private Transform pullTarget; 
+
+    private Transform pullTarget;
     private Vector3 localGrabPoint;
+    private Vector3 offsetInAttachSpace;
 
     [Header("Visual Snapping & Physics")]
-    [Tooltip("The transform the hand/ray visual will snap to.")]
     public Transform attach;
-    [Tooltip("How strongly the object pulls towards your hand/ray.")]
-    public float pullStrength = 5000f;
+    public float pullStrength = 15000f;
+    public float damp = 0f;
 
     [Header("Dynamic Edge Grabbing")]
-    [Tooltip("Optional: Point A of the grabbable edge.")]
     public Transform edgeStart;
-    [Tooltip("Optional: Point B of the grabbable edge.")]
     public Transform edgeEnd;
 
     void Start()
     {
         simpleInteractable = GetComponent<XRSimpleInteractable>();
         artBody = GetComponent<ArticulationBody>();
-
-        // Set the simple interactable's attach transform to our custom one
-        if (attach != null)
-        {
-            //simpleInteractable.attachTransform = attach;
-        }
 
         simpleInteractable.selectEntered.AddListener(OnGrab);
         simpleInteractable.selectExited.AddListener(OnRelease);
@@ -46,21 +37,19 @@ public class ArticulationPull : MonoBehaviour
         IXRSelectInteractor interactor = args.interactorObject;
         Vector3 interactionPoint = interactor.transform.position;
 
-        // 1. If it's a Ray Interactor, get the exact point where the ray hit the handle
         if (interactor is XRRayInteractor rayInteractor)
         {
             if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
-            {
                 interactionPoint = hit.point;
-            }
         }
 
-        // 2. Calculate the attach point based on the hit point (or hand position)
         UpdateAttachPosition(interactionPoint);
-
-        // 3. Get the interactors dynamic attach transform. 
-        // For a hand, this is the hand. For a ray, this is the end of the ray line.
         pullTarget = interactor.GetAttachTransform(simpleInteractable);
+
+        Vector3 extendedLocalGrabPoint = localGrabPoint;
+        Vector3 extendedWorldGrabPoint = transform.TransformPoint(extendedLocalGrabPoint);
+
+        offsetInAttachSpace = pullTarget.InverseTransformPoint(extendedWorldGrabPoint);
     }
 
     void OnRelease(SelectExitEventArgs args)
@@ -72,11 +61,14 @@ public class ArticulationPull : MonoBehaviour
     {
         if (pullTarget != null)
         {
-            // Pull towards the pullTarget (the hand or the end of the ray)
-            Vector3 worldGrabPoint = transform.TransformPoint(localGrabPoint);
-            Vector3 pullVector = pullTarget.position - worldGrabPoint;
-            
-            artBody.AddForceAtPosition(pullVector * pullStrength, worldGrabPoint);
+            Vector3 extendedLocalGrabPoint = localGrabPoint;
+            Vector3 extendedWorldGrabPoint = transform.TransformPoint(extendedLocalGrabPoint);
+            Vector3 targetPoint = pullTarget.TransformPoint(offsetInAttachSpace);
+            Vector3 pullVector = targetPoint - extendedWorldGrabPoint;
+            Vector3 pointVelocity = artBody.GetPointVelocity(extendedWorldGrabPoint);
+
+            Vector3 force = (pullVector * pullStrength) - (pointVelocity * damp);
+            artBody.AddForceAtPosition(force, extendedWorldGrabPoint);
         }
     }
 
@@ -103,12 +95,9 @@ public class ArticulationPull : MonoBehaviour
         Vector3 lineDirection = end - start;
         float lineLength = lineDirection.magnitude;
         lineDirection.Normalize();
-
         Vector3 pointVector = point - start;
         float dotProduct = Vector3.Dot(pointVector, lineDirection);
-
         dotProduct = Mathf.Clamp(dotProduct, 0f, lineLength);
-
         return start + lineDirection * dotProduct;
     }
 
@@ -120,6 +109,18 @@ public class ArticulationPull : MonoBehaviour
             Gizmos.DrawLine(edgeStart.position, edgeEnd.position);
             Gizmos.DrawSphere(edgeStart.position, 0.02f);
             Gizmos.DrawSphere(edgeEnd.position, 0.02f);
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        if (attach != null)
+        {
+            Vector3 basePoint = attach.position;
+            Vector3 extendedPoint = transform.TransformPoint(transform.InverseTransformPoint(basePoint) );
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(basePoint, extendedPoint);
+            Gizmos.DrawSphere(extendedPoint, 0.015f);
         }
     }
 }

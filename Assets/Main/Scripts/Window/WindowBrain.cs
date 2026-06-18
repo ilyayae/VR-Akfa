@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WindowBrain : MonoBehaviour
@@ -10,7 +11,7 @@ public class WindowBrain : MonoBehaviour
     public WindowHandle handleScript;
     public List<GameObject> transforms;
     public List<TextureChanger> changers = new();
-    float originalLow;
+    public List<HingeChanger> hinges = new();
 
     public Transform twoWindowHandleTransform;
     public Transform oneWindowHandleTransform;
@@ -28,7 +29,7 @@ public class WindowBrain : MonoBehaviour
         {
             GameObject go = parent.GetChild(i).gameObject;
             if (go == myFrame || go == myHandle || go == myDoor.gameObject || transforms.Contains(go))
-                return;
+                continue;
             Destroy(go);
         }
     }
@@ -81,8 +82,6 @@ public class WindowBrain : MonoBehaviour
             handleScript.onClose += OnHandleClosed;
             handleScript.onOpen += OnHandleOpened;
         }
-
-        originalLow = myDoor.myBody.xDrive.lowerLimit;
     }
 
     public void NewWindow(GameObject newFrame, bool lefty)
@@ -96,8 +95,11 @@ public class WindowBrain : MonoBehaviour
         GameObject frame = Instantiate(newFrame, myDoor.transform);
 
 
-        TextureChanger frameChanger = frame.GetComponent<TextureChanger>();
-        if (frameChanger != null) changers.Add(frameChanger);
+        TextureChanger[] newChangers = frame.GetComponentsInChildren<TextureChanger>();
+        changers.AddRange(newChangers);
+
+        HingeChanger[] newHinges = frame.GetComponentsInChildren<HingeChanger>();
+        hinges.AddRange(newHinges);
     }
 
     public void NewGlass(GameObject newGlassPrefab)
@@ -117,6 +119,11 @@ public class WindowBrain : MonoBehaviour
             if (oldChanger != null && changers.Contains(oldChanger))
             {
                 changers.Remove(oldChanger);
+            }
+            HingeChanger oldHinge = child.GetComponent<HingeChanger>();
+            if (oldHinge != null && hinges.Contains(oldHinge))
+            {
+                hinges.Remove(oldHinge);
             }
         }
     }

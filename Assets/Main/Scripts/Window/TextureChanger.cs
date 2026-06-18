@@ -7,38 +7,38 @@ public class TextureChanger : MonoBehaviour
     private const int OUTDOORS_MAT_INDEX = 1;
     private const int ROOM_MAT_INDEX = 2;
 
-    public void ChangeTextureOutdoors(Texture text)
+    public void ChangeTextureOutdoors(Material text)
     {
         UpdateTextures(text, updateOutdoors: true, updateRoom: false);
     }
 
-    public void ChangeTextureRoom(Texture text)
+    public void ChangeTextureRoom(Material text)
     {
         UpdateTextures(text, updateOutdoors: false, updateRoom: true);
     }
 
-    public void ChangeTextureBoth(Texture text)
+    public void ChangeTextureBoth(Material text)
     {
         UpdateTextures(text, updateOutdoors: true, updateRoom: true);
     }
 
-    private void UpdateTextures(Texture text, bool updateOutdoors, bool updateRoom)
+    private void UpdateTextures(Material text, bool updateOutdoors, bool updateRoom)
     {
         foreach (Renderer r in whatToChange)
         {
             if (r != null && r.sharedMaterials.Length >= 3)
             {
                 Material[] mats = r.materials;
-
                 if (updateOutdoors)
                 {
-                    mats[OUTDOORS_MAT_INDEX].mainTexture = text;
+                    mats[OUTDOORS_MAT_INDEX] = text;
                 }
 
                 if (updateRoom)
                 {
-                    mats[ROOM_MAT_INDEX].mainTexture = text;
+                    mats[ROOM_MAT_INDEX] = text;
                 }
+                r.materials = mats;
             }
         }
     }

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3008511194997790600}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000029653306}
-  m_LocalPosition: {x: 0, y: -0.13499881, z: 0.019876562}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0.019876562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -111,10 +111,10 @@ PrefabInstance:
       addedObject: {fileID: 1976878074990368283}
     - targetCorrespondingSourceObject: {fileID: -6404206229873849875, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3682937527430289373}
+      addedObject: {fileID: 7908145200799157323}
     - targetCorrespondingSourceObject: {fileID: -6404206229873849875, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7908145200799157323}
+      addedObject: {fileID: 1660864867220068045}
   m_SourcePrefab: {fileID: 100100000, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
 --- !u!1 &4821934299059189662 stripped
 GameObject:
@@ -206,8 +206,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0325489, y: 0.0845539, z: 0.01284576}
-  m_Center: {x: 0.0002405308, y: -0.09725556, z: 0.03}
+  m_Size: {x: 0.0325489, y: 0.09265806, z: 0.012845758}
+  m_Center: {x: 0.00024053082, y: -0.089356355, z: 0.03}
 --- !u!114 &1976878074990368283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,22 +283,6 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
---- !u!114 &3682937527430289373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821934299059189662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe0abfbab923ba47b98eaffe62444bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArticulationPull
-  attach: {fileID: 1007666078546043923}
-  pullStrength: 10000
-  edgeStart: {fileID: 0}
-  edgeEnd: {fileID: 0}
 --- !u!114 &7908145200799157323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,6 +298,25 @@ MonoBehaviour:
   speedOfAnim: 1
   openDegree: 0.5
   isOpened: 0
+--- !u!114 &1660864867220068045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821934299059189662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f101fab13b7fd6418088241f8e2a0ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArticulationHandle
+  controllerTwistAxis: {x: 0, y: 0, z: 1}
+  overstepBuffer: 45
+  pullStrength: 15000
+  pullDamping: 0
+  attach: {fileID: 1007666078546043923}
+  edgeStart: {fileID: 0}
+  edgeEnd: {fileID: 0}
 --- !u!4 &6353304310574494289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4458066051023195170, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}

@@ -66,13 +66,15 @@ public class UserControlledManager : MonoBehaviour
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, outsideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, insideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, WindowSelection));
     }
     public void goOutside()
     {
         StartCoroutine(TeleportTo(outsideLocation.transform));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, outsideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, insideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
     }
 
     public IEnumerator TeleportTo(Transform targetTransform)

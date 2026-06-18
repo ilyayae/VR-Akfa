@@ -550,6 +550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1020313442422036913}
   - component: {fileID: 6200833792321951650}
+  - component: {fileID: 1833649363645381026}
   m_Layer: 0
   m_Name: Door_Frame_98_R
   m_TagString: Untagged
@@ -603,6 +604,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 1209959115093211932}
+--- !u!114 &1833649363645381026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3193747445324536500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f257eff560f84448d2b5d068458755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingeChanger
+  whatToChange:
+  - {fileID: 3764176710371713025}
+  - {fileID: 6545576577639638866}
+  - {fileID: 4601545006930245954}
+  - {fileID: 5470340589564710855}
 --- !u!1 &3278220266980202426
 GameObject:
   m_ObjectHideFlags: 0
