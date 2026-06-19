@@ -13,15 +13,9 @@ public class WindowBrain : MonoBehaviour
     public List<TextureChanger> changers = new();
     public List<HingeChanger> hinges = new();
 
-    public Transform twoWindowHandleTransform;
-    public Transform oneWindowHandleTransform;
-    public Vector3 twoWindowHandlePosition;
-    public Vector3 oneWindowHandlePosition;
 
     private void Start()
     {
-        twoWindowHandlePosition = twoWindowHandleTransform.localPosition;
-        oneWindowHandlePosition = oneWindowHandleTransform.localPosition;
     }
     private void ClearChildren(Transform parent)
     {
@@ -52,13 +46,11 @@ public class WindowBrain : MonoBehaviour
         if (one)
         {
             myHandle.gameObject.SetActive(false);
-            myHandle.transform.localPosition = oneWindowHandlePosition;
             myHandle.gameObject.SetActive(true);
         }
         else
         {
             myHandle.gameObject.SetActive(false);
-            myHandle.transform.localPosition = twoWindowHandlePosition;
             myHandle.gameObject.SetActive(true);
         }
     }

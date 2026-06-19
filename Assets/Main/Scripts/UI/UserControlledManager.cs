@@ -43,10 +43,6 @@ public class UserControlledManager : MonoBehaviour
         listOfFacades[0].gameObject.SetActive(true);
         listOfFacades[0].transform.position = chosenFacadeLoaction.position;
     }
-    public void ChangeFacadeBySelection()
-    {
-        ChangeFacadeById(FacadeSelection.GetComponent<FacadeSelection>().currentID);
-    }
     public void ChangeFacadeById(int id)
     {
         StartCoroutine(ChangeFacadeAnimation(id));
