@@ -4,9 +4,9 @@ using UnityEngine;
 public class TextureChanger : MonoBehaviour
 {
     [SerializeField] private List<Renderer> whatToChange;
-    private const int OUTDOORS_MAT_INDEX = 1;
-    private const int ROOM_MAT_INDEX = 2;
 
+    // The last material is always roomside, the first material is always inside, if there are three materials the one in the middle is always outside
+    // inside and should not be changed. 
     public void ChangeTextureOutdoors(Material text)
     {
         UpdateTextures(text, updateOutdoors: true, updateRoom: false);
@@ -26,18 +26,23 @@ public class TextureChanger : MonoBehaviour
     {
         foreach (Renderer r in whatToChange)
         {
-            if (r != null && r.sharedMaterials.Length >= 3)
-            {
-                Material[] mats = r.materials;
-                if (updateOutdoors)
-                {
-                    mats[OUTDOORS_MAT_INDEX] = text;
-                }
+            if (r == null || r.sharedMaterials.Length == 0) continue;
 
-                if (updateRoom)
-                {
-                    mats[ROOM_MAT_INDEX] = text;
-                }
+            Material[] mats = r.materials;
+            int length = mats.Length;
+            bool materialsChanged = false;
+            if (updateOutdoors && length >= 3)
+            {
+                mats[1] = text;
+                materialsChanged = true;
+            }
+            if (updateRoom && length >= 2)
+            {
+                mats[length - 1] = text;
+                materialsChanged = true;
+            }
+            if (materialsChanged)
+            {
                 r.materials = mats;
             }
         }
