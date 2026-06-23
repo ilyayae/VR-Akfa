@@ -30,42 +30,71 @@ public class WindowManager : MonoBehaviour
         SetGlassToId(0);
     }
     int currentTexture = 0;
+    int currSetting = 0;
+    public void SetLaminationSettingState(int set)
+    {
+        currSetting = set;
+    }
     public void SetTextureToId(int id)
     {
         currentTexture = id;
-        if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf == true)
-        {
-            TextureChanger texChanger = currentInstantiatedFrame.GetComponentInChildren<TextureChanger>();
-            if (texChanger != null) texChanger.ChangeTextureBoth(materials[id].window);
+        Material windowMat = materials[id].window;
+        Material hingeMat = materials[id].hinge;
 
-            HingeChanger hingeChanger = currentInstantiatedFrame.GetComponentInChildren<HingeChanger>();
-            if (hingeChanger != null) hingeChanger.ChangeTextureBoth(materials[id].hinge);
+        if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf)
+        {
+            ApplyToTextureChanger(currentInstantiatedFrame.GetComponentInChildren<TextureChanger>(), windowMat);
+            ApplyToHingeChanger(currentInstantiatedFrame.GetComponentInChildren<HingeChanger>(), hingeMat);
         }
-        if (windowsill != null)
+        if (windowsill != null && (currSetting == 0 || currSetting == 2))
         {
             windowsill.material = materials[id].windowsill;
         }
-        if(RightWindow != null && RightWindow.gameObject.activeSelf == true)
+
+        if (RightWindow != null && RightWindow.gameObject.activeSelf)
         {
-            foreach (TextureChanger tchange in RightWindow.changers)
-            {
-                tchange.ChangeTextureBoth(materials[id].window);
-            }
-            foreach(HingeChanger tchange in RightWindow.hinges)
-            {
-                tchange.ChangeTextureBoth(materials[id].hinge);
-            }
+            foreach (TextureChanger tchange in RightWindow.changers) ApplyToTextureChanger(tchange, windowMat);
+            foreach (HingeChanger hchange in RightWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
         }
-        if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
         {
-            foreach (TextureChanger tchange in LeftWindow.changers)
-            {
-                tchange.ChangeTextureBoth(materials[id].window);
-            }
-            foreach (HingeChanger tchange in LeftWindow.hinges)
-            {
-                tchange.ChangeTextureBoth(materials[id].hinge);
-            }
+            foreach (TextureChanger tchange in LeftWindow.changers) ApplyToTextureChanger(tchange, windowMat);
+            foreach (HingeChanger hchange in LeftWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
+        }
+    }
+    private void ApplyToTextureChanger(TextureChanger changer, Material mat)
+    {
+        if (changer == null) return;
+
+        switch (currSetting)
+        {
+            case 0:
+                changer.ChangeTextureBoth(mat);
+                break;
+            case 1:
+                changer.ChangeTextureOutdoors(mat);
+                break;
+            case 2:
+                changer.ChangeTextureRoom(mat);
+                break;
+        }
+    }
+
+    private void ApplyToHingeChanger(HingeChanger changer, Material mat)
+    {
+        if (changer == null) return;
+
+        switch (currSetting)
+        {
+            case 0:
+                changer.ChangeTextureBoth(mat);
+                break;
+            case 1:
+                break;
+            case 2:
+                changer.ChangeTextureBoth(mat);
+                break;
         }
     }
     int currentHandle = 0;
@@ -81,7 +110,6 @@ public class WindowManager : MonoBehaviour
             LeftWindow.NewHandle(handlesL[id]);
         }
     }
-
     public void SetFrameToId(int id)
     {
         currentSetId = id;
@@ -93,19 +121,24 @@ public class WindowManager : MonoBehaviour
         if (isSingleWindowMode)
         {
             currentInstantiatedFrame = Instantiate(sets[id].frameModelSingular, transform);
-            currentInstantiatedFrame.transform.position = Vector3.zero;
             currentInstantiatedFrame.transform.localPosition = Vector3.zero;
 
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
                 RightWindow.NewWindow(sets[id].doorModelSingular, false);
             }
+
+            HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
+            if (hc != null && hc.RightHingeTransform != null)
+            {
+                AlignToHingeKeepY(RightWindow.myDoor.transform, hc.RightHingeTransform.position);
+            }
         }
         else
         {
             currentInstantiatedFrame = Instantiate(sets[id].frameModelDual, transform);
-            currentInstantiatedFrame.transform.position = Vector3.zero;
             currentInstantiatedFrame.transform.localPosition = Vector3.zero;
+
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
                 RightWindow.NewWindow(sets[id].doorModelR, false);
@@ -114,7 +147,25 @@ public class WindowManager : MonoBehaviour
             {
                 LeftWindow.NewWindow(sets[id].doorModelL, true);
             }
+
+            HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
+            if (hc != null && hc.RightHingeTransform != null && hc.LeftHingeTransform != null)
+            {
+                AlignToHingeKeepY(RightWindow.myDoor.transform, hc.RightHingeTransform.position);
+                AlignToHingeKeepY(LeftWindow.myDoor.transform, hc.LeftHingeTransform.position);
+            }
         }
+
+        SetTextureToId(currentTexture);
+    }
+
+    private void AlignToHingeKeepY(Transform windowToMove, Vector3 targetHingeWorldPos)
+    {
+        Vector3 currentPos = windowToMove.position;
+        Vector3 offset = targetHingeWorldPos - currentPos;
+        float upMovementAmount = Vector3.Dot(offset, windowToMove.up);
+        Vector3 horizontalOffset = offset - (windowToMove.up * upMovementAmount);
+        windowToMove.position = currentPos + horizontalOffset;
     }
     public void SetGlassToId(int id)
     {
@@ -141,13 +192,11 @@ public class WindowManager : MonoBehaviour
 
         LeftWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(false);
-        RightWindow.transform.localPosition = centerPos;
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
 
         RightWindow.SetHandleOneOrTwo(true);
 
-        SetTextureToId(currentTexture);
         SetHandleToId(currentHandle);
     }
 
@@ -159,14 +208,11 @@ public class WindowManager : MonoBehaviour
 
         LeftWindow.gameObject.SetActive(true);
         RightWindow.gameObject.SetActive(false);
-        RightWindow.transform.position = originalRightPos;
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
 
-        LeftWindow.SetHandleOneOrTwo(false);
         RightWindow.SetHandleOneOrTwo(false);
 
-        SetTextureToId(currentTexture);
         SetHandleToId(currentHandle);
     }
 
