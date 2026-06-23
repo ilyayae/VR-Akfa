@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1994940788001171524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,6 +90,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       propertyPath: m_Name
       value: Master_Karma
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959930680747338428, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
