@@ -41,20 +41,11 @@ public class WindowBrain : MonoBehaviour
             transform.position = newPosition;
         }
     }
-    public void SetHandleOneOrTwo(bool one)
+    public void SetHandlePosition(Vector3 worldPosition)
     {
-        if (one)
-        {
-            myHandle.gameObject.SetActive(false);
-            myHandle.transform.position = myHandle.transform.position + new Vector3(0.055f, 0, 0);
-            myHandle.gameObject.SetActive(true);
-        }
-        else
-        {
-            myHandle.gameObject.SetActive(false);
-            myHandle.transform.position = myHandle.transform.position - new Vector3(0.055f, 0, 0);
-            myHandle.gameObject.SetActive(true);
-        }
+        myHandle.gameObject.SetActive(false);
+        myHandle.transform.position = worldPosition;
+        myHandle.gameObject.SetActive(true);
     }
 
     public void NewHandle(GameObject newHandle)
@@ -78,7 +69,7 @@ public class WindowBrain : MonoBehaviour
         }
     }
 
-    public void NewWindow(GameObject newFrame, bool lefty)
+    public void NewWindow(GameObject newWindowDoor, bool lefty)
     {
         RemoveOldChangers(myFrame.transform);
         RemoveOldChangers(myDoor.transform);
@@ -86,13 +77,14 @@ public class WindowBrain : MonoBehaviour
         ClearChildren(myFrame.transform);
         ClearChildren(myDoor.transform);
 
-        GameObject frame = Instantiate(newFrame, myDoor.transform);
+        GameObject Door = Instantiate(newWindowDoor, myDoor.transform);
 
+        SetHandlePosition(Door.GetComponent<HingeChanger>().handle.position);
 
-        TextureChanger[] newChangers = frame.GetComponentsInChildren<TextureChanger>();
+        TextureChanger[] newChangers = Door.GetComponentsInChildren<TextureChanger>();
         changers.AddRange(newChangers);
 
-        HingeChanger[] newHinges = frame.GetComponentsInChildren<HingeChanger>();
+        HingeChanger[] newHinges = Door.GetComponentsInChildren<HingeChanger>();
         hinges.AddRange(newHinges);
     }
 
