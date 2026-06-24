@@ -46,13 +46,13 @@ public class WindowBrain : MonoBehaviour
         if (one)
         {
             myHandle.gameObject.SetActive(false);
-            myHandle.transform.position = myHandle.transform.position + new Vector3(0.045f, 0, 0);
+            myHandle.transform.position = myHandle.transform.position + new Vector3(0.055f, 0, 0);
             myHandle.gameObject.SetActive(true);
         }
         else
         {
             myHandle.gameObject.SetActive(false);
-            myHandle.transform.position = myHandle.transform.position - new Vector3(0.045f, 0, 0);
+            myHandle.transform.position = myHandle.transform.position - new Vector3(0.055f, 0, 0);
             myHandle.gameObject.SetActive(true);
         }
     }
