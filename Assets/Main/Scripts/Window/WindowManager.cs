@@ -29,7 +29,8 @@ public class WindowManager : MonoBehaviour
         SetTextureToId(0);
         SetGlassToId(0);
     }
-    int currentTexture = 0;
+    int currentTextureINSIDE = 0;
+    int currentTextureOUTSIDE = 0;
     int currSetting = 0;
     public void SetLaminationSettingState(int set)
     {
@@ -37,13 +38,10 @@ public class WindowManager : MonoBehaviour
     }
     public void SetTextureToId(int id)
     {
-        currentTexture = id;
-        Material windowMat = materials[id].window;
-        Material hingeMat = materials[id].hinge;
-
+        Material hingeMat = materials[id].windowsill;
         if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf)
         {
-            ApplyToTextureChanger(currentInstantiatedFrame.GetComponentInChildren<TextureChanger>(), windowMat);
+            ApplyToTextureChanger(currentInstantiatedFrame.GetComponentInChildren<TextureChanger>(), id);
             ApplyToHingeChanger(currentInstantiatedFrame.GetComponentInChildren<HingeChanger>(), hingeMat);
         }
         if (windowsill != null && (currSetting == 0 || currSetting == 2))
@@ -53,30 +51,44 @@ public class WindowManager : MonoBehaviour
 
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
         {
-            foreach (TextureChanger tchange in RightWindow.changers) ApplyToTextureChanger(tchange, windowMat);
+            foreach (TextureChanger tchange in RightWindow.changers) ApplyToTextureChanger(tchange, id);
             foreach (HingeChanger hchange in RightWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
         }
 
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
         {
-            foreach (TextureChanger tchange in LeftWindow.changers) ApplyToTextureChanger(tchange, windowMat);
+            foreach (TextureChanger tchange in LeftWindow.changers) ApplyToTextureChanger(tchange, id);
             foreach (HingeChanger hchange in LeftWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
         }
     }
-    private void ApplyToTextureChanger(TextureChanger changer, Material mat)
+
+    public void SetLaminationForWindow(int idInside, int idOutside)
+    {
+        int savedState = currSetting; 
+        currSetting = 1;
+        SetTextureToId(idOutside);
+        currSetting = 2;
+        SetTextureToId(idInside);
+        currSetting = savedState;
+    }
+    private void ApplyToTextureChanger(TextureChanger changer, int id)
     {
         if (changer == null) return;
 
         switch (currSetting)
         {
             case 0:
-                changer.ChangeTextureBoth(mat);
+                currentTextureINSIDE = id;
+                currentTextureOUTSIDE = id;
+                changer.ChangeTextureBoth(materials[id].window);
                 break;
             case 1:
-                changer.ChangeTextureOutdoors(mat);
+                changer.ChangeTextureOutdoors(materials[id].window);
+                currentTextureOUTSIDE = id;
                 break;
             case 2:
-                changer.ChangeTextureRoom(mat);
+                changer.ChangeTextureRoom(materials[id].window);
+                currentTextureINSIDE = id;
                 break;
         }
     }
@@ -155,8 +167,7 @@ public class WindowManager : MonoBehaviour
                 AlignToHingeKeepY(LeftWindow.myDoor.transform, hc.LeftHingeTransform.position);
             }
         }
-
-        SetTextureToId(currentTexture);
+        SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
     }
 
     private void AlignToHingeKeepY(Transform windowToMove, Vector3 targetHingeWorldPos)
