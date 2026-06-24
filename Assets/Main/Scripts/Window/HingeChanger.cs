@@ -6,6 +6,8 @@ public class HingeChanger : MonoBehaviour
     [SerializeField] private List<Renderer> whatToChange;
     public Transform RightHingeTransform;
     public Transform LeftHingeTransform;
+
+    public Transform handle;
     public void ChangeTextureBoth(Material text)
     {
         UpdateTextures(text);

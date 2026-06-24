@@ -161,11 +161,13 @@ public class WindowManager : MonoBehaviour
 
     private void AlignToHingeKeepY(Transform windowToMove, Vector3 targetHingeWorldPos)
     {
+        windowToMove.gameObject.SetActive(false);
         Vector3 currentPos = windowToMove.position;
         Vector3 offset = targetHingeWorldPos - currentPos;
         float upMovementAmount = Vector3.Dot(offset, windowToMove.up);
         Vector3 horizontalOffset = offset - (windowToMove.up * upMovementAmount);
         windowToMove.position = currentPos + horizontalOffset;
+        windowToMove.gameObject.SetActive(true);
     }
     public void SetGlassToId(int id)
     {
@@ -194,9 +196,6 @@ public class WindowManager : MonoBehaviour
         RightWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
-
-        RightWindow.SetHandleOneOrTwo(true);
-
         SetHandleToId(currentHandle);
     }
 
@@ -210,9 +209,6 @@ public class WindowManager : MonoBehaviour
         RightWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
-
-        RightWindow.SetHandleOneOrTwo(false);
-
         SetHandleToId(currentHandle);
     }
 
