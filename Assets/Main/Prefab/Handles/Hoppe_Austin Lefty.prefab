@@ -114,13 +114,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4150816211705813679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000020968055, y: -0.7071067, z: -0.7071068, w: 0.0000020968052}
-  m_LocalPosition: {x: 0, y: -0.0004999999, z: -0.0005000001}
+  m_LocalRotation: {x: -0.000000059604645, y: -0.7071079, z: -0.00000014901161, w: -0.7071057}
+  m_LocalPosition: {x: 0, y: -0.0015, z: -0.0005}
   m_LocalScale: {x: 0.01, y: 0.010000002, z: 0.010000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5248257418238239132}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
 --- !u!1 &5005139823105895965
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +513,7 @@ MonoBehaviour:
   attach: {fileID: 20825617812474226}
   edgeStart: {fileID: 0}
   edgeEnd: {fileID: 0}
+  AnimName: HoppeAustin
 --- !u!4 &5248257418238239132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f03645e5682ac684f85da883b818c728, type: 3}

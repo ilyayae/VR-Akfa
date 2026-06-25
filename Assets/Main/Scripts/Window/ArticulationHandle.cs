@@ -28,6 +28,8 @@ public class ArticulationHandle : MonoBehaviour
     public Transform edgeStart;
     public Transform edgeEnd;
 
+    public string AnimName;
+
     private Quaternion previousControllerRotation;
     private float unclampedVirtualAngle;
 
@@ -67,12 +69,13 @@ public class ArticulationHandle : MonoBehaviour
         offsetInAttachSpace = pullTarget.InverseTransformPoint(extendedWorldGrabPoint);
 
         previousControllerRotation = currentInteractor.transform.rotation;
-
+        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe(AnimName);
         unclampedVirtualAngle = artBody.jointPosition[0] * Mathf.Rad2Deg;
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
+        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe("GrabExit");
         currentInteractor = null;
         pullTarget = null;
     }

@@ -41,6 +41,11 @@ public class HandSnap : MonoBehaviour
         interactor.selectExited.RemoveListener(OnHandRelease);
     }
 
+    public void AnimateMe(string name)
+    {
+        handVisual.gameObject.GetComponent<Animator>().SetTrigger(name);
+    }
+
     private void OnHandGrab(SelectEnterEventArgs args)
     {
         GameObject interactedObj = args.interactableObject.transform.gameObject;

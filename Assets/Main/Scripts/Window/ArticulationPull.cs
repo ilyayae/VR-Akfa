@@ -23,6 +23,7 @@ public class ArticulationPull : MonoBehaviour
     public Transform edgeStart;
     public Transform edgeEnd;
 
+    public string AnimName;
     void Start()
     {
         simpleInteractable = GetComponent<XRSimpleInteractable>();
@@ -31,30 +32,32 @@ public class ArticulationPull : MonoBehaviour
         simpleInteractable.selectEntered.AddListener(OnGrab);
         simpleInteractable.selectExited.AddListener(OnRelease);
     }
-
+    IXRSelectInteractor currentInteractor;
     void OnGrab(SelectEnterEventArgs args)
     {
-        IXRSelectInteractor interactor = args.interactorObject;
-        Vector3 interactionPoint = interactor.transform.position;
+        currentInteractor = args.interactorObject;
+        Vector3 interactionPoint = currentInteractor.transform.position;
 
-        if (interactor is XRRayInteractor rayInteractor)
+        if (currentInteractor is XRRayInteractor rayInteractor)
         {
             if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
                 interactionPoint = hit.point;
         }
 
         UpdateAttachPosition(interactionPoint);
-        pullTarget = interactor.GetAttachTransform(simpleInteractable);
+        pullTarget = currentInteractor.GetAttachTransform(simpleInteractable);
 
         Vector3 extendedLocalGrabPoint = localGrabPoint;
         Vector3 extendedWorldGrabPoint = transform.TransformPoint(extendedLocalGrabPoint);
 
+        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe(AnimName);
         offsetInAttachSpace = pullTarget.InverseTransformPoint(extendedWorldGrabPoint);
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
         pullTarget = null;
+        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe("GrabExit");
     }
 
     void FixedUpdate()
