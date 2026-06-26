@@ -60,11 +60,12 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _ENVIRONMENTREFLECTIONS_OFF: 0
-    - _FadeDistance: 3
+    - _FadeDistance: 6
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SPECULARHIGHLIGHTS_OFF: 0
+    - _Size: 2.98
     - _Smoothness: 0.116
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
@@ -74,7 +75,8 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 3.44159, g: 3.44159, b: 3.44159, a: 1}
+    - _BaseColor: {r: 2.0986106, g: 2.0986106, b: 2.0986106, a: 0.7176471}
+    - _LookOrigin: {r: 0.35, g: 0, b: 2.25, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8412104625969820898
