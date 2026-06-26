@@ -223,6 +223,30 @@ public class WindowManager : MonoBehaviour
         SetHandleToId(currentHandle);
     }
 
+    public void setMechanismSwing()
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf)
+            RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING);
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
+            LeftWindow.SetMechanism(WindowBrain.WindowMechanism.SWING);
+    }
+
+    public void setMechanismTilt()
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf)
+            RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING_TILT);
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
+            LeftWindow.SetMechanism(WindowBrain.WindowMechanism.SWING_TILT);
+    }
+
+    public void setMechanismSlide()
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeSelf)
+            RightWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
+        if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
+            LeftWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
+    }
+
     private void Update()
     {
         
