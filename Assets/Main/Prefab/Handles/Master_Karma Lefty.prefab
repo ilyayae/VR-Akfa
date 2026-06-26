@@ -160,7 +160,7 @@ ArticulationBody:
   m_GameObject: {fileID: 3009792341624653019}
   m_Enabled: 1
   serializedVersion: 6
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_ParentAnchorPosition: {x: 0, y: -0.000000029802322, z: -0.000000044703484}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
@@ -396,9 +396,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2a7df52a37d02438354b3044926cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowHandle
+  currentHandleState: 0
+  left: 1
   speedOfAnim: 1
-  openDegree: 0.5
-  isOpened: 0
 --- !u!114 &3412400529720200222
 MonoBehaviour:
   m_ObjectHideFlags: 0

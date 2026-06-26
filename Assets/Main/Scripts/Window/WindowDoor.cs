@@ -76,14 +76,11 @@ public class WindowDoor : MonoBehaviour
     private IEnumerator TransitionStateRoutine(doorState newState)
     {
         float previousOpenDegree = GetOpenedDegreeOfWindow();
-        bool wasLocked = Mathf.Approximately(myBody.xDrive.lowerLimit, myBody.xDrive.upperLimit) || isHandleLocked;
         float targetCloseDegree = isHandleLocked ? 0f : openDegree;
-
         if (previousOpenDegree > targetCloseDegree)
         {
             yield return StartCoroutine(SetOpenedDegreeOfWindow(targetCloseDegree));
         }
-
         ResetToClosedPosition();
 
         switch (newState)
@@ -92,29 +89,16 @@ public class WindowDoor : MonoBehaviour
             case doorState.TILT: SetJointTiltDirect(); break;
             case doorState.SLIDE: SetJointSlideDirect(); break;
         }
-
         yield return new WaitForFixedUpdate();
-
-        if (wasLocked && isHandleLocked)
+        if (isHandleLocked)
         {
             SetJointLocked();
         }
-        else if (previousOpenDegree > targetCloseDegree)
-        {
-            yield return StartCoroutine(SetOpenedDegreeOfWindow(previousOpenDegree));
-        }
         else
         {
-            if (!isHandleLocked)
-            {
-                BlockWindowFromClosing();
-            }
-            else
-            {
-                ArticulationDrive drive = myBody.xDrive;
-                drive.target = 0f;
-                myBody.xDrive = drive;
-            }
+            float degreeToReopen = Mathf.Max(previousOpenDegree, openDegree);
+            yield return StartCoroutine(SetOpenedDegreeOfWindow(degreeToReopen));
+            BlockWindowFromClosing();
         }
     }
 

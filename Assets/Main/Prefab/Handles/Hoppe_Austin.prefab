@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2656959791657127330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ ArticulationBody:
   m_GameObject: {fileID: 5005139823105895965}
   m_Enabled: 1
   serializedVersion: 6
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_ParentAnchorPosition: {x: 0, y: -0.000000029802322, z: -0.000000044703484}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 8049016815252364890}
   - component: {fileID: 6348951432901448191}
   - component: {fileID: 9221391787629520181}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hoppe_Austin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,6 +290,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f03645e5682ac684f85da883b818c728, type: 3}
       propertyPath: m_Name
       value: Hoppe_Toulon (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f03645e5682ac684f85da883b818c728, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -493,9 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2a7df52a37d02438354b3044926cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowHandle
+  currentHandleState: 0
+  left: 0
   speedOfAnim: 1
-  openDegree: 0.5
-  isOpened: 0
 --- !u!114 &5389734634014792759
 MonoBehaviour:
   m_ObjectHideFlags: 0

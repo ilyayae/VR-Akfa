@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 public class UserControlledManager : MonoBehaviour
 {
@@ -72,7 +74,19 @@ public class UserControlledManager : MonoBehaviour
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, insideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
     }
+    public void ChangeLanguageByIndex(int localeIndex)
+    {
+        StartCoroutine(SetLocaleCoroutine(localeIndex));
+    }
+    private IEnumerator SetLocaleCoroutine(int index)
+    {
+        yield return LocalizationSettings.InitializationOperation;
 
+        if (index >= 0 && index < LocalizationSettings.AvailableLocales.Locales.Count)
+        {
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
+        }
+    }
     public IEnumerator TeleportTo(Transform targetTransform)
     {
         float timer = 0f;

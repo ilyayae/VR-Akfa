@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class WindowBrain : MonoBehaviour
 {
+    public enum WindowMechanism { SWING, SWING_TILT, SLIDE }
+    public WindowMechanism currentMechanism = WindowMechanism.SWING;
+
     public GameObject myFrame;
     public GameObject myHandle;
     public WindowDoor myDoor;
@@ -13,10 +15,14 @@ public class WindowBrain : MonoBehaviour
     public List<TextureChanger> changers = new();
     public List<HingeChanger> hinges = new();
 
+    private WindowHandle.HandleState lastHandleState = WindowHandle.HandleState.CLOSED;
+    private bool isCurrentlyBlocked = false;
+    private bool wasPracticallyClosed = true;
 
-    private void Start()
-    {
-    }
+    // Protection flags for safe mechanism transitioning
+    private bool isTransitioningMechanism = false;
+    private Coroutine mechanismTransitionRoutine;
+
     private void ClearChildren(Transform parent)
     {
         for (int i = parent.childCount - 1; i >= 0; i--)
@@ -28,19 +34,77 @@ public class WindowBrain : MonoBehaviour
         }
     }
 
+    public void SetMechanism(WindowMechanism mech)
+    {
+        if (currentMechanism == mech) return;
+
+        if (mechanismTransitionRoutine != null)
+        {
+            StopCoroutine(mechanismTransitionRoutine);
+        }
+
+        mechanismTransitionRoutine = StartCoroutine(DoSetMechanism(mech));
+    }
+
+    private IEnumerator DoSetMechanism(WindowMechanism newMech)
+    {
+        isTransitioningMechanism = true;
+        if (myDoor != null && myDoor.GetOpenedDegreeOfWindow() > 0.01f)
+        {
+            yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0f));
+        }
+
+        if (handleScript != null && handleScript.GetDegreeOfHandle() > 0.01f)
+        {
+            yield return StartCoroutine(handleScript.SetDegreeOfHandle(0f));
+        }
+
+        if (myDoor != null)
+        {
+            myDoor.SetHandleLockedState(true);
+            myDoor.SetJointLocked();
+        }
+
+        yield return new WaitForFixedUpdate();
+
+        currentMechanism = newMech;
+        ApplyHandleLimit();
+        if (myDoor != null)
+        {
+            doorState newDoorState = doorState.SWING;
+            if (newMech == WindowMechanism.SWING) newDoorState = doorState.SWING;
+            else if (newMech == WindowMechanism.SLIDE) newDoorState = doorState.SLIDE;
+            else if (newMech == WindowMechanism.SWING_TILT) newDoorState = doorState.SWING;
+
+            myDoor.SwitchState(newDoorState);
+        }
+
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+
+        isTransitioningMechanism = false; // Unlock evaluation
+        EvaluateWindowState();
+        mechanismTransitionRoutine = null;
+    }
+
+    private void ApplyHandleLimit()
+    {
+        if (handleScript != null)
+        {
+            if (currentMechanism == WindowMechanism.SWING_TILT)
+                handleScript.SetMaxAngle(180f);
+            else
+                handleScript.SetMaxAngle(90f);
+        }
+    }
+
     public void MoveArticulationRoot(Vector3 newPosition)
     {
         ArticulationBody ab = GetComponentInChildren<ArticulationBody>();
-
-        if (ab != null)
-        {
-            ab.TeleportRoot(newPosition, transform.rotation);
-        }
-        else
-        {
-            transform.position = newPosition;
-        }
+        if (ab != null) ab.TeleportRoot(newPosition, transform.rotation);
+        else transform.position = newPosition;
     }
+
     public void SetHandlePosition(Vector3 worldPosition)
     {
         myHandle.gameObject.SetActive(false);
@@ -52,20 +116,20 @@ public class WindowBrain : MonoBehaviour
     {
         if (handleScript != null)
         {
-            handleScript.onClose -= OnHandleClosed;
-            handleScript.onOpen -= OnHandleOpened;
+            handleScript.onHandleStateChanged -= OnHandleStateChanged;
         }
 
         ClearChildren(myHandle.transform);
-
         GameObject handleInstance = Instantiate(newHandle, myHandle.transform);
 
         HandlePointer pointer = handleInstance.GetComponent<HandlePointer>();
         if (pointer != null && pointer.handle != null)
         {
             handleScript = pointer.handle;
-            handleScript.onClose += OnHandleClosed;
-            handleScript.onOpen += OnHandleOpened;
+            ApplyHandleLimit();
+            handleScript.onHandleStateChanged += OnHandleStateChanged;
+            lastHandleState = handleScript.currentHandleState;
+            EvaluateWindowState();
         }
     }
 
@@ -88,59 +152,109 @@ public class WindowBrain : MonoBehaviour
         hinges.AddRange(newHinges);
     }
 
-    public void NewGlass(GameObject newGlassPrefab)
-    {
-        /*
-        ClearChildren(myGlass.transform);
-
-        GameObject glass = Instantiate(newGlassPrefab, myGlass.transform);
-        */
-    }
+    public void NewGlass(GameObject newGlassPrefab) { }
 
     private void RemoveOldChangers(Transform parent)
     {
         foreach (Transform child in parent)
         {
             TextureChanger oldChanger = child.GetComponent<TextureChanger>();
-            if (oldChanger != null && changers.Contains(oldChanger))
-            {
-                changers.Remove(oldChanger);
-            }
+            if (oldChanger != null && changers.Contains(oldChanger)) changers.Remove(oldChanger);
+
             HingeChanger oldHinge = child.GetComponent<HingeChanger>();
-            if (oldHinge != null && hinges.Contains(oldHinge))
-            {
-                hinges.Remove(oldHinge);
-            }
+            if (oldHinge != null && hinges.Contains(oldHinge)) hinges.Remove(oldHinge);
         }
     }
 
-    public void OnHandleClosed()
+    private void Update()
     {
-        if (myDoor.GetOpenedDegreeOfWindow() > myDoor.openDegree)
+        if (myDoor == null || isTransitioningMechanism) return;
+
+        bool isPracticallyClosed = myDoor.GetOpenedDegreeOfWindow() < (myDoor.openDegree * 0.9f);
+        if (isPracticallyClosed != wasPracticallyClosed)
         {
-            myDoor.BlockWindowFromClosing();
+            wasPracticallyClosed = isPracticallyClosed;
+        }
+        EvaluateWindowState();
+    }
+
+    public void OnHandleStateChanged(WindowHandle.HandleState newState)
+    {
+        lastHandleState = newState;
+        EvaluateWindowState();
+    }
+
+    public void EvaluateWindowState()
+    {
+        if (myDoor == null || handleScript == null || isTransitioningMechanism) return;
+
+        float doorOpenDeg = myDoor.GetOpenedDegreeOfWindow();
+        bool isPracticallyClosed = doorOpenDeg < (myDoor.openDegree * 0.9f);
+
+        if (isPracticallyClosed)
+        {
+            if (currentMechanism == WindowMechanism.SWING_TILT)
+            {
+                if (lastHandleState == WindowHandle.HandleState.TILT && myDoor.state != doorState.TILT)
+                    myDoor.SwitchState(doorState.TILT);
+                else if (lastHandleState == WindowHandle.HandleState.SWING && myDoor.state != doorState.SWING)
+                    myDoor.SwitchState(doorState.SWING);
+            }
+        }
+
+        bool handleMatchesState = false;
+        if (currentMechanism == WindowMechanism.SWING_TILT)
+        {
+            if (myDoor.state == doorState.SWING && lastHandleState == WindowHandle.HandleState.SWING) handleMatchesState = true;
+            if (myDoor.state == doorState.TILT && lastHandleState == WindowHandle.HandleState.TILT) handleMatchesState = true;
         }
         else
         {
-            StartCoroutine(closeSequence());
+            if (lastHandleState != WindowHandle.HandleState.CLOSED) handleMatchesState = true;
+        }
+
+        if (lastHandleState == WindowHandle.HandleState.CLOSED) handleMatchesState = false;
+        if (isPracticallyClosed)
+        {
+            if (lastHandleState == WindowHandle.HandleState.CLOSED)
+            {
+                if (!myDoor.isHandleLocked) StartCoroutine(closeSequence());
+            }
+            else
+            {
+                if (myDoor.isHandleLocked)
+                {
+                    myDoor.SetHandleLockedState(false);
+                    myDoor.SetJointUnlocked();
+                }
+            }
+        }
+        else
+        {
+            if (!handleMatchesState)
+            {
+                if (!isCurrentlyBlocked)
+                {
+                    myDoor.BlockWindowFromClosing();
+                    isCurrentlyBlocked = true;
+                }
+            }
+            else
+            {
+                if (isCurrentlyBlocked)
+                {
+                    myDoor.UnblockWindowFromClosing();
+                    isCurrentlyBlocked = false;
+                }
+            }
         }
     }
 
     public IEnumerator closeSequence()
     {
+        myDoor.SetHandleLockedState(true);
         yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0));
         myDoor.SetJointLocked();
-    }
-
-    public void OnHandleOpened()
-    {
-        if (myDoor.GetOpenedDegreeOfWindow() > myDoor.openDegree)
-        {
-            myDoor.UnblockWindowFromClosing();
-        }
-        else
-        {
-            myDoor.SetJointUnlocked();
-        }
+        isCurrentlyBlocked = false;
     }
 }
