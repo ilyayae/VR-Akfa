@@ -311,6 +311,7 @@ MonoBehaviour:
   - {fileID: 1514872814407301742}
   RightHingeTransform: {fileID: 2720148846471190558}
   LeftHingeTransform: {fileID: 8073398061282156750}
+  handle: {fileID: 0}
 --- !u!114 &-728233576445957290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,7 +934,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 175832304009877548, guid: 2c0b87bd135041243a6ba8719711ee60, type: 3}
+  - {fileID: 2100000, guid: 005e9c58fc0203d48b1f48c3f811f92a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

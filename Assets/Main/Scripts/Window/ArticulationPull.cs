@@ -23,7 +23,6 @@ public class ArticulationPull : MonoBehaviour
     public Transform edgeStart;
     public Transform edgeEnd;
 
-    public string AnimName;
     void Start()
     {
         simpleInteractable = GetComponent<XRSimpleInteractable>();
@@ -50,14 +49,12 @@ public class ArticulationPull : MonoBehaviour
         Vector3 extendedLocalGrabPoint = localGrabPoint;
         Vector3 extendedWorldGrabPoint = transform.TransformPoint(extendedLocalGrabPoint);
 
-        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe(AnimName);
         offsetInAttachSpace = pullTarget.InverseTransformPoint(extendedWorldGrabPoint);
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
         pullTarget = null;
-        currentInteractor.transform.parent.gameObject.GetComponent<HandSnap>().AnimateMe("GrabExit");
     }
 
     void FixedUpdate()
