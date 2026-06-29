@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HandSnap : MonoBehaviour
 {
@@ -19,6 +23,8 @@ public class HandSnap : MonoBehaviour
 
     private Coroutine animationCoroutine;
 
+    [SerializeField] private InputActionReference buttonToDetect;
+
     private void Awake()
     {
         if (interactor == null)
@@ -33,17 +39,28 @@ public class HandSnap : MonoBehaviour
     {
         interactor.selectEntered.AddListener(OnHandGrab);
         interactor.selectExited.AddListener(OnHandRelease);
+        buttonToDetect.action.started += AnimateGrab;
+        buttonToDetect.action.canceled += AnimateRelease;
+    }
+
+    private void AnimateRelease(InputAction.CallbackContext context)
+    {
+
+        handVisual.gameObject.GetComponent<Animator>().SetTrigger("GrabExit");
+    }
+
+    private void AnimateGrab(InputAction.CallbackContext context)
+    {
+
+        handVisual.gameObject.GetComponent<Animator>().SetTrigger("HoppeAustin");
     }
 
     private void OnDisable()
     {
         interactor.selectEntered.RemoveListener(OnHandGrab);
         interactor.selectExited.RemoveListener(OnHandRelease);
-    }
-
-    public void AnimateMe(string name)
-    {
-        handVisual.gameObject.GetComponent<Animator>().SetTrigger(name);
+        buttonToDetect.action.started -= AnimateGrab;
+        buttonToDetect.action.canceled -= AnimateRelease;
     }
 
     private void OnHandGrab(SelectEnterEventArgs args)
@@ -119,5 +136,10 @@ public class HandSnap : MonoBehaviour
         handVisual.localRotation = targetLocalRot;
 
         animationCoroutine = null;
+    }
+
+    private void Update()
+    {
+        
     }
 }

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 8691023063703135016}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000059604645, y: -0.7071079, z: -0.00000014901161, w: -0.7071057}
-  m_LocalPosition: {x: 0, y: -0.0015, z: -0.0005}
+  m_LocalPosition: {x: 0.00016, y: -0.00175, z: -0.0005}
   m_LocalScale: {x: 0.01, y: 0.010000002, z: 0.010000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -398,7 +398,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WindowHandle
   currentHandleState: 0
   left: 1
-  speedOfAnim: 1
 --- !u!114 &3412400529720200222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,4 +415,3 @@ MonoBehaviour:
   attach: {fileID: 1994940788001171524}
   edgeStart: {fileID: 0}
   edgeEnd: {fileID: 0}
-  AnimName: HoppeAustin

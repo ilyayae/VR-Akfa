@@ -107,6 +107,11 @@ public class WindowBrain : MonoBehaviour
 
     public void SetHandlePosition(Vector3 worldPosition)
     {
+        if (handleScript != null)
+        {
+            handleScript.ResetToClosedPosition();
+        }
+
         myHandle.gameObject.SetActive(false);
         myHandle.transform.position = worldPosition;
         myHandle.gameObject.SetActive(true);
@@ -151,7 +156,6 @@ public class WindowBrain : MonoBehaviour
         HingeChanger[] newHinges = Door.GetComponentsInChildren<HingeChanger>();
         hinges.AddRange(newHinges);
     }
-
     public void NewGlass(GameObject newGlassPrefab) { }
 
     private void RemoveOldChangers(Transform parent)

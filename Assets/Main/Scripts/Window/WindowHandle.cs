@@ -15,19 +15,39 @@ public class WindowHandle : MonoBehaviour
     private ArticulationBody myBody;
     private float maxSwingAngle;
 
+    private Quaternion initialLocalRotation;
+    private Vector3 initialLocalPosition;
+
     void Awake()
     {
         myBody = GetComponent<ArticulationBody>();
+        initialLocalRotation = transform.localRotation;
+        initialLocalPosition = transform.localPosition;
     }
 
     void Start()
     {
         myBody.twistLock = ArticulationDofLock.LimitedMotion;
-
-        // Initialize maxSwingAngle based on prefab limits just in case Brain hasn't overwritten it yet
         maxSwingAngle = left ? myBody.xDrive.upperLimit : Mathf.Abs(myBody.xDrive.lowerLimit);
+        UpdateHandleState(true);
+    }
 
-        UpdateHandleState(true); // Initialize state immediately
+    public void ResetToClosedPosition()
+    {
+        if (myBody == null) myBody = GetComponent<ArticulationBody>();
+
+        transform.localPosition = initialLocalPosition;
+        transform.localRotation = initialLocalRotation;
+
+        if (myBody != null)
+        {
+            myBody.jointPosition = new ArticulationReducedSpace(0f);
+            myBody.jointVelocity = new ArticulationReducedSpace(0f);
+
+            ArticulationDrive drive = myBody.xDrive;
+            drive.target = 0f;
+            myBody.xDrive = drive;
+        }
     }
 
     public void SetMaxAngle(float maxAngle)
@@ -76,7 +96,7 @@ public class WindowHandle : MonoBehaviour
         yield return StartCoroutine(SetDegreeOfHandle(0));
     }
 
-    [SerializeField] float speedOfAnim = 1f;
+    float speedOfAnim = 2f;
 
     public IEnumerator SetDegreeOfHandle(float degree)
     {
@@ -84,6 +104,22 @@ public class WindowHandle : MonoBehaviour
 
         float targetAngle = left ? (maxSwingAngle * degree) : (-maxSwingAngle * degree);
         float currentAngle = myBody.jointPosition.dofCount > 0 ? (myBody.jointPosition[0] * Mathf.Rad2Deg) : 0f;
+
+        // 1. EARLY EXIT: If already at target, skip the delay!
+        if (Mathf.Abs(currentAngle - targetAngle) < 0.1f)
+        {
+            ArticulationDrive d = myBody.xDrive;
+            d.target = targetAngle;
+            myBody.xDrive = d;
+
+            var inst = myBody.jointPosition;
+            if (inst.dofCount > 0)
+            {
+                inst[0] = targetAngle * Mathf.Deg2Rad;
+                myBody.jointPosition = inst;
+            }
+            yield break;
+        }
 
         ArticulationDrive drive = myBody.xDrive;
         float rememberStiffness = drive.stiffness;
@@ -93,8 +129,10 @@ public class WindowHandle : MonoBehaviour
         drive.damping = 100000f;
         myBody.xDrive = drive;
 
+        // 2. SCALE DURATION: Proportional to the distance it needs to travel
+        float travelRatio = maxSwingAngle > 0f ? Mathf.Clamp01(Mathf.Abs(currentAngle - targetAngle) / maxSwingAngle) : 0f;
         float elapsedTime = 0f;
-        float duration = 1f / speedOfAnim;
+        float duration = (1f / speedOfAnim) * travelRatio;
 
         while (elapsedTime < duration)
         {
@@ -110,9 +148,16 @@ public class WindowHandle : MonoBehaviour
 
         drive = myBody.xDrive;
         drive.target = targetAngle;
-        drive.stiffness = rememberStiffness; // release control back to player
+        drive.stiffness = rememberStiffness;
         drive.damping = rememberDamping;
         myBody.xDrive = drive;
+
+        var instances = myBody.jointPosition;
+        if (instances.dofCount > 0)
+        {
+            instances[0] = targetAngle * Mathf.Deg2Rad;
+            myBody.jointPosition = instances;
+        }
     }
 
     private void Update()

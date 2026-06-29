@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum doorState
 {
@@ -32,7 +33,7 @@ public class WindowDoor : MonoBehaviour
     private Quaternion initialLocalRotation;
     private Vector3 initialLocalPosition;
 
-    [SerializeField] float speedOfAnim = 1f;
+    float speedOfAnim = 3f;
 
     void Awake()
     {
@@ -140,7 +141,10 @@ public class WindowDoor : MonoBehaviour
         state = doorState.SLIDE;
         myBody.jointType = ArticulationJointType.PrismaticJoint;
         SetDofLocks(ArticulationDofLock.LockedMotion, ArticulationDofLock.LimitedMotion);
-        UpdateJointAnchors(Quaternion.Euler(0, 180, 0));
+        if (left)
+            UpdateJointAnchors(Quaternion.Euler(0, -180, 0));
+        else
+            UpdateJointAnchors(Quaternion.Euler(0, 180, 0));
         SetLimits(0f, maxSlideDistance);
         UnlockDrive();
     }
@@ -191,13 +195,27 @@ public class WindowDoor : MonoBehaviour
 
         float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
 
+        // 1. EARLY EXIT: If already at the target value, skip the delay entirely!
+        if (Mathf.Abs(currentVal - targetVal) < 0.01f)
+        {
+            ArticulationDrive d = myBody.xDrive;
+            d.target = targetVal;
+            myBody.xDrive = d;
+            UnlockDrive();
+            yield break; // Instantly finish the Coroutine
+        }
+
         ArticulationDrive drive = myBody.xDrive;
         drive.stiffness = 100000f;
         drive.damping = 10000f;
         myBody.xDrive = drive;
 
+        // 2. SCALE DURATION: Proportional to the distance it needs to travel
+        float maxVal = (state == doorState.SLIDE) ? maxSlideDistance : (state == doorState.TILT ? maxTiltAngle : maxSwingAngle);
+        float travelRatio = maxVal > 0f ? Mathf.Clamp01(Mathf.Abs(currentVal - targetVal) / maxVal) : 0f;
+
         float elapsedTime = 0f;
-        float duration = 1f / speedOfAnim;
+        float duration = (1f / speedOfAnim) * travelRatio; // Shrinks duration if it's mostly closed
 
         while (elapsedTime < duration)
         {
@@ -337,12 +355,21 @@ public class WindowDoor : MonoBehaviour
             transform.rotation = initialLocalRotation;
         }
 
-        myBody.jointPosition = new ArticulationReducedSpace(0f);
-        myBody.jointVelocity = new ArticulationReducedSpace(0f);
+        if (myBody == null) myBody = GetComponent<ArticulationBody>();
+        if (myBody != null)
+        {
+            myBody.jointPosition = new ArticulationReducedSpace(0f);
+            myBody.jointVelocity = new ArticulationReducedSpace(0f);
+
+            ArticulationDrive drive = myBody.xDrive;
+            drive.target = 0f;
+            myBody.xDrive = drive;
+        }
     }
 
     private void UpdateJointAnchors(Quaternion newAnchorRotation)
     {
+
         myBody.anchorPosition = originalAnchorPosition;
         myBody.anchorRotation = newAnchorRotation;
         myBody.parentAnchorPosition = initialLocalPosition + (initialLocalRotation * originalAnchorPosition);
@@ -350,5 +377,6 @@ public class WindowDoor : MonoBehaviour
 
         myBody.jointPosition = new ArticulationReducedSpace(0f);
         myBody.jointVelocity = new ArticulationReducedSpace(0f);
+
     }
 }

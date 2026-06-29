@@ -1,6 +1,7 @@
-using UnityEngine;
 using Unity.XR.CoreUtils; // Required for XROrigin
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // Required if using the New Input System
 
 public class VRViewResetter : MonoBehaviour
@@ -12,6 +13,7 @@ public class VRViewResetter : MonoBehaviour
 
     [Header("Input (Optional)")]
     public InputActionReference resetAction;
+    public InputActionReference reloadAction;
 
     public Image fillInCircle;
     public Transform allcircles;
@@ -21,8 +23,11 @@ public class VRViewResetter : MonoBehaviour
         if (resetAction != null)
         {
             resetAction.action.Enable();
+            reloadAction.action.Enable();
             resetAction.action.performed += TriggerReset;
             resetAction.action.canceled += UnTriggerReset;
+            reloadAction.action.performed += TriggerReload;
+            reloadAction.action.canceled += UnTriggerReload;
         }
     }
 
@@ -32,7 +37,10 @@ public class VRViewResetter : MonoBehaviour
         {
             resetAction.action.performed -= TriggerReset;
             resetAction.action.canceled -= UnTriggerReset;
+            reloadAction.action.performed -= TriggerReload;
+            reloadAction.action.canceled -= UnTriggerReload;
             resetAction.action.Disable();
+            reloadAction.action.Disable();
         }
     }
 
@@ -44,6 +52,15 @@ public class VRViewResetter : MonoBehaviour
     private void UnTriggerReset(InputAction.CallbackContext context)
     {
         resetting = false;
+    }
+    private void TriggerReload(InputAction.CallbackContext context)
+    {
+        reloading = true;
+    }
+
+    private void UnTriggerReload(InputAction.CallbackContext context)
+    {
+        reloading = false;
     }
     public void ResetPlayerView()
     {
@@ -57,12 +74,26 @@ public class VRViewResetter : MonoBehaviour
 
         xrOrigin.MoveCameraToWorldLocation(targetHeadPosition.position);
     }
+    public void ReloadCurrentScene()
+    {
+        Time.timeScale = 1f;
+
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
 
     bool resetting = false;
     float timer = 0f;
     float maxTimer = 1f;
     float fadeTimer = 0f;
     float fadeMaxTimer = 0.4f;
+
+
+    bool reloading = false;
+    float reloadTimer = 0f;
+    float maxReloadTimer = 1f;
+    float reloadFadeTimer = 0f;
+    float reloadFadeMaxTimer = 0.4f;
     private void Update()
     {
         if(resetting)
@@ -111,6 +142,62 @@ public class VRViewResetter : MonoBehaviour
                 fillInCircle.fillAmount = 0;
                 fadeTimer = 0;
                 timer = 0;
+                foreach (Transform t in allcircles)
+                {
+                    Image img = t.GetComponent<Image>();
+                    Color c = img.color;
+                    img.color = new Color(c.r, c.g, c.b, 0f);
+                }
+            }
+        }
+
+
+        if (reloading)
+        {
+            if (reloadFadeTimer < reloadFadeMaxTimer)
+            {
+                reloadFadeTimer += Time.deltaTime;
+                foreach (Transform t in allcircles)
+                {
+                    Image img = t.GetComponent<Image>();
+                    Color c = img.color;
+                    img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / fadeMaxTimer);
+                }
+            }
+            else
+            {
+                reloadTimer += Time.deltaTime;
+                fillInCircle.fillAmount = (reloadTimer / maxReloadTimer);
+                if (reloadTimer > maxReloadTimer)
+                {
+                    ReloadCurrentScene();
+                    fillInCircle.fillAmount = 0;
+                    reloadFadeTimer = 0;
+                    reloadTimer = 0;
+                    reloading = false;
+                    foreach (Transform t in allcircles)
+                    {
+                        Image img = t.GetComponent<Image>();
+                        Color c = img.color;
+                        img.color = new Color(c.r, c.g, c.b, 0f);
+                    }
+                }
+            }
+        }
+        else if (reloadFadeTimer > 0)
+        {
+            reloadFadeTimer -= Time.deltaTime;
+            foreach (Transform t in allcircles)
+            {
+                Image img = t.GetComponent<Image>();
+                Color c = img.color;
+                img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / reloadFadeMaxTimer);
+            }
+            if (reloadFadeTimer <= 0)
+            {
+                fillInCircle.fillAmount = 0;
+                reloadFadeTimer = 0;
+                reloadTimer = 0;
                 foreach (Transform t in allcircles)
                 {
                     Image img = t.GetComponent<Image>();

@@ -11591,7 +11591,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.85
+  m_fontSize: 71.65
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17526,7 +17526,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614822934}
   m_LocalRotation: {x: 0.30070576, y: -0, z: -0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.125}
   m_LocalScale: {x: 0.0001, y: 0.0001, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22224,7 +22224,6 @@ MonoBehaviour:
   left: 0
   myBody: {fileID: 8268102027008756026}
   openDegree: 0.01
-  speedOfAnim: 1
 --- !u!114 &216743045374901134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23477,7 +23476,6 @@ MonoBehaviour:
   damp: 0
   edgeStart: {fileID: 7685413911069864386}
   edgeEnd: {fileID: 3555246887604400946}
-  AnimName: 
 --- !u!224 &1220980847841192936
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26524,7 +26522,6 @@ MonoBehaviour:
   left: 1
   myBody: {fileID: 6852604196744063521}
   openDegree: 0.01
-  speedOfAnim: 1
 --- !u!114 &3450621437729811251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27713,7 +27710,6 @@ MonoBehaviour:
   damp: 0
   edgeStart: {fileID: 5120442086367597273}
   edgeEnd: {fileID: 2085628406714961961}
-  AnimName: 
 --- !u!4 &4491041113279989450
 Transform:
   m_ObjectHideFlags: 0
@@ -34126,6 +34122,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1909803159584954480, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c29b5d9b572a0ee40b67a60875b28c4a, type: 2}
+    - target: {fileID: 1909803159584954480, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 53ccdf5cbd9d53b4b8c95d1c1d7000f8, type: 2}
+    - target: {fileID: 1909803159584954480, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 53ccdf5cbd9d53b4b8c95d1c1d7000f8, type: 2}
     - target: {fileID: 2417619519468693073, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -34242,6 +34250,10 @@ PrefabInstance:
       propertyPath: interactor
       value: 
       objectReference: {fileID: 1968514650}
+    - target: {fileID: 4902100271088893645, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: buttonToDetect
+      value: 
+      objectReference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 5436636803625249512, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -34260,7 +34272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616087391994167938, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 5616087391994167938, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34326,10 +34338,26 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6935721425085085376, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c29b5d9b572a0ee40b67a60875b28c4a, type: 2}
+    - target: {fileID: 6935721425085085376, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 53ccdf5cbd9d53b4b8c95d1c1d7000f8, type: 2}
+    - target: {fileID: 6935721425085085376, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4bf71cf4b29460344bb58fa3133eef7f, type: 2}
     - target: {fileID: 7422156177927290382, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: interactor
       value: 
       objectReference: {fileID: 651456335}
+    - target: {fileID: 7422156177927290382, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: buttonToDetect
+      value: 
+      objectReference: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 7956237544578808398, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Layer
       value: 2
