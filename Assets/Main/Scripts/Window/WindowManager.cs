@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class WindowManager : MonoBehaviour
@@ -22,8 +20,8 @@ public class WindowManager : MonoBehaviour
     private int currentSetId = 0;
     private GameObject currentInstantiatedFrame;
 
-    private Vector3 originalLeftPos;
-    private Vector3 originalRightPos;
+    [Header("OtherWindowsRenderers")]
+    [SerializeField] private List<Renderer> otherWindows = new();
     private void Start()
     {
         SetHandleToId(0);
@@ -61,6 +59,16 @@ public class WindowManager : MonoBehaviour
         {
             foreach (TextureChanger tchange in LeftWindow.changers) ApplyToTextureChanger(tchange, id);
             foreach (HingeChanger hchange in LeftWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
+        }
+
+        if(currSetting == 0 || currSetting == 1)
+        {
+            foreach (Renderer r in otherWindows)
+            {
+                Material[] mats = r.materials;
+                mats[0] = materials[id].window;
+                r.materials = mats;
+            }
         }
     }
 
@@ -214,9 +222,6 @@ public class WindowManager : MonoBehaviour
             RightWindow.myDoor.ResetToClosedPosition();
             if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
         }
-
-        originalLeftPos = LeftWindow.transform.position;
-        originalRightPos = RightWindow.transform.position;
         Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
 
         LeftWindow.gameObject.SetActive(false);

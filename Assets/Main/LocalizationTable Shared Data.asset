@@ -10,11 +10,109 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: WindowsHandlesAndMaterials Shared Data
+  m_Name: LocalizationTable Shared Data
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
-  m_TableCollectionName: WindowsHandlesAndMaterials
-  m_TableCollectionNameGuidString: 71f015157462d15428f8b0d5f3a2a453
+  m_TableCollectionName: LocalizationTable
+  m_TableCollectionNameGuidString: a5903bf79e6fb2b4a857c48099cb8120
   m_Entries:
+  - m_Id: 259290206208
+    m_Key: FACADE_CLASSICAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 345780948992
+    m_Key: FACADE_MODERN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382791487488
+    m_Key: FACADE_OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 398293635072
+    m_Key: FACADE_BRICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 443390791680
+    m_Key: BTTN_GoToInterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 535363489792
+    m_Key: BTTN_Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 583681871872
+    m_Key: BTTN_GoOutside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 607207723008
+    m_Key: BTTN_Window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3177535934464
+    m_Key: BTTN_Style
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193809833984
+    m_Key: BTTN_X-Ray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3240450494464
+    m_Key: UI_STYLE_Lamination
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3672207953920
+    m_Key: UI_STYLE_Handles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706798379008
+    m_Key: UI_STYLE_TypeOfLamination
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3768173629440
+    m_Key: UI_STYLE_LaminationInside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3833638326272
+    m_Key: UI_STYLE_LaminationOutside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3839480991744
+    m_Key: 'UI_STYLE_LaminationBoth
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4809556398080
+    m_Key: UI_WINDOW_NumberOfDoors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4867878195200
+    m_Key: UI_WINDOW_OpeningMechanism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4905526267904
+    m_Key: UI_WINDOW_WindowType
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175959977984
+    m_Key: UI_WINDOW_OneWindow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6179655159808
+    m_Key: UI_WINDOW_TwoWindows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6323029053440
+    m_Key: UI_WINDOW_MechanismSwing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6330683658240
+    m_Key: UI_WINDOW_MechanismSwing-Tilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6331925172224
+    m_Key: UI_WINDOW_MechanismSlide
+    m_Metadata:
+      m_Items: []
   - m_Id: 1145638916096
     m_Key: WINDOW_85
     m_Metadata:
@@ -130,11 +228,11 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 2642205079589880104
+    rid: 2642205079589880083
   references:
     version: 2
     RefIds:
-    - rid: 2642205079589880104
+    - rid: 2642205079589880083
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1782387889226
+        m_CustomEpoch: 1782386312862

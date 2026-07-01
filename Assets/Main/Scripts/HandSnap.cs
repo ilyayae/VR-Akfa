@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using static UnityEngine.Rendering.DebugUI;
 
 public class HandSnap : MonoBehaviour
 {
@@ -23,8 +19,15 @@ public class HandSnap : MonoBehaviour
 
     private Coroutine animationCoroutine;
 
-    [SerializeField] private InputActionReference buttonToDetect;
+    [SerializeField] private InputActionReference triggerButton;
+    [SerializeField] private InputActionReference gripButton;
+    [SerializeField] private InputActionReference thumbButton;
 
+    [Header("Animation Settings")]
+    public Animator handAnimator;
+    private int grabLayerIndex = 4;
+    public float transitionSpeed = 8f;
+    private float targetGrabWeight = 0f;
     private void Awake()
     {
         if (interactor == null)
@@ -39,28 +42,12 @@ public class HandSnap : MonoBehaviour
     {
         interactor.selectEntered.AddListener(OnHandGrab);
         interactor.selectExited.AddListener(OnHandRelease);
-        buttonToDetect.action.started += AnimateGrab;
-        buttonToDetect.action.canceled += AnimateRelease;
-    }
-
-    private void AnimateRelease(InputAction.CallbackContext context)
-    {
-
-        handVisual.gameObject.GetComponent<Animator>().SetTrigger("GrabExit");
-    }
-
-    private void AnimateGrab(InputAction.CallbackContext context)
-    {
-
-        handVisual.gameObject.GetComponent<Animator>().SetTrigger("HoppeAustin");
     }
 
     private void OnDisable()
     {
         interactor.selectEntered.RemoveListener(OnHandGrab);
         interactor.selectExited.RemoveListener(OnHandRelease);
-        buttonToDetect.action.started -= AnimateGrab;
-        buttonToDetect.action.canceled -= AnimateRelease;
     }
 
     private void OnHandGrab(SelectEnterEventArgs args)
@@ -96,11 +83,23 @@ public class HandSnap : MonoBehaviour
         }
 
         AnimateHandTo(targetTransform, Vector3.zero, Quaternion.identity);
+
+        if (interactedObj.TryGetComponent<GrabPoseData>(out GrabPoseData poseData))
+        {
+            handAnimator.SetInteger("GrabPoseID", poseData.poseID);
+        }
+        else
+        {
+            handAnimator.SetInteger("GrabPoseID", 1);
+        }
+        targetGrabWeight = 1f;
     }
 
     private void OnHandRelease(SelectExitEventArgs args)
     {
         AnimateHandTo(originalParent, originalLocalPosition, originalLocalRotation);
+        handAnimator.SetInteger("GrabPoseID", 0);
+        targetGrabWeight = 0f;
     }
 
     private void AnimateHandTo(Transform targetParent, Vector3 targetLocalPos, Quaternion targetLocalRot)
@@ -138,8 +137,21 @@ public class HandSnap : MonoBehaviour
         animationCoroutine = null;
     }
 
+    float trigger = 0f;
+    float grip = 0f;
+    float thumb = 0f;
     private void Update()
     {
-        
+        float currentWeight = handAnimator.GetLayerWeight(grabLayerIndex);
+        handAnimator.SetLayerWeight(grabLayerIndex, Mathf.Lerp(currentWeight, targetGrabWeight, Time.deltaTime * transitionSpeed));
+        float triggerValue = triggerButton.action.ReadValue<float>();
+        float gripValue = gripButton.action.ReadValue<float>();
+        float thumbValue = thumbButton.action.ReadValue<float>();
+        trigger = Mathf.Lerp(trigger, triggerValue, Time.deltaTime * transitionSpeed);
+        grip = Mathf.Lerp(grip, gripValue, Time.deltaTime * transitionSpeed);
+        thumb = Mathf.Lerp(thumb, thumbValue, Time.deltaTime * transitionSpeed);
+        handAnimator.SetFloat("Trigger_Input", trigger);
+        handAnimator.SetFloat("Grip_Input", grip);
+        handAnimator.SetFloat("Thumb_Input", thumb);
     }
 }

@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.XR.CoreUtils; // Required for XROrigin
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ public class VRViewResetter : MonoBehaviour
     public Image fillInCircle;
     public Transform allcircles;
 
+    public TMP_Text FPStext;
     private void OnEnable()
     {
         if (resetAction != null)
@@ -94,9 +96,23 @@ public class VRViewResetter : MonoBehaviour
     float maxReloadTimer = 1f;
     float reloadFadeTimer = 0f;
     float reloadFadeMaxTimer = 0.4f;
+
+    private float FPStimer = 0f;
+    private int frameCount = 0;
     private void Update()
     {
-        if(resetting)
+        FPStimer += Time.unscaledDeltaTime;
+        frameCount++;
+
+        if (FPStimer >= 1f)
+        {
+            int fps = Mathf.RoundToInt(frameCount / FPStimer);
+            FPStext.text = "FPS: " + fps.ToString();
+            FPStimer -= 1f;
+            frameCount = 0;
+        }
+
+        if (resetting)
         {
             if (fadeTimer < fadeMaxTimer)
             {
