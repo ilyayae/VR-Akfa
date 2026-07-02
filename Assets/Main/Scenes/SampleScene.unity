@@ -11500,7 +11500,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.85
+  m_fontSize: 71.65
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20553,6 +20553,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933329646}
   m_CullTransparentMesh: 1
+--- !u!1 &1950584131
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950584133}
+  - component: {fileID: 1950584132}
+  m_Layer: 0
+  m_Name: ProbeVolumePerSceneData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1950584132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950584131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumePerSceneData
+  serializedBakingSet: {fileID: 0}
+  sceneGUID: 99c9720ab356a0642a771bea13969a05
+  obsoleteAsset: {fileID: 0}
+  obsoleteCellSharedDataAsset: {fileID: 0}
+  obsoleteCellSupportDataAsset: {fileID: 0}
+  obsoleteSerializedScenarios: []
+--- !u!4 &1950584133
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950584131}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1958271084
 GameObject:
   m_ObjectHideFlags: 0
@@ -23077,7 +23127,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 28c0bac1def2a9b41963896a4076c632, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28860,6 +28910,7 @@ GameObject:
   - component: {fileID: 6697621764719482963}
   - component: {fileID: 882129739231024964}
   - component: {fileID: 5383010484839249767}
+  - component: {fileID: 6697621764719482964}
   m_Layer: 0
   m_Name: Plane.001
   m_TagString: Untagged
@@ -30848,6 +30899,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5148817237194746646}
   m_Mesh: {fileID: 4579454407841743219, guid: dd1236963f9e2254ca5b64fbcaf565f7, type: 3}
+--- !u!114 &6697621764719482964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148817237194746646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353f10a67dbfd194eab50b71e9865f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeshBoundMod
+  isWorld: 0
+  _renderer: {fileID: 882129739231024964}
+  sizeMultiplier: {x: 1.7, y: 2, z: 5}
+  sizeAddend: {x: 0, y: 0, z: 0}
+  centerMultiplier: {x: 1, y: 1, z: 1}
+  centerAddend: {x: 0, y: 0, z: 0}
+  debug: 0
 --- !u!1 &6751757331021971152
 GameObject:
   m_ObjectHideFlags: 0
@@ -36045,3 +36115,4 @@ SceneRoots:
   - {fileID: 8264235773590489278}
   - {fileID: 4287879056260637921}
   - {fileID: 381683082}
+  - {fileID: 1950584133}
