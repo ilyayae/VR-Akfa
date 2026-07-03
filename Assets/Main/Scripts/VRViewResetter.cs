@@ -1,10 +1,10 @@
 using System.Collections;
 using TMPro;
-using Unity.XR.CoreUtils; // Required for XROrigin
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Required if using the New Input System
+using UnityEngine.UI;
 
 public class VRViewResetter : MonoBehaviour
 {
@@ -65,6 +65,7 @@ public class VRViewResetter : MonoBehaviour
     {
         reloading = false;
     }
+
     public void ResetPlayerView()
     {
         if (xrOrigin == null || targetHeadPosition == null)
@@ -73,10 +74,20 @@ public class VRViewResetter : MonoBehaviour
             return;
         }
 
-        xrOrigin.MatchOriginUpCameraForward(transform.up, transform.forward);
+        // 1. Get the direction this Manager object is facing & flatten it.
+        Vector3 flatForward = transform.forward;
+        flatForward.y = 0f;
 
+        // 2. Align Camera. Use Vector3.up strictly instead of transform.up to guarantee ZERO angle/tilt!
+        if (flatForward.sqrMagnitude > 0.001f)
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, flatForward.normalized);
+        else
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, transform.forward);
+
+        // 3. Compensate XROrigin placement to lock head to the exact offset.
         xrOrigin.MoveCameraToWorldLocation(targetHeadPosition.position);
     }
+
     public void ReloadCurrentScene()
     {
         Time.timeScale = 1f;
@@ -100,6 +111,7 @@ public class VRViewResetter : MonoBehaviour
 
     private float FPStimer = 0f;
     private int frameCount = 0;
+
     private void Update()
     {
         FPStimer += Time.unscaledDeltaTime;
@@ -118,7 +130,7 @@ public class VRViewResetter : MonoBehaviour
             if (fadeTimer < fadeMaxTimer)
             {
                 fadeTimer += Time.deltaTime;
-                foreach(Transform t in allcircles) 
+                foreach (Transform t in allcircles)
                 {
                     Image img = t.GetComponent<Image>();
                     Color c = img.color;
@@ -154,7 +166,7 @@ public class VRViewResetter : MonoBehaviour
                 Color c = img.color;
                 img.color = new Color(c.r, c.g, c.b, fadeTimer / fadeMaxTimer);
             }
-            if(fadeTimer <= 0)
+            if (fadeTimer <= 0)
             {
                 fillInCircle.fillAmount = 0;
                 fadeTimer = 0;
@@ -178,7 +190,8 @@ public class VRViewResetter : MonoBehaviour
                 {
                     Image img = t.GetComponent<Image>();
                     Color c = img.color;
-                    img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / fadeMaxTimer);
+                    // Bugfix: used reloadFadeMaxTimer here instead of fadeMaxTimer
+                    img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / reloadFadeMaxTimer);
                 }
             }
             else
@@ -224,12 +237,15 @@ public class VRViewResetter : MonoBehaviour
             }
         }
     }
+
     [SerializeField] Image fadeImage;
     [SerializeField] float fadeDuration = 0.5f;
+
     public void startTeleport(Transform transform)
     {
         StartCoroutine(TeleportTo(transform));
     }
+
     public IEnumerator TeleportTo(Transform targetTransform)
     {
         float timer = 0f;
@@ -243,9 +259,19 @@ public class VRViewResetter : MonoBehaviour
         }
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
+
+        // Move Resetter and enforce strict Y=0 flattening to prevent angle issues.
         transform.position = targetTransform.position;
-        transform.rotation = targetTransform.rotation;
+        Vector3 flatForward = targetTransform.forward;
+        flatForward.y = 0f;
+
+        if (flatForward.sqrMagnitude > 0.001f)
+            transform.rotation = Quaternion.LookRotation(flatForward.normalized, Vector3.up);
+        else
+            transform.rotation = Quaternion.Euler(0f, targetTransform.eulerAngles.y, 0f);
+
         ResetPlayerView();
+
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
         while (timer < fadeDuration)
