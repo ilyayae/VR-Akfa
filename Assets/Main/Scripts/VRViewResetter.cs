@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.XR.CoreUtils; // Required for XROrigin
 using UnityEngine;
@@ -72,7 +73,7 @@ public class VRViewResetter : MonoBehaviour
             return;
         }
 
-        xrOrigin.MatchOriginUpCameraForward(targetHeadPosition.up, targetHeadPosition.forward);
+        xrOrigin.MatchOriginUpCameraForward(transform.up, transform.forward);
 
         xrOrigin.MoveCameraToWorldLocation(targetHeadPosition.position);
     }
@@ -222,5 +223,39 @@ public class VRViewResetter : MonoBehaviour
                 }
             }
         }
+    }
+    [SerializeField] Image fadeImage;
+    [SerializeField] float fadeDuration = 0.5f;
+    public void startTeleport(Transform transform)
+    {
+        StartCoroutine(TeleportTo(transform));
+    }
+    public IEnumerator TeleportTo(Transform targetTransform)
+    {
+        float timer = 0f;
+        Color fadeColor = fadeImage.color;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeColor.a = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            fadeImage.color = fadeColor;
+            yield return null;
+        }
+        fadeColor.a = 1f;
+        fadeImage.color = fadeColor;
+        transform.position = targetTransform.position;
+        transform.rotation = targetTransform.rotation;
+        ResetPlayerView();
+        yield return new WaitForSeconds(0.1f);
+        timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeColor.a = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+            fadeImage.color = fadeColor;
+            yield return null;
+        }
+        fadeColor.a = 0f;
+        fadeImage.color = fadeColor;
     }
 }

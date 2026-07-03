@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -23,6 +27,16 @@ public class HandSnap : MonoBehaviour
     [SerializeField] private InputActionReference gripButton;
     [SerializeField] private InputActionReference thumbButton;
 
+    [Header("TeleportMovement")]
+    [SerializeField] private VRViewResetter Manager;
+    [SerializeField] private List<InputAndFunctionPair> teleportButtons;
+    [SerializeField] private XRRayInteractor rayInteractor;
+    [SerializeField] private GameObject teleportationReticle;
+    [SerializeField] private LayerMask teleportLayerMask;
+    [SerializeField] private LayerMask normalLayerMask;
+    private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> startCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
+    private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> cancelCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
+
     [Header("Animation Settings")]
     public Animator handAnimator;
     private int grabLayerIndex = 4;
@@ -42,13 +56,94 @@ public class HandSnap : MonoBehaviour
     {
         interactor.selectEntered.AddListener(OnHandGrab);
         interactor.selectExited.AddListener(OnHandRelease);
-    }
+        foreach (var teleportButton in teleportButtons)
+        {
+            if (teleportButton.Action != null && teleportButton.Action.action != null)
+            {
+                if (teleportButton.isVector)
+                {
+                    Action<InputAction.CallbackContext> start = (InputAction.CallbackContext context) =>
+                    {
+                        Vector2 stickValue = context.ReadValue<Vector2>();
+                        if (teleportButton.vectorMoveTreshold.x < 0)
+                        {
+                            if (stickValue.x < teleportButton.vectorMoveTreshold.x)
+                            {
+                                teleportButton.OnActionTriggered?.Invoke();
+                            }
+                        }
+                        else if (teleportButton.vectorMoveTreshold.x > 0)
+                        {
+                            if (stickValue.x > teleportButton.vectorMoveTreshold.x)
+                            {
+                                teleportButton.OnActionTriggered?.Invoke();
+                            }
+                        }
+                        if (teleportButton.vectorMoveTreshold.y < 0)
+                        {
+                            if (stickValue.y < teleportButton.vectorMoveTreshold.y)
+                            {
+                                teleportButton.OnActionTriggered?.Invoke();
+                            }
+                        }
+                        else if (teleportButton.vectorMoveTreshold.y > 0)
+                        {
+                            if (stickValue.y > teleportButton.vectorMoveTreshold.y)
+                            {
+                                teleportButton.OnActionTriggered?.Invoke();
+                            }
+                        }
+                    };
+                    Action<InputAction.CallbackContext> cancel = (InputAction.CallbackContext context) =>
+                    {
+                        teleportButton.OnActionCanceled?.Invoke();
+                    };
+                    teleportButton.Action.action.started += start;
+                    teleportButton.Action.action.canceled += cancel;
+                    startCallbacks.Add(teleportButton, start);
+                    cancelCallbacks.Add(teleportButton, cancel);
+                }
+                else
+                {
+                    Action<InputAction.CallbackContext> start = (InputAction.CallbackContext context) => {
+                        teleportButton.OnActionTriggered?.Invoke();
+                    };
 
+                    Action<InputAction.CallbackContext> cancel = (InputAction.CallbackContext context) => {
+                        teleportButton.OnActionCanceled?.Invoke();
+                    };
+                    teleportButton.Action.action.started += start;
+                    teleportButton.Action.action.canceled += cancel;
+                    startCallbacks.Add(teleportButton, start);
+                    cancelCallbacks.Add(teleportButton, cancel);
+                }
+            }
+        }
+    }
     private void OnDisable()
     {
         interactor.selectEntered.RemoveListener(OnHandGrab);
         interactor.selectExited.RemoveListener(OnHandRelease);
+
+
+        foreach (InputAndFunctionPair iafp in teleportButtons)
+        {
+            if (iafp.Action != null && iafp.Action.action != null)
+            {
+                if (startCallbacks.TryGetValue(iafp, out Action<InputAction.CallbackContext> start))
+                {
+                    iafp.Action.action.started -= start;
+                }
+                if (cancelCallbacks.TryGetValue(iafp, out Action<InputAction.CallbackContext> cancel))
+                {
+                    iafp.Action.action.canceled -= cancel;
+                }
+            }
+        }
+        startCallbacks.Clear();
+        cancelCallbacks.Clear();
     }
+
 
     private void OnHandGrab(SelectEnterEventArgs args)
     {
@@ -140,8 +235,64 @@ public class HandSnap : MonoBehaviour
     float trigger = 0f;
     float grip = 0f;
     float thumb = 0f;
+    bool teleporting = false;
+    public void StartTeleport()
+    {
+        teleporting = true;
+        rayInteractor.lineType = XRRayInteractor.LineType.ProjectileCurve;
+        rayInteractor.raycastMask = teleportLayerMask;
+    }
+
+    public void EndTeleport()
+    {
+        if (teleporting)
+        {
+            teleporting = false;
+            rayInteractor.lineType = XRRayInteractor.LineType.StraightLine;
+            rayInteractor.raycastMask = normalLayerMask;
+            if (teleportationReticle.activeSelf)
+            {
+                Manager.startTeleport(teleportationReticle.transform);
+            }
+            teleportationReticle.SetActive(false);
+        }
+    }
+    public float clickCooldown = 0.5f;
+    float goLeftLastTime = 0;
+    public void GoLeft()
+    {
+        if (Time.time - goLeftLastTime > clickCooldown)
+        {
+            goLeftLastTime = Time.time;
+            Manager.transform.Rotate(0f, -30f, 0f);
+        }
+    }
+
+    float goRightLastTime = 0;
+    public void GoRight()
+    {
+        if(Time.time - goRightLastTime > clickCooldown)
+        {
+            goRightLastTime = Time.time;
+            Manager.transform.Rotate(0f, 30f, 0f);
+        }
+    }
     private void Update()
     {
+        if(teleporting)
+        {
+            rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
+            if(hit.transform != null && hit.transform.gameObject.tag == "Hittable")
+            {
+                teleportationReticle.SetActive(true);
+                teleportationReticle.transform.position = hit.point;
+                teleportationReticle.transform.rotation = Quaternion.Euler(0f, teleportationReticle.transform.rotation.y, 0f);
+            }
+            else
+            {
+                teleportationReticle.SetActive(false);
+            }
+        }
         float currentWeight = handAnimator.GetLayerWeight(grabLayerIndex);
         handAnimator.SetLayerWeight(grabLayerIndex, Mathf.Lerp(currentWeight, targetGrabWeight, Time.deltaTime * transitionSpeed));
         float triggerValue = triggerButton.action.ReadValue<float>();
