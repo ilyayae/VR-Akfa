@@ -226,7 +226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &33226059
 Light:
   m_ObjectHideFlags: 0
@@ -1222,56 +1222,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233108473}
   m_Mesh: {fileID: 7401044611077726763, guid: 6f794bcf83ae3c841bef14ef86a833fa, type: 3}
---- !u!1 &235408446
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 235408448}
-  - component: {fileID: 235408447}
-  m_Layer: 0
-  m_Name: ProbeVolumePerSceneData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &235408447
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235408446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumePerSceneData
-  serializedBakingSet: {fileID: 11400000, guid: e1c05b32c4c277e4d993876abe85b8c5, type: 2}
-  sceneGUID: 76e592e848faa484c8068fec8f6b2241
-  obsoleteAsset: {fileID: 0}
-  obsoleteCellSharedDataAsset: {fileID: 0}
-  obsoleteCellSupportDataAsset: {fileID: 0}
-  obsoleteSerializedScenarios: []
---- !u!4 &235408448
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235408446}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &243997991
 GameObject:
   m_ObjectHideFlags: 0
@@ -15581,8 +15531,8 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: dec211b6a7be0c8498efee160b7840bc, type: 2}
   - {fileID: 2100000, guid: 512fc1769c7030f41bc5c1e81acaf926, type: 2}
-  - {fileID: 2100000, guid: 01a77906859ac7044948e849309717f8, type: 2}
-  - {fileID: 2100000, guid: 2ea1758658939d148ba2b2cc6edd5f55, type: 2}
+  - {fileID: 2100000, guid: e7049d4940800224aa28a56eebfee596, type: 2}
+  - {fileID: 2100000, guid: 8c21f3348b43f51449875b3beb434a07, type: 2}
   - {fileID: -2982471694907768054, guid: dd1236963f9e2254ca5b64fbcaf565f7, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -15786,7 +15736,6 @@ SceneRoots:
   - {fileID: 1586526507}
   - {fileID: 1379898748}
   - {fileID: 969832165}
-  - {fileID: 235408448}
   - {fileID: 1952269997}
   - {fileID: 1171276162}
   - {fileID: 2089209101}
