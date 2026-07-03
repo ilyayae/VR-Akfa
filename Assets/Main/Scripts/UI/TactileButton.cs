@@ -216,4 +216,5 @@ public class InputAndFunctionPair
     public bool isVector;
     public Vector2 vectorMoveTreshold;
     public UnityEvent OnActionTriggered;
+    public UnityEvent OnActionCanceled;
 }

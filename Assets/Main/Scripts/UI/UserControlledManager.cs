@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class UserControlledManager : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class UserControlledManager : MonoBehaviour
         }
         listOfFacades[0].gameObject.SetActive(true);
         listOfFacades[0].transform.position = chosenFacadeLoaction.position;
+
+        SceneManager.LoadScene("Exterior", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Room", LoadSceneMode.Additive);
     }
     public void ChangeFacadeById(int id)
     {

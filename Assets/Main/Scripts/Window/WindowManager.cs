@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,8 +20,8 @@ public class WindowManager : MonoBehaviour
     private int currentSetId = 0;
     private GameObject currentInstantiatedFrame;
 
-    private Vector3 originalLeftPos;
-    private Vector3 originalRightPos;
+    [Header("OtherWindowsRenderers")]
+    [SerializeField] private List<Renderer> otherWindows = new();
     private void Start()
     {
         SetHandleToId(0);
@@ -59,6 +59,16 @@ public class WindowManager : MonoBehaviour
         {
             foreach (TextureChanger tchange in LeftWindow.changers) ApplyToTextureChanger(tchange, id);
             foreach (HingeChanger hchange in LeftWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
+        }
+
+        if(currSetting == 0 || currSetting == 1)
+        {
+            foreach (Renderer r in otherWindows)
+            {
+                Material[] mats = r.materials;
+                mats[0] = materials[id].window;
+                r.materials = mats;
+            }
         }
     }
 
@@ -124,6 +134,127 @@ public class WindowManager : MonoBehaviour
     }
     public void SetFrameToId(int id)
     {
+        StartCoroutine(FrameChangeSequence(id));
+    }
+    IEnumerator CloseRightWindow()
+    {
+        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
+        {
+            yield return StartCoroutine(RightWindow.myDoor.SetOpenedDegreeOfWindow(0f));
+            if (RightWindow.handleScript != null)
+            {
+                yield return StartCoroutine(RightWindow.handleScript.SetDegreeOfHandle(0f));
+            }
+            RightWindow.myDoor.ResetToClosedPosition();
+            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
+        }
+    }
+
+    IEnumerator CloseLeftWindow()
+    {
+        if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
+        {
+            yield return StartCoroutine(LeftWindow.myDoor.SetOpenedDegreeOfWindow(0f));
+            if (LeftWindow.handleScript != null)
+            {
+                yield return StartCoroutine(LeftWindow.handleScript.SetDegreeOfHandle(0f));
+            }
+            LeftWindow.myDoor.ResetToClosedPosition();
+            if (LeftWindow.handleScript != null) LeftWindow.handleScript.ResetToClosedPosition();
+        }
+    }
+
+    private IEnumerator AlignToHingeKeepY(WindowDoor door, Vector3 targetHingeWorldPos)
+    {
+        ArticulationBody body = door.myBody;
+        Transform t = door.transform;
+
+        // Force snap before doing any articulation hierarchy rebuilds
+        door.ResetToClosedPosition();
+        WindowBrain brain = door.GetComponentInParent<WindowBrain>();
+        if (brain != null && brain.handleScript != null)
+        {
+            brain.handleScript.ResetToClosedPosition();
+        }
+
+        yield return new WaitForFixedUpdate();
+
+        Vector3 offset = targetHingeWorldPos - t.position;
+        offset -= Vector3.Project(offset, t.up);
+
+        Vector3 newPosition = t.position + offset;
+
+        if (body != null)
+        {
+            if (body.isRoot)
+            {
+                body.TeleportRoot(newPosition, t.rotation);
+            }
+            else
+            {
+                body.enabled = false;
+                t.position = newPosition;
+                body.enabled = true;
+            }
+        }
+        else
+        {
+            t.position = newPosition;
+        }
+
+        Physics.SyncTransforms();
+
+        yield return new WaitForFixedUpdate();
+    }
+
+    public void SetSingleWindowMode()
+    {
+        if (isSingleWindowMode) return;
+        isSingleWindowMode = true;
+
+        if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
+        {
+            LeftWindow.myDoor.ResetToClosedPosition();
+            if (LeftWindow.handleScript != null) LeftWindow.handleScript.ResetToClosedPosition();
+        }
+        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
+        {
+            RightWindow.myDoor.ResetToClosedPosition();
+            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
+        }
+        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
+
+        LeftWindow.gameObject.SetActive(false);
+        RightWindow.gameObject.SetActive(false);
+        RightWindow.gameObject.SetActive(true);
+        SetFrameToId(currentSetId);
+        SetHandleToId(currentHandle);
+    }
+
+    public void SetDualWindowMode()
+    {
+        if (!isSingleWindowMode) return;
+        isSingleWindowMode = false;
+
+        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
+        {
+            RightWindow.myDoor.ResetToClosedPosition();
+            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
+        }
+
+        LeftWindow.gameObject.SetActive(true);
+        RightWindow.gameObject.SetActive(false);
+        RightWindow.gameObject.SetActive(true);
+        SetFrameToId(currentSetId);
+        SetHandleToId(currentHandle);
+    }
+    private IEnumerator FrameChangeSequence(int id)
+    {
+        Coroutine rightWindowCoroutine = StartCoroutine(CloseRightWindow());
+        Coroutine leftWindowCoroutine = StartCoroutine(CloseLeftWindow());
+
+        yield return rightWindowCoroutine;
+        yield return leftWindowCoroutine;
         currentSetId = id;
         if (currentInstantiatedFrame != null)
         {
@@ -139,11 +270,12 @@ public class WindowManager : MonoBehaviour
             {
                 RightWindow.NewWindow(sets[id].doorModelSingular, false);
             }
+            SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (hc != null && hc.RightHingeTransform != null)
             {
-                AlignToHingeKeepY(RightWindow.myDoor.transform, hc.RightHingeTransform.position);
+                yield return StartCoroutine(AlignToHingeKeepY(RightWindow.myDoor, hc.RightHingeTransform.position));
             }
         }
         else
@@ -159,27 +291,17 @@ public class WindowManager : MonoBehaviour
             {
                 LeftWindow.NewWindow(sets[id].doorModelL, true);
             }
+            SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (hc != null && hc.RightHingeTransform != null && hc.LeftHingeTransform != null)
             {
-                AlignToHingeKeepY(RightWindow.myDoor.transform, hc.RightHingeTransform.position);
-                AlignToHingeKeepY(LeftWindow.myDoor.transform, hc.LeftHingeTransform.position);
+                StartCoroutine(AlignToHingeKeepY(RightWindow.myDoor, hc.RightHingeTransform.position));
+                yield return StartCoroutine(AlignToHingeKeepY(LeftWindow.myDoor, hc.LeftHingeTransform.position));
             }
         }
-        SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
     }
 
-    private void AlignToHingeKeepY(Transform windowToMove, Vector3 targetHingeWorldPos)
-    {
-        windowToMove.gameObject.SetActive(false);
-        Vector3 currentPos = windowToMove.position;
-        Vector3 offset = targetHingeWorldPos - currentPos;
-        float upMovementAmount = Vector3.Dot(offset, windowToMove.up);
-        Vector3 horizontalOffset = offset - (windowToMove.up * upMovementAmount);
-        windowToMove.position = currentPos + horizontalOffset;
-        windowToMove.gameObject.SetActive(true);
-    }
     public void SetGlassToId(int id)
     {
         if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
@@ -190,37 +312,6 @@ public class WindowManager : MonoBehaviour
         {
             LeftWindow.NewGlass(glass[id]);
         }
-    }
-
-
-    public void SetSingleWindowMode()
-    {
-        if (isSingleWindowMode) return;
-
-        isSingleWindowMode = true;
-
-        originalLeftPos = LeftWindow.transform.position;
-        originalRightPos = RightWindow.transform.position;
-        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
-
-        LeftWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(true);
-        SetFrameToId(currentSetId);
-        SetHandleToId(currentHandle);
-    }
-
-    public void SetDualWindowMode()
-    {
-        if (!isSingleWindowMode) return;
-
-        isSingleWindowMode = false;
-
-        LeftWindow.gameObject.SetActive(true);
-        RightWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(true);
-        SetFrameToId(currentSetId);
-        SetHandleToId(currentHandle);
     }
 
     public void setMechanismSwing()

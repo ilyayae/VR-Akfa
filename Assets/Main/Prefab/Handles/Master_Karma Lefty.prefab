@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 8691023063703135016}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000059604645, y: -0.7071079, z: -0.00000014901161, w: -0.7071057}
-  m_LocalPosition: {x: 0, y: -0.0015, z: -0.0005}
+  m_LocalPosition: {x: 0.00016, y: -0.00175, z: -0.0005}
   m_LocalScale: {x: 0.01, y: 0.010000002, z: 0.010000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127,6 +127,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8959930680747338428, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3412400529720200222}
+    - targetCorrespondingSourceObject: {fileID: 8959930680747338428, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3971883055975506964}
   m_SourcePrefab: {fileID: 100100000, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
 --- !u!4 &1776092762459563567 stripped
 Transform:
@@ -398,7 +401,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WindowHandle
   currentHandleState: 0
   left: 1
-  speedOfAnim: 1
 --- !u!114 &3412400529720200222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,4 +418,16 @@ MonoBehaviour:
   attach: {fileID: 1994940788001171524}
   edgeStart: {fileID: 0}
   edgeEnd: {fileID: 0}
-  AnimName: HoppeAustin
+--- !u!114 &3971883055975506964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439468633334092598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a7ceb7fdb97f647abfa101d2165c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabPoseData
+  poseID: 1
