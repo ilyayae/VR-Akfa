@@ -282,11 +282,33 @@ public class HandSnap : MonoBehaviour
         if(teleporting)
         {
             rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
-            if(hit.transform != null && hit.transform.gameObject.tag == "Hittable")
+            if (hit.transform != null && hit.transform.gameObject.tag == "Hittable")
             {
                 teleportationReticle.SetActive(true);
                 teleportationReticle.transform.position = hit.point;
-                teleportationReticle.transform.rotation = Quaternion.Euler(0f, teleportationReticle.transform.rotation.y, 0f);
+
+                Vector3 camPos = (Manager != null && Manager.xrOrigin != null & Manager.xrOrigin.Camera != null)
+                    ? Manager.xrOrigin.Camera.transform.position
+                    : rayInteractor.transform.position;
+                Vector2 direction = hit.point - camPos;
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    teleportationReticle.transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+                }
+                else
+                {
+                    Vector3 camfwd = (Manager != null && Manager.xrOrigin != null & Manager.xrOrigin.Camera != null)
+                        ? Manager.xrOrigin.Camera.transform.forward
+                        : rayInteractor.transform.forward;
+
+                    camfwd.y = 0f;
+                    if(camfwd.sqrMagnitude > 0.001f)
+                    {
+                        teleportationReticle.transform.rotation = Quaternion.LookRotation(camfwd.normalized, Vector3.up);
+                    }
+                }
             }
             else
             {

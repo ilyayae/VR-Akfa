@@ -73,7 +73,13 @@ public class VRViewResetter : MonoBehaviour
             return;
         }
 
-        xrOrigin.MatchOriginUpCameraForward(transform.up, transform.forward);
+        Vector3 flatForward = transform.forward;
+        flatForward.y = 0f;
+
+        if (flatForward.sqrMagnitude > 0.001f)
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, flatForward.normalized);
+        else
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, transform.forward);
 
         xrOrigin.MoveCameraToWorldLocation(targetHeadPosition.position);
     }
@@ -178,7 +184,7 @@ public class VRViewResetter : MonoBehaviour
                 {
                     Image img = t.GetComponent<Image>();
                     Color c = img.color;
-                    img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / fadeMaxTimer);
+                    img.color = new Color(c.r, c.g, c.b, reloadFadeTimer / reloadFadeMaxTimer);
                 }
             }
             else
@@ -244,7 +250,16 @@ public class VRViewResetter : MonoBehaviour
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
         transform.position = targetTransform.position;
-        transform.rotation = targetTransform.rotation;
+        Vector3 flatForward = targetTransform.forward;
+        flatForward.y = 0f;
+        if(flatForward.sqrMagnitude > 0.001f)
+        {
+            transform.rotation = Quaternion.LookRotation(flatForward.normalized, Vector3.up);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0f, targetTransform.eulerAngles.y, 0f);
+        }
         ResetPlayerView();
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
