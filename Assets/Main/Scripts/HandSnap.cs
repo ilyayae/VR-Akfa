@@ -125,6 +125,7 @@ public class HandSnap : MonoBehaviour
         interactor.selectEntered.RemoveListener(OnHandGrab);
         interactor.selectExited.RemoveListener(OnHandRelease);
 
+
         foreach (InputAndFunctionPair iafp in teleportButtons)
         {
             if (iafp.Action != null && iafp.Action.action != null)
@@ -270,7 +271,7 @@ public class HandSnap : MonoBehaviour
     float goRightLastTime = 0;
     public void GoRight()
     {
-        if (Time.time - goRightLastTime > clickCooldown)
+        if(Time.time - goRightLastTime > clickCooldown)
         {
             goRightLastTime = Time.time;
             Manager.transform.Rotate(0f, 30f, 0f);
@@ -278,47 +279,20 @@ public class HandSnap : MonoBehaviour
     }
     private void Update()
     {
-        if (teleporting)
+        if(teleporting)
         {
             rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
-            if (hit.transform != null && hit.transform.CompareTag("Hittable")) // Optimised Tag checking
+            if(hit.transform != null && hit.transform.gameObject.tag == "Hittable")
             {
                 teleportationReticle.SetActive(true);
                 teleportationReticle.transform.position = hit.point;
-
-                // Determine direction pointing from the player towards hit location.
-                Vector3 cameraPos = (Manager != null && Manager.xrOrigin != null && Manager.xrOrigin.Camera != null)
-                    ? Manager.xrOrigin.Camera.transform.position
-                    : rayInteractor.transform.position;
-
-                Vector3 direction = hit.point - cameraPos;
-                direction.y = 0f; // Force flat on plane to prevent any angle/tilt
-
-                if (direction.sqrMagnitude > 0.001f)
-                {
-                    // Perfectly horizontal rotation based on direction
-                    teleportationReticle.transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
-                }
-                else
-                {
-                    // Fallback to camera facing direction if pointing straight down
-                    Vector3 camFwd = (Manager != null && Manager.xrOrigin != null && Manager.xrOrigin.Camera != null)
-                        ? Manager.xrOrigin.Camera.transform.forward
-                        : rayInteractor.transform.forward;
-
-                    camFwd.y = 0f;
-                    if (camFwd.sqrMagnitude > 0.001f)
-                    {
-                        teleportationReticle.transform.rotation = Quaternion.LookRotation(camFwd.normalized, Vector3.up);
-                    }
-                }
+                teleportationReticle.transform.rotation = Quaternion.Euler(0f, teleportationReticle.transform.rotation.y, 0f);
             }
             else
             {
                 teleportationReticle.SetActive(false);
             }
         }
-
         float currentWeight = handAnimator.GetLayerWeight(grabLayerIndex);
         handAnimator.SetLayerWeight(grabLayerIndex, Mathf.Lerp(currentWeight, targetGrabWeight, Time.deltaTime * transitionSpeed));
         float triggerValue = triggerButton.action.ReadValue<float>();
