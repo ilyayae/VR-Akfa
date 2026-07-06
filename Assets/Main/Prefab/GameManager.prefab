@@ -538,7 +538,7 @@ MonoBehaviour:
           m_CallState: 2
   - Action: {fileID: -60998027439631388, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     isVector: 1
-    vectorMoveTreshold: {x: -0.25, y: 0}
+    vectorMoveTreshold: {x: -0.75, y: 0}
     OnActionTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -559,7 +559,7 @@ MonoBehaviour:
         m_Calls: []
   - Action: {fileID: -60998027439631388, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     isVector: 1
-    vectorMoveTreshold: {x: 0.25, y: 0}
+    vectorMoveTreshold: {x: 0.75, y: 0}
     OnActionTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -848,7 +848,7 @@ MonoBehaviour:
           m_CallState: 2
   - Action: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     isVector: 1
-    vectorMoveTreshold: {x: 0.25, y: 0}
+    vectorMoveTreshold: {x: 0.75, y: 0}
     OnActionTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -869,7 +869,7 @@ MonoBehaviour:
         m_Calls: []
   - Action: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     isVector: 1
-    vectorMoveTreshold: {x: -0.25, y: 0}
+    vectorMoveTreshold: {x: -0.75, y: 0}
     OnActionTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
   m_AllowHoverHapticsWhileSelecting: 1
-  m_LineType: 1
+  m_LineType: 0
   m_BlendVisualLinePoints: 1
   m_MaxRaycastDistance: 30
   m_RayOriginTransform: {fileID: 0}
