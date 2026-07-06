@@ -259,22 +259,31 @@ public class HandSnap : MonoBehaviour
     }
     public float clickCooldown = 0.5f;
     float goLeftLastTime = 0;
+
+    float goRightLastTime = 0;
     public void GoLeft()
     {
         if (Time.time - goLeftLastTime > clickCooldown)
         {
             goLeftLastTime = Time.time;
-            Manager.transform.Rotate(0f, -30f, 0f);
+
+            if (Manager != null && Manager.xrOrigin != null)
+            {
+                Manager.xrOrigin.RotateAroundCameraUsingOriginUp(-30f);
+            }
         }
     }
 
-    float goRightLastTime = 0;
     public void GoRight()
     {
-        if(Time.time - goRightLastTime > clickCooldown)
+        if (Time.time - goRightLastTime > clickCooldown)
         {
             goRightLastTime = Time.time;
-            Manager.transform.Rotate(0f, 30f, 0f);
+
+            if (Manager != null && Manager.xrOrigin != null)
+            {
+                Manager.xrOrigin.RotateAroundCameraUsingOriginUp(30f);
+            }
         }
     }
     private void Update()
@@ -290,7 +299,7 @@ public class HandSnap : MonoBehaviour
                 Vector3 camPos = (Manager != null && Manager.xrOrigin != null & Manager.xrOrigin.Camera != null)
                     ? Manager.xrOrigin.Camera.transform.position
                     : rayInteractor.transform.position;
-                Vector2 direction = hit.point - camPos;
+                Vector3 direction = hit.point - camPos;
                 direction.y = 0f;
 
                 if (direction.sqrMagnitude > 0.001f)

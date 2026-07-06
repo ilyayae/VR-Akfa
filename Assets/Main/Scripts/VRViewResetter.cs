@@ -247,20 +247,22 @@ public class VRViewResetter : MonoBehaviour
             fadeImage.color = fadeColor;
             yield return null;
         }
+
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
-        transform.position = targetTransform.position;
         Vector3 flatForward = targetTransform.forward;
         flatForward.y = 0f;
-        if(flatForward.sqrMagnitude > 0.001f)
+        if (flatForward.sqrMagnitude > 0.001f)
         {
-            transform.rotation = Quaternion.LookRotation(flatForward.normalized, Vector3.up);
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, flatForward.normalized);
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0f, targetTransform.eulerAngles.y, 0f);
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, transform.forward);
         }
-        ResetPlayerView();
+        Vector3 cameraLocalPos = xrOrigin.Camera.transform.localPosition;
+        cameraLocalPos.y = 0f;
+        xrOrigin.transform.position = targetTransform.position - (xrOrigin.transform.rotation * cameraLocalPos);
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
         while (timer < fadeDuration)
@@ -270,6 +272,7 @@ public class VRViewResetter : MonoBehaviour
             fadeImage.color = fadeColor;
             yield return null;
         }
+
         fadeColor.a = 0f;
         fadeImage.color = fadeColor;
     }
