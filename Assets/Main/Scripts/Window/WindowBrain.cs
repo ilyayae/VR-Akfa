@@ -10,6 +10,7 @@ public class WindowBrain : MonoBehaviour
     public GameObject myFrame;
     public GameObject myHandle;
     public WindowDoor myDoor;
+    public GameObject myGrab;
     public WindowHandle handleScript;
     public List<GameObject> transforms;
     public List<TextureChanger> changers = new();
@@ -28,7 +29,7 @@ public class WindowBrain : MonoBehaviour
         for (int i = parent.childCount - 1; i >= 0; i--)
         {
             GameObject go = parent.GetChild(i).gameObject;
-            if (go == myFrame || go == myHandle || go == myDoor.gameObject || transforms.Contains(go))
+            if (go == myFrame || go == myHandle || go == myDoor.gameObject || go == myGrab || transforms.Contains(go))
                 continue;
             Destroy(go);
         }

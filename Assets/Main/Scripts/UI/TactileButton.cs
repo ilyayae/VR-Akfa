@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class TactileButton : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class TactileButton : MonoBehaviour
     void Start()
     {
         targetButton = transform.parent.gameObject.GetComponent<Button>();
+        //gameObject.AddComponent<XRSimpleInteractable>();
     }
 
     private void OnEnable()

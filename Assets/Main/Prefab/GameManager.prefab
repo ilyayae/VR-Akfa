@@ -315,7 +315,6 @@ Transform:
   - {fileID: 8390319177513594448}
   - {fileID: 290629061744863678}
   - {fileID: 4884471283800551075}
-  - {fileID: 7184475847215211594}
   m_Father: {fileID: 5981266948189710274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1649378917689384287
@@ -586,6 +585,66 @@ MonoBehaviour:
   normalLayerMask:
     serializedVersion: 2
     m_Bits: 96
+  teleportValid:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 0, g: 0.010046005, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 16384
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  teleportInvalid:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 1, g: 0, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 16384
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
   handAnimator: {fileID: 5974211011065476036}
   transitionSpeed: 8
   clickCooldown: 0.5
@@ -846,48 +905,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - Action: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-    isVector: 1
-    vectorMoveTreshold: {x: 0.5, y: 0}
-    OnActionTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4902100271088893645}
-          m_TargetAssemblyTypeName: HandSnap, Assembly-CSharp
-          m_MethodName: GoRight
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnActionCanceled:
-      m_PersistentCalls:
-        m_Calls: []
-  - Action: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-    isVector: 1
-    vectorMoveTreshold: {x: -0.5, y: 0}
-    OnActionTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4902100271088893645}
-          m_TargetAssemblyTypeName: HandSnap, Assembly-CSharp
-          m_MethodName: GoLeft
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnActionCanceled:
-      m_PersistentCalls:
-        m_Calls: []
   rayInteractor: {fileID: 2574360981544870810}
   teleportationReticle: {fileID: 3174890384174709982}
   teleportLayerMask:
@@ -896,6 +913,66 @@ MonoBehaviour:
   normalLayerMask:
     serializedVersion: 2
     m_Bits: 96
+  teleportValid:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 0, g: 0.010046005, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 16384
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  teleportInvalid:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 1, g: 0, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 16384
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
   handAnimator: {fileID: 4532585339208448836}
   transitionSpeed: 8
   clickCooldown: 0.5
@@ -1297,7 +1374,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.01, z: 0.4}
+  m_LocalScale: {x: 0.4, y: 0.04, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4630120250713160413}
@@ -1393,6 +1470,7 @@ Transform:
   m_Children:
   - {fileID: 8352310687074706728}
   - {fileID: 6363816397299019002}
+  - {fileID: 7184475847215211594}
   m_Father: {fileID: 2897134228913349394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2366812061579296414
@@ -1798,7 +1876,7 @@ MonoBehaviour:
   m_InvalidColorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 0}
-    key1: {r: 0.16509432, g: 1, b: 0.2523415, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 1}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1859,7 +1937,7 @@ MonoBehaviour:
   m_SmoothMovement: 0
   m_FollowTightness: 10
   m_SnapThresholdDistance: 10
-  m_Reticle: {fileID: 5111061323254587313}
+  m_Reticle: {fileID: 0}
   m_BlockedReticle: {fileID: 0}
   m_StopLineAtFirstRaycastHit: 1
   m_StopLineAtSelection: 1
@@ -2646,7 +2724,7 @@ MonoBehaviour:
   m_InvalidColorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 0}
-    key1: {r: 0.16509432, g: 1, b: 0.2523415, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 1}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -2707,7 +2785,7 @@ MonoBehaviour:
   m_SmoothMovement: 0
   m_FollowTightness: 10
   m_SnapThresholdDistance: 10
-  m_Reticle: {fileID: 535938827882616873}
+  m_Reticle: {fileID: 0}
   m_BlockedReticle: {fileID: 0}
   m_StopLineAtFirstRaycastHit: 1
   m_StopLineAtSelection: 1
@@ -3045,7 +3123,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.39999998, y: 0.01, z: 0.39999998}
+  m_LocalScale: {x: 0.39999998, y: 0.04, z: 0.39999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2897134228913349394}
@@ -3451,7 +3529,7 @@ MonoBehaviour:
   xrOrigin: {fileID: 7810996336860853988}
   targetHeadPosition: {fileID: 4827908156746087898}
   resetAction: {fileID: -3966551929905817014, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  reloadAction: {fileID: 6152359269161239468, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  reloadAction: {fileID: 2003597869508908159, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   fillInCircle: {fileID: 5578901604073042143}
   allcircles: {fileID: 1276940770680819666}
   FPStext: {fileID: 4761972769283556916}
@@ -3664,12 +3742,12 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6536464639923875075}
   m_LocalRotation: {x: 0.5, y: 0.49999994, z: 0.5, w: 0.50000006}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0258}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0917}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5111642525870328135}
-  m_Father: {fileID: 2897134228913349394}
+  m_Father: {fileID: 8390319177513594448}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

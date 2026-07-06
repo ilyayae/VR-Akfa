@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour
 {
-    Camera player;
-    private float startRotationX;
+    private Camera player;
     private float startRotationZ;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void Awake()
     {
-        player = Camera.main; 
-        startRotationX = transform.eulerAngles.x;
+        player = Camera.main;
+
         startRotationZ = transform.eulerAngles.z;
     }
 
@@ -18,30 +17,32 @@ public class LookAtPlayer : MonoBehaviour
         if (player != null)
         {
             Vector3 direction = player.transform.position - transform.position;
-            direction.y = 0;
+
             if (direction.sqrMagnitude > 0.01f)
             {
                 direction *= -1f;
-                Quaternion targetHorizontalRotation = Quaternion.LookRotation(direction);
-                float targetRotationY = targetHorizontalRotation.eulerAngles.y;
-                Quaternion targetRotation = Quaternion.Euler(startRotationX, targetRotationY, startRotationZ);
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                Quaternion targetRotation = Quaternion.Euler(lookRotation.eulerAngles.x, lookRotation.eulerAngles.y, startRotationZ);
+
                 transform.rotation = targetRotation;
             }
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (player == null) return;
+
         float rotationSpeed = 5f;
         Vector3 direction = player.transform.position - transform.position;
-        direction.y = 0;
+
         if (direction.sqrMagnitude > 0.01f)
         {
             direction *= -1f;
-            Quaternion targetHorizontalRotation = Quaternion.LookRotation(direction);
-            float targetRotationY = targetHorizontalRotation.eulerAngles.y;
-            Quaternion targetRotation = Quaternion.Euler(startRotationX, targetRotationY, startRotationZ);
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Quaternion targetRotation = Quaternion.Euler(lookRotation.eulerAngles.x, lookRotation.eulerAngles.y, startRotationZ);
+
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }

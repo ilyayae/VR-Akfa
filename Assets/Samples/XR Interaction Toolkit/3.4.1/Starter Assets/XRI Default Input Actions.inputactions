@@ -2236,6 +2236,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ResetGame",
+                    "type": "Button",
+                    "id": "93c668c9-79e8-4614-8d6b-7c07fdde0f2f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2623,6 +2632,39 @@
                     "action": "Thumb",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "29ea772a-d866-4107-ac26-d888f24cee84",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetGame",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Binding",
+                    "id": "21dc3ea9-653f-41cc-b5d2-19e558b0fcff",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetGame",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Modifier",
+                    "id": "9c26ca07-08ec-4ef5-b6f9-31704a633752",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetGame",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

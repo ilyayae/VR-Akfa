@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
 [RequireComponent(typeof(XRSimpleInteractable))]
 [RequireComponent(typeof(ArticulationBody))]
@@ -35,6 +36,9 @@ public class ArticulationHandle : MonoBehaviour
     private Vector3 localGrabPoint;
     private Vector3 offsetInAttachSpace;
 
+    private Gradient grabGradient;
+    private Gradient origGradient;
+
     void Start()
     {
         simpleInteractable = GetComponent<XRSimpleInteractable>();
@@ -47,6 +51,16 @@ public class ArticulationHandle : MonoBehaviour
 
         simpleInteractable.selectEntered.AddListener(OnGrab);
         simpleInteractable.selectExited.AddListener(OnRelease);
+
+        grabGradient = new();
+        GradientColorKey[] colorKeys = new GradientColorKey[2];
+        colorKeys[0] = new GradientColorKey(Color.white, 0.0f);
+        colorKeys[1] = new GradientColorKey(new Color(1f, 0.5f, 0f), 1.0f);
+
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0] = new GradientAlphaKey(0.0f, 0.0f);
+        alphaKeys[1] = new GradientAlphaKey(1.0f, 0.25f);
+        grabGradient.SetKeys(colorKeys, alphaKeys);
     }
 
     void OnGrab(SelectEnterEventArgs args)
@@ -68,10 +82,23 @@ public class ArticulationHandle : MonoBehaviour
 
         previousControllerRotation = currentInteractor.transform.rotation;
         unclampedVirtualAngle = artBody.jointPosition[0] * Mathf.Rad2Deg;
+
+        if(currentInteractor.transform.TryGetComponent(out XRInteractorLineVisual line))
+        {
+            origGradient = line.validColorGradient;
+            line.validColorGradient = grabGradient;
+        }
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
+        if (origGradient != null)
+        {
+            if (currentInteractor.transform.TryGetComponent(out XRInteractorLineVisual line))
+            {
+                line.validColorGradient = origGradient;
+            }
+        }
         currentInteractor = null;
         pullTarget = null;
     }

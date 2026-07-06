@@ -100,7 +100,7 @@ public class VRViewResetter : MonoBehaviour
 
     bool reloading = false;
     float reloadTimer = 0f;
-    float maxReloadTimer = 1f;
+    float maxReloadTimer = 0.5f;
     float reloadFadeTimer = 0f;
     float reloadFadeMaxTimer = 0.4f;
 

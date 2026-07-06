@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
 public class HandSnap : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class HandSnap : MonoBehaviour
     [SerializeField] private GameObject teleportationReticle;
     [SerializeField] private LayerMask teleportLayerMask;
     [SerializeField] private LayerMask normalLayerMask;
+    [SerializeField]
+    private Gradient teleportValid;
+    [SerializeField]
+    private Gradient teleportInvalid;
+    private Gradient originalInvalid;
     private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> startCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
     private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> cancelCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
 
@@ -50,6 +56,7 @@ public class HandSnap : MonoBehaviour
         originalParent = handVisual.parent;
         originalLocalPosition = handVisual.localPosition;
         originalLocalRotation = handVisual.localRotation;
+        originalInvalid = rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient;
     }
 
     private void OnEnable()
@@ -188,6 +195,8 @@ public class HandSnap : MonoBehaviour
             handAnimator.SetInteger("GrabPoseID", 1);
         }
         targetGrabWeight = 1f;
+
+        rayInteractor.gameObject.SetActive(false);
     }
 
     private void OnHandRelease(SelectExitEventArgs args)
@@ -195,6 +204,7 @@ public class HandSnap : MonoBehaviour
         AnimateHandTo(originalParent, originalLocalPosition, originalLocalRotation);
         handAnimator.SetInteger("GrabPoseID", 0);
         targetGrabWeight = 0f;
+        rayInteractor.gameObject.SetActive(true);
     }
 
     private void AnimateHandTo(Transform targetParent, Vector3 targetLocalPos, Quaternion targetLocalRot)
@@ -255,6 +265,7 @@ public class HandSnap : MonoBehaviour
                 Manager.startTeleport(teleportationReticle.transform);
             }
             teleportationReticle.SetActive(false);
+            rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = originalInvalid;
         }
     }
     public float clickCooldown = 0.5f;
@@ -293,6 +304,7 @@ public class HandSnap : MonoBehaviour
             rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
             if (hit.transform != null && hit.transform.gameObject.tag == "Hittable")
             {
+                rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = teleportValid;
                 teleportationReticle.SetActive(true);
                 teleportationReticle.transform.position = hit.point;
 
@@ -321,6 +333,7 @@ public class HandSnap : MonoBehaviour
             }
             else
             {
+                rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = teleportInvalid;
                 teleportationReticle.SetActive(false);
             }
         }

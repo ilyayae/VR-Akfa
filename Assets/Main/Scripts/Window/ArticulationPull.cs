@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
 [RequireComponent(typeof(XRSimpleInteractable))]
 [RequireComponent(typeof(ArticulationBody))]
@@ -23,6 +24,8 @@ public class ArticulationPull : MonoBehaviour
     public Transform edgeStart;
     public Transform edgeEnd;
 
+    private Gradient grabGradient;
+    private Gradient origGradient;
     void Start()
     {
         simpleInteractable = GetComponent<XRSimpleInteractable>();
@@ -30,6 +33,16 @@ public class ArticulationPull : MonoBehaviour
 
         simpleInteractable.selectEntered.AddListener(OnGrab);
         simpleInteractable.selectExited.AddListener(OnRelease);
+
+        grabGradient = new();
+        GradientColorKey[] colorKeys = new GradientColorKey[2];
+        colorKeys[0] = new GradientColorKey(Color.white, 0.0f);
+        colorKeys[1] = new GradientColorKey(new Color(1f, 0.5f, 0f), 1.0f);
+
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0] = new GradientAlphaKey(0.0f, 0.0f);
+        alphaKeys[1] = new GradientAlphaKey(1.0f, 0.25f);
+        grabGradient.SetKeys(colorKeys, alphaKeys);
     }
     IXRSelectInteractor currentInteractor;
     void OnGrab(SelectEnterEventArgs args)
@@ -50,10 +63,23 @@ public class ArticulationPull : MonoBehaviour
         Vector3 extendedWorldGrabPoint = transform.TransformPoint(extendedLocalGrabPoint);
 
         offsetInAttachSpace = pullTarget.InverseTransformPoint(extendedWorldGrabPoint);
+
+        if (currentInteractor.transform.TryGetComponent(out XRInteractorLineVisual line))
+        {
+            origGradient = line.validColorGradient;
+            line.validColorGradient = grabGradient;
+        }
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
+        if (origGradient != null)
+        {
+            if (currentInteractor.transform.TryGetComponent(out XRInteractorLineVisual line))
+            {
+                line.validColorGradient = origGradient;
+            }
+        }
         pullTarget = null;
     }
 
