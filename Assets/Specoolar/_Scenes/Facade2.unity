@@ -6354,7 +6354,7 @@ GameObject:
   - component: {fileID: 884279300}
   - component: {fileID: 884279301}
   m_Layer: 0
-  m_Name: _Facade_2
+  m_Name: Scene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6408,6 +6408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightingLoader
   bakingSet: {fileID: 11400000, guid: 669bd256d2148ca4aa5e9105e583433f, type: 2}
+  sceneName: 
 --- !u!1 &886394659
 GameObject:
   m_ObjectHideFlags: 0
