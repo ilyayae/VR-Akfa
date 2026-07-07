@@ -16,10 +16,6 @@ public class UserControlledManager : MonoBehaviour
     private bool FacadeSelectionOpened = false;
     private Coroutine scaleCoroutine;
 
-    [Header("Facades")]
-    [SerializeField] private List<GameObject> listOfFacades;
-    [SerializeField] private Transform chosenFacadeLoaction;
-    [SerializeField] private Transform stashedFacadeLoaction;
     [SerializeField] private Transform insideLocation;
     [SerializeField] private Transform outsideLocation;
     [SerializeField] private GameObject GameManager; //Move it to teleport the player
@@ -38,14 +34,7 @@ public class UserControlledManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        foreach(GameObject facade in listOfFacades)
-        {
-            facade.transform.position = stashedFacadeLoaction.position;
-            facade.gameObject.SetActive(false);
-        }
-        listOfFacades[0].gameObject.SetActive(true);
-        listOfFacades[0].transform.position = chosenFacadeLoaction.position;
-
+        ChangeFacadeById(0);
         SceneManager.LoadScene("Exterior", LoadSceneMode.Additive);
         SceneManager.LoadScene("Room", LoadSceneMode.Additive);
     }
@@ -56,10 +45,7 @@ public class UserControlledManager : MonoBehaviour
     public IEnumerator ChangeFacadeAnimation(int id)
     {
         yield return null;
-        listOfFacades[currentFacadeID].transform.position = stashedFacadeLoaction.position;
-        listOfFacades[currentFacadeID].SetActive(false);
-        listOfFacades[id].transform.position = chosenFacadeLoaction.position;
-        listOfFacades[id].SetActive(true);
+        FacadeManager.Instance.SetActiveFacadeByID(id);
         currentFacadeID = id;
     }
     public void goInside()

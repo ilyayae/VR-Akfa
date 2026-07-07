@@ -5674,6 +5674,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 457626332063e094d8ba98e98787b21b, type: 3}
   m_PrefabInstance: {fileID: 365186229}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186231 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2891935587911605243, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186232 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2692715406629933822, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186233 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3756613659247834134, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186234 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3609080451402002605, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186235 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4844179986015981071, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &365186236 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2355982399387309400, guid: 457626332063e094d8ba98e98787b21b, type: 3}
+  m_PrefabInstance: {fileID: 365186229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &427037068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6353,6 +6383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 884279300}
   - component: {fileID: 884279301}
+  - component: {fileID: 884279302}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -6409,6 +6440,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightingLoader
   bakingSet: {fileID: 11400000, guid: 669bd256d2148ca4aa5e9105e583433f, type: 2}
   sceneName: 
+  changer: {fileID: 884279302}
+--- !u!114 &884279302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884279299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5146195137500174eb4301f4c35be02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OtherWindowChanger
+  windows:
+  - {fileID: 365186236}
+  - {fileID: 365186235}
+  - {fileID: 365186234}
+  - {fileID: 365186233}
+  - {fileID: 365186232}
+  - {fileID: 365186231}
 --- !u!1 &886394659
 GameObject:
   m_ObjectHideFlags: 0

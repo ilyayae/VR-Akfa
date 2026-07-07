@@ -20,8 +20,6 @@ public class WindowManager : MonoBehaviour
     private int currentSetId = 0;
     private GameObject currentInstantiatedFrame;
 
-    [Header("OtherWindowsRenderers")]
-    [SerializeField] private List<Renderer> otherWindows = new();
     private void Start()
     {
         SetHandleToId(0);
@@ -63,12 +61,7 @@ public class WindowManager : MonoBehaviour
 
         if(currSetting == 0 || currSetting == 1)
         {
-            foreach (Renderer r in otherWindows)
-            {
-                Material[] mats = r.materials;
-                mats[0] = materials[id].window;
-                r.materials = mats;
-            }
+            FacadeManager.Instance.setMaterials(materials[id].window);
         }
     }
 

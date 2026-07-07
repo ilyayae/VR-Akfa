@@ -27,10 +27,11 @@ public class FacadeScene : MonoBehaviour
 {
     public ProbeVolumeBakingSet bakingSet;
     [HideInInspector] public string sceneName;
+    public OtherWindowChanger changer;
     private void Awake()
     {
         sceneName = gameObject.scene.name;
-        FacadeManager.main.OnLoadFacade(this);
+        FacadeManager.Instance.OnLoadFacade(this);
     }
 
     public void LoadLighting()

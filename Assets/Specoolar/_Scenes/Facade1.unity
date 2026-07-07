@@ -828,6 +828,41 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
   m_PrefabInstance: {fileID: 635955349}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955354 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2891935587911605243, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955355 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2007874185832948384, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955356 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2692715406629933822, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955357 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3756613659247834134, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955358 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3609080451402002605, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955359 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8993257315604256862, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &635955360 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4844179986015981071, guid: f8efd5c173ece0040b28e7690e37c4ac, type: 3}
+  m_PrefabInstance: {fileID: 635955349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &641324939
 GameObject:
   m_ObjectHideFlags: 0
@@ -7135,6 +7170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2083770773}
   - component: {fileID: 2083770774}
+  - component: {fileID: 2083770775}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -7197,6 +7233,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightingLoader
   bakingSet: {fileID: 11400000, guid: 4a74444b54bcdae439cdc4895286e3b7, type: 2}
   sceneName: 
+  changer: {fileID: 2083770775}
+--- !u!114 &2083770775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083770772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5146195137500174eb4301f4c35be02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  windows:
+  - {fileID: 635955360}
+  - {fileID: 635955359}
+  - {fileID: 635955358}
+  - {fileID: 635955357}
+  - {fileID: 635955356}
+  - {fileID: 635955355}
+  - {fileID: 635955354}
 --- !u!1 &2105892484
 GameObject:
   m_ObjectHideFlags: 0

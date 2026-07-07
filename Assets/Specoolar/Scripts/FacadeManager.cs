@@ -15,11 +15,12 @@ public class FacadeManager : MonoBehaviour
         public string name;
         public bool enabled = false;
         public FacadeScene facade;
+        public OtherWindowChanger changer;
     }
-    public static FacadeManager main = null;
+    public static FacadeManager Instance { get; private set; }
     private void Awake()
     {
-        main = this;
+        Instance = this;
         facadeSettings = new FacadeData[facadeSceneNames.Length];
 
         for (int i = 0; i < facadeSettings.Length; i++)
@@ -36,9 +37,13 @@ public class FacadeManager : MonoBehaviour
     {
         var data = getFacade(facade.sceneName);
         data.facade = facade;
+        data.changer = facade.changer;
         onFacadeUpdate(data);
     }
-
+    public void SetActiveFacadeByID(int id)
+    {
+        SetActiveFacade(facadeSceneNames[id]);
+    }
     public void SetActiveFacade(string facadeName)
     {
         foreach (var item in facadeSettings)
@@ -47,7 +52,14 @@ public class FacadeManager : MonoBehaviour
             onFacadeUpdate(item);
         }
     }
-
+    public void setMaterials(Material material)
+    {
+        foreach(var facade in facadeSettings)
+        {
+            if(facade.changer != null)
+                facade.changer.SetMaterial(material);
+        }
+    }
     FacadeData getFacade(string name)
     {
         foreach (var item in facadeSettings)
