@@ -40,11 +40,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 0a1417d42a1efbe4b95252b8910383c6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3deec2fce9673434280ddd36009c74cc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: d5036e9b5e3e42748ae1911dab06ab43, type: 3}
+        m_Texture: {fileID: 2800000, guid: d80b495a2080c944fb3dda84bdba053c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -124,13 +124,13 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.2227273
+    - _Smoothness: 0.22
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Tiling: 0.6
+    - _Tiling: 0.4
     - _UVSec: 0
     - _WINDOWDEFORM: 1
     - _WindowFalloff: 0.1
@@ -140,9 +140,10 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 0.42767292, g: 0.42767292, b: 0.42767292, a: 1}
+    - _BaseColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
     - _Color: {r: 0.22795206, g: 0.22795206, b: 0.22795206, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset: {r: -0.398, g: 0.15, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindowPadding: {r: 0.2, g: 10, b: 0.2, a: 0}
     - _WindowPaddingInside: {r: 0.1, g: 0.1, b: 0.1, a: 0}
