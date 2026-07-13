@@ -156,7 +156,13 @@ MonoBehaviour:
   - {fileID: 8471140312463635171}
   RightHingeTransform: {fileID: 0}
   LeftHingeTransform: {fileID: 0}
-  handle: {fileID: 6604062429755716704}
+  SmallHandTarget: {fileID: 0}
+  BigHand: {fileID: 0}
+  Hinge: {fileID: 0}
+  handleTransform: {fileID: 6604062429755716704}
+  BigHandTarget: {fileID: 0}
+  HingeTarget: {fileID: 0}
+  SmallHand: {fileID: 0}
 --- !u!114 &2541453104944229524
 MonoBehaviour:
   m_ObjectHideFlags: 0

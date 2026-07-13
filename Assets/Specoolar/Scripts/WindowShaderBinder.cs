@@ -4,6 +4,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class WindowShaderBinder : MonoBehaviour
 {
+    static public WindowShaderBinder instance;
     [Header("Size (in CM)")]
     public Vector3 size;
     public Vector3 restSize;
@@ -31,6 +32,7 @@ public class WindowShaderBinder : MonoBehaviour
     void Start()
     {
         Init();
+        instance = this;
     }
     private void OnDrawGizmos()
     {

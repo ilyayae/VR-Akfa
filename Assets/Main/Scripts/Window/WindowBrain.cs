@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class WindowBrain : MonoBehaviour
 {
@@ -139,7 +140,7 @@ public class WindowBrain : MonoBehaviour
         }
     }
 
-    public void NewWindow(GameObject newWindowDoor, bool lefty)
+    public void NewWindow(GameObject newWindowDoor, bool lefty, Transform smallHandTarget)
     {
         RemoveOldChangers(myFrame.transform);
         RemoveOldChangers(myDoor.transform);
@@ -149,13 +150,23 @@ public class WindowBrain : MonoBehaviour
 
         GameObject Door = Instantiate(newWindowDoor, myDoor.transform);
 
-        SetHandlePosition(Door.GetComponent<HingeChanger>().handle.position);
+        SetHandlePosition(Door.GetComponent<HingeChanger>().handleTransform.position);
 
         TextureChanger[] newChangers = Door.GetComponentsInChildren<TextureChanger>();
         changers.AddRange(newChangers);
 
         HingeChanger[] newHinges = Door.GetComponentsInChildren<HingeChanger>();
         hinges.AddRange(newHinges);
+
+        if(smallHandTarget != null)
+        {
+            ConstraintSource newSource = new ConstraintSource();
+            newSource.sourceTransform = smallHandTarget;
+            newSource.weight = 1.0f;
+            hinges[0].SmallHand.AddSource(newSource);
+            hinges[0].SmallHand.weight = 1f;
+            hinges[0].SmallHand.constraintActive = true;
+        }
     }
     public void NewGlass(GameObject newGlassPrefab) { }
 

@@ -344,20 +344,10 @@ public class WindowDoor : MonoBehaviour
 
     public void ResetToClosedPosition()
     {
-        if (transform.parent != null)
-        {
-            transform.localPosition = initialLocalPosition;
-            transform.localRotation = initialLocalRotation;
-        }
-        else
-        {
-            transform.position = initialLocalPosition;
-            transform.rotation = initialLocalRotation;
-        }
-
         if (myBody == null) myBody = GetComponent<ArticulationBody>();
         if (myBody != null)
         {
+
             myBody.jointPosition = new ArticulationReducedSpace(0f);
             myBody.jointVelocity = new ArticulationReducedSpace(0f);
 

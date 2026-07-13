@@ -1,6 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+
+public enum numberMode
+{
+    Two,
+    One,
+    Three
+}
 
 public class WindowManager : MonoBehaviour
 {
@@ -16,7 +24,7 @@ public class WindowManager : MonoBehaviour
 
     [SerializeField] private Renderer windowsill;
 
-    private bool isSingleWindowMode = false;
+    private numberMode WindowMode = numberMode.Two;
     private int currentSetId = 0;
     private GameObject currentInstantiatedFrame;
 
@@ -202,8 +210,8 @@ public class WindowManager : MonoBehaviour
 
     public void SetSingleWindowMode()
     {
-        if (isSingleWindowMode) return;
-        isSingleWindowMode = true;
+        if (WindowMode == numberMode.One) return;
+        WindowMode = numberMode.One;
 
         if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
         {
@@ -226,8 +234,8 @@ public class WindowManager : MonoBehaviour
 
     public void SetDualWindowMode()
     {
-        if (!isSingleWindowMode) return;
-        isSingleWindowMode = false;
+        if (WindowMode == numberMode.Two) return;
+        WindowMode = numberMode.Two;
 
         if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
         {
@@ -236,6 +244,30 @@ public class WindowManager : MonoBehaviour
         }
 
         LeftWindow.gameObject.SetActive(true);
+        RightWindow.gameObject.SetActive(false);
+        RightWindow.gameObject.SetActive(true);
+        SetFrameToId(currentSetId);
+        SetHandleToId(currentHandle);
+    }
+
+    public void SetTripleWindowMode()
+    {
+        if (WindowMode == numberMode.Three) return;
+        WindowMode = numberMode.Three;
+
+        if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
+        {
+            LeftWindow.myDoor.ResetToClosedPosition();
+            if (LeftWindow.handleScript != null) LeftWindow.handleScript.ResetToClosedPosition();
+        }
+        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
+        {
+            RightWindow.myDoor.ResetToClosedPosition();
+            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
+        }
+        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
+
+        LeftWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
@@ -254,44 +286,141 @@ public class WindowManager : MonoBehaviour
             Destroy(currentInstantiatedFrame);
         }
 
-        if (isSingleWindowMode)
+        if (WindowMode == numberMode.One)
         {
+            WindowShaderBinder.instance.size.x = 150;
+            Vector3 newScale = windowsill.transform.localScale;
+            newScale.x = 100;
+            windowsill.transform.localScale = newScale;
             currentInstantiatedFrame = Instantiate(sets[id].frameModelSingular, transform);
             currentInstantiatedFrame.transform.localPosition = Vector3.zero;
 
+            HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
-                RightWindow.NewWindow(sets[id].doorModelSingular, false);
+                RightWindow.NewWindow(sets[id].doorModelSingular, false, hc.SmallHandTarget);
             }
             SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
-            HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (hc != null && hc.RightHingeTransform != null)
             {
                 yield return StartCoroutine(AlignToHingeKeepY(RightWindow.myDoor, hc.RightHingeTransform.position));
             }
+
+            if (RightWindow.hinges[0].BigHandTarget != null && RightWindow.hinges[0].HingeTarget)
+            {
+                ConstraintSource hingeSource = new ConstraintSource();
+                hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
+                hingeSource.weight = 1f;
+                hc.Hinge.AddSource(hingeSource);
+                ConstraintSource handSource = new ConstraintSource();
+                handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
+                handSource.weight = 1f;
+                hc.BigHand.AddSource(handSource);
+                hc.Hinge.weight = 1f;
+                hc.Hinge.constraintActive = true;
+
+                hc.BigHand.weight = 1f;
+                hc.BigHand.constraintActive = true;
+            }
         }
-        else
+        else if (WindowMode == numberMode.Three)
         {
-            currentInstantiatedFrame = Instantiate(sets[id].frameModelDual, transform);
+            WindowShaderBinder.instance.size.x = 220;
+            Vector3 newScale = windowsill.transform.localScale;
+            newScale.x = 147;
+            windowsill.transform.localScale = newScale;
+            currentInstantiatedFrame = Instantiate(sets[id].frameModelTriple, transform);
             currentInstantiatedFrame.transform.localPosition = Vector3.zero;
 
+            HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
-                RightWindow.NewWindow(sets[id].doorModelR, false);
-            }
-            if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
-            {
-                LeftWindow.NewWindow(sets[id].doorModelL, true);
+                RightWindow.NewWindow(sets[id].doorModelTriple, false, hc.SmallHandTarget);
             }
             SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
+            if (hc != null && hc.RightHingeTransform != null)
+            {
+                yield return StartCoroutine(AlignToHingeKeepY(RightWindow.myDoor, hc.RightHingeTransform.position));
+            }
+
+            if (RightWindow.hinges[0].BigHandTarget != null && RightWindow.hinges[0].HingeTarget)
+            {
+                ConstraintSource hingeSource = new ConstraintSource();
+                hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
+                hingeSource.weight = 1f;
+                hc.Hinge.AddSource(hingeSource);
+                ConstraintSource handSource = new ConstraintSource();
+                handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
+                handSource.weight = 1f;
+                hc.BigHand.AddSource(handSource);
+                hc.Hinge.weight = 1f;
+                hc.Hinge.constraintActive = true;
+
+                hc.BigHand.weight = 1f;
+                hc.BigHand.constraintActive = true;
+            }
+        }
+        else if (WindowMode == numberMode.Two)
+        {
+            WindowShaderBinder.instance.size.x = 150;
+            Vector3 newScale = windowsill.transform.localScale;
+            newScale.x = 100;
+            windowsill.transform.localScale = newScale;
+            currentInstantiatedFrame = Instantiate(sets[id].frameModelDual, transform);
+            currentInstantiatedFrame.transform.localPosition = Vector3.zero;
+
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
+            if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
+            {
+                RightWindow.NewWindow(sets[id].doorModelR, false, hc.SmallHandTarget);
+            }
+            if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
+            {
+                LeftWindow.NewWindow(sets[id].doorModelL, true, hc.SmallHandTarget);
+            }
+            SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
+
             if (hc != null && hc.RightHingeTransform != null && hc.LeftHingeTransform != null)
             {
                 StartCoroutine(AlignToHingeKeepY(RightWindow.myDoor, hc.RightHingeTransform.position));
                 yield return StartCoroutine(AlignToHingeKeepY(LeftWindow.myDoor, hc.LeftHingeTransform.position));
             }
+
+            if (RightWindow.hinges[0].BigHandTarget != null && RightWindow.hinges[0].HingeTarget)
+            {
+                ConstraintSource hingeSource = new ConstraintSource();
+                hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
+                hingeSource.weight = 1f;
+                hc.Hinge.AddSource(hingeSource);
+                ConstraintSource handSource = new ConstraintSource();
+                handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
+                handSource.weight = 1f;
+                hc.BigHand.AddSource(handSource);
+                hc.Hinge.weight = 1f;
+                hc.Hinge.constraintActive = true;
+
+                hc.BigHand.weight = 1f;
+                hc.BigHand.constraintActive = true;
+            }
+            if (LeftWindow.hinges[0].BigHandTarget != null && LeftWindow.hinges[0].HingeTarget)
+            {
+                ConstraintSource hingeSource = new ConstraintSource();
+                hingeSource.sourceTransform = LeftWindow.hinges[0].HingeTarget;
+                hingeSource.weight = 1f;
+                hc.Hinge.AddSource(hingeSource);
+                ConstraintSource handSource = new ConstraintSource();
+                handSource.sourceTransform = LeftWindow.hinges[0].BigHandTarget;
+                handSource.weight = 1f;
+                hc.BigHand.AddSource(handSource);
+                hc.Hinge.weight = 1f;
+                hc.Hinge.constraintActive = true;
+
+                hc.BigHand.weight = 1f;
+                hc.BigHand.constraintActive = true;
+            }
+
         }
     }
 

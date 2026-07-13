@@ -9,4 +9,7 @@ public class WindowSet : ScriptableObject
 
     public GameObject frameModelSingular;
     public GameObject doorModelSingular;
+
+    public GameObject frameModelTriple;
+    public GameObject doorModelTriple;
 }
