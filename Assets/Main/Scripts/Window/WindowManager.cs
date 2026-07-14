@@ -298,7 +298,7 @@ public class WindowManager : MonoBehaviour
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
-                RightWindow.NewWindow(sets[id].doorModelSingular, false, hc.SmallHandTarget);
+                RightWindow.NewWindow(sets[id].doorModelSingular, false, hc.SmallHandTargetR);
             }
             SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
@@ -312,16 +312,16 @@ public class WindowManager : MonoBehaviour
                 ConstraintSource hingeSource = new ConstraintSource();
                 hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
                 hingeSource.weight = 1f;
-                hc.Hinge.AddSource(hingeSource);
+                hc.HingeR.AddSource(hingeSource);
                 ConstraintSource handSource = new ConstraintSource();
                 handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
                 handSource.weight = 1f;
-                hc.BigHand.AddSource(handSource);
-                hc.Hinge.weight = 1f;
-                hc.Hinge.constraintActive = true;
+                hc.BigHandR.AddSource(handSource);
+                hc.HingeR.weight = 1f;
+                hc.HingeR.constraintActive = true;
 
-                hc.BigHand.weight = 1f;
-                hc.BigHand.constraintActive = true;
+                hc.BigHandR.weight = 1f;
+                hc.BigHandR.constraintActive = true;
             }
         }
         else if (WindowMode == numberMode.Three)
@@ -336,7 +336,7 @@ public class WindowManager : MonoBehaviour
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
-                RightWindow.NewWindow(sets[id].doorModelTriple, false, hc.SmallHandTarget);
+                RightWindow.NewWindow(sets[id].doorModelTriple, false, hc.SmallHandTargetR);
             }
             SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
@@ -350,16 +350,16 @@ public class WindowManager : MonoBehaviour
                 ConstraintSource hingeSource = new ConstraintSource();
                 hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
                 hingeSource.weight = 1f;
-                hc.Hinge.AddSource(hingeSource);
+                hc.HingeR.AddSource(hingeSource);
                 ConstraintSource handSource = new ConstraintSource();
                 handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
                 handSource.weight = 1f;
-                hc.BigHand.AddSource(handSource);
-                hc.Hinge.weight = 1f;
-                hc.Hinge.constraintActive = true;
+                hc.BigHandR.AddSource(handSource);
+                hc.HingeR.weight = 1f;
+                hc.HingeR.constraintActive = true;
 
-                hc.BigHand.weight = 1f;
-                hc.BigHand.constraintActive = true;
+                hc.BigHandR.weight = 1f;
+                hc.BigHandR.constraintActive = true;
             }
         }
         else if (WindowMode == numberMode.Two)
@@ -374,11 +374,11 @@ public class WindowManager : MonoBehaviour
             HingeChanger hc = currentInstantiatedFrame.GetComponent<HingeChanger>();
             if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
             {
-                RightWindow.NewWindow(sets[id].doorModelR, false, hc.SmallHandTarget);
+                RightWindow.NewWindow(sets[id].doorModelR, false, hc.SmallHandTargetR);
             }
             if (LeftWindow != null && LeftWindow.gameObject.activeSelf == true)
             {
-                LeftWindow.NewWindow(sets[id].doorModelL, true, hc.SmallHandTarget);
+                LeftWindow.NewWindow(sets[id].doorModelL, true, hc.SmallHandTargetL);
             }
             SetLaminationForWindow(currentTextureINSIDE, currentTextureOUTSIDE);
 
@@ -393,32 +393,32 @@ public class WindowManager : MonoBehaviour
                 ConstraintSource hingeSource = new ConstraintSource();
                 hingeSource.sourceTransform = RightWindow.hinges[0].HingeTarget;
                 hingeSource.weight = 1f;
-                hc.Hinge.AddSource(hingeSource);
+                hc.HingeR.AddSource(hingeSource);
                 ConstraintSource handSource = new ConstraintSource();
                 handSource.sourceTransform = RightWindow.hinges[0].BigHandTarget;
                 handSource.weight = 1f;
-                hc.BigHand.AddSource(handSource);
-                hc.Hinge.weight = 1f;
-                hc.Hinge.constraintActive = true;
+                hc.BigHandR.AddSource(handSource);
+                hc.HingeR.weight = 1f;
+                hc.HingeR.constraintActive = true;
 
-                hc.BigHand.weight = 1f;
-                hc.BigHand.constraintActive = true;
+                hc.BigHandR.weight = 1f;
+                hc.BigHandR.constraintActive = true;
             }
             if (LeftWindow.hinges[0].BigHandTarget != null && LeftWindow.hinges[0].HingeTarget)
             {
                 ConstraintSource hingeSource = new ConstraintSource();
                 hingeSource.sourceTransform = LeftWindow.hinges[0].HingeTarget;
                 hingeSource.weight = 1f;
-                hc.Hinge.AddSource(hingeSource);
+                hc.HingeL.AddSource(hingeSource);
                 ConstraintSource handSource = new ConstraintSource();
                 handSource.sourceTransform = LeftWindow.hinges[0].BigHandTarget;
                 handSource.weight = 1f;
-                hc.BigHand.AddSource(handSource);
-                hc.Hinge.weight = 1f;
-                hc.Hinge.constraintActive = true;
+                hc.BigHandL.AddSource(handSource);
+                hc.HingeL.weight = 1f;
+                hc.HingeL.constraintActive = true;
 
-                hc.BigHand.weight = 1f;
-                hc.BigHand.constraintActive = true;
+                hc.BigHandL.weight = 1f;
+                hc.BigHandL.constraintActive = true;
             }
 
         }
