@@ -244,10 +244,10 @@ public class WindowManager : MonoBehaviour
         }
 
         LeftWindow.gameObject.SetActive(true);
-        RightWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
         SetHandleToId(currentHandle);
+        LeftWindow.SetMechanism(RightWindow.currentMechanism);
     }
 
     public void SetTripleWindowMode()
@@ -268,7 +268,6 @@ public class WindowManager : MonoBehaviour
         Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
 
         LeftWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(false);
         RightWindow.gameObject.SetActive(true);
         SetFrameToId(currentSetId);
         SetHandleToId(currentHandle);
