@@ -10,9 +10,12 @@ public class HingeChanger : MonoBehaviour
     [Header("Frame settings")]
     public Transform RightHingeTransform;
     public Transform LeftHingeTransform;
-    public Transform SmallHandTarget;
-    public AimConstraint BigHand;
-    public AimConstraint Hinge;
+    public Transform SmallHandTargetR;
+    public AimConstraint BigHandR;
+    public AimConstraint HingeR;
+    public Transform SmallHandTargetL;
+    public AimConstraint BigHandL;
+    public AimConstraint HingeL;
 
     [Header("Door settings")]
     public Transform handleTransform;

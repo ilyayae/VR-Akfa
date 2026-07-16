@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5c2d6458d94864a8bc627aae00b7f6, type: 3}
+  m_Name: 85 1
+  m_EditorClassIdentifier: Assembly-CSharp::WindowSet
+  frameModelDual: {fileID: 703052203124162337, guid: cc52ba68dee523641899fc6ba6550cfe, type: 3}
+  doorModelL: {fileID: 6926934675019164741, guid: 42822344187956141ab2a3f5ae08f667, type: 3}
+  doorModelR: {fileID: 67510788506158138, guid: d7fa68d61bd56d24bbba7e28dddc7a44, type: 3}
+  frameModelSingular: {fileID: 4311246152054244362, guid: 16d2eefa65074dd4fb18f4237ff08fe0, type: 3}
+  doorModelSingular: {fileID: 2229081349882718007, guid: 018ca11d276bb654780340ba822e475e, type: 3}
+  frameModelTriple: {fileID: 5179652162021402145, guid: 5644e2bbb35992642b9d274b2991a74b, type: 3}
+  doorModelTriple: {fileID: 3922257050602863643, guid: a73b8511c9990fc4bad74bb0722b7588, type: 3}
