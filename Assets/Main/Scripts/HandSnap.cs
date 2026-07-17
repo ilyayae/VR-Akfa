@@ -11,6 +11,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
 public class HandSnap : MonoBehaviour
 {
+    private bool wasClicked = false;
     public XRBaseInteractor interactor;
     public Transform handVisual;
 
@@ -28,6 +29,7 @@ public class HandSnap : MonoBehaviour
     [SerializeField] private InputActionReference gripButton;
     [SerializeField] private InputActionReference thumbButton;
 
+    [Space]
     [Header("TeleportMovement")]
     [SerializeField] private VRViewResetter Manager;
     [SerializeField] private List<InputAndFunctionPair> teleportButtons;
@@ -35,19 +37,28 @@ public class HandSnap : MonoBehaviour
     [SerializeField] private GameObject teleportationReticle;
     [SerializeField] private LayerMask teleportLayerMask;
     [SerializeField] private LayerMask normalLayerMask;
-    [SerializeField]
-    private Gradient teleportValid;
-    [SerializeField]
-    private Gradient teleportInvalid;
-    private Gradient originalInvalid;
     private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> startCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
     private Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>> cancelCallbacks = new Dictionary<InputAndFunctionPair, Action<InputAction.CallbackContext>>();
 
+    [Space]
     [Header("Animation Settings")]
     public Animator handAnimator;
     private int grabLayerIndex = 4;
     public float transitionSpeed = 8f;
     private float targetGrabWeight = 0f;
+
+    private AudioSource source;
+
+    [Space]
+    [Header("Animation Settings")]
+    [SerializeField] private XRInteractorLineVisual lineVisual;
+    [HideInInspector] public Gradient Normal;
+    [HideInInspector] public Gradient HowerUI;
+    [HideInInspector] public Gradient PressUI;
+    [HideInInspector] public Gradient HoverWindow;
+    [HideInInspector] public Gradient PressWindow;
+    [HideInInspector] public Gradient teleportAppropriate;
+    [HideInInspector] public Gradient teleportInappropriate;
     private void Awake()
     {
         if (interactor == null)
@@ -56,7 +67,13 @@ public class HandSnap : MonoBehaviour
         originalParent = handVisual.parent;
         originalLocalPosition = handVisual.localPosition;
         originalLocalRotation = handVisual.localRotation;
-        originalInvalid = rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient;
+        source = GetComponent<AudioSource>();
+    }
+
+    public void setGradient()
+    {
+        lineVisual.invalidColorGradient = Normal;
+        lineVisual.validColorGradient = HowerUI;
     }
 
     private void OnEnable()
@@ -238,7 +255,7 @@ public class HandSnap : MonoBehaviour
 
         handVisual.localPosition = targetLocalPos;
         handVisual.localRotation = targetLocalRot;
-
+        source.Play();
         animationCoroutine = null;
     }
 
@@ -252,7 +269,6 @@ public class HandSnap : MonoBehaviour
         rayInteractor.lineType = XRRayInteractor.LineType.ProjectileCurve;
         rayInteractor.raycastMask = teleportLayerMask;
     }
-
     public void EndTeleport()
     {
         if (teleporting)
@@ -260,12 +276,19 @@ public class HandSnap : MonoBehaviour
             teleporting = false;
             rayInteractor.lineType = XRRayInteractor.LineType.StraightLine;
             rayInteractor.raycastMask = normalLayerMask;
+
             if (teleportationReticle.activeSelf)
             {
                 Manager.startTeleport(teleportationReticle.transform);
+                if (GameManager.Instance != null) GameManager.Instance.PlayTeleport();
             }
+            else
+            {
+                if (GameManager.Instance != null) GameManager.Instance.PlayCantTeleport();
+            }
+
             teleportationReticle.SetActive(false);
-            rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = originalInvalid;
+            lineVisual.invalidColorGradient = Normal;
         }
     }
     public float clickCooldown = 0.5f;
@@ -299,12 +322,20 @@ public class HandSnap : MonoBehaviour
     }
     private void Update()
     {
-        if(teleporting)
+        float currentWeight = handAnimator.GetLayerWeight(grabLayerIndex);
+        handAnimator.SetLayerWeight(grabLayerIndex, Mathf.Lerp(currentWeight, targetGrabWeight, Time.deltaTime * transitionSpeed));
+        float triggerValue = triggerButton.action.ReadValue<float>();
+        float gripValue = gripButton.action.ReadValue<float>();
+        float thumbValue = thumbButton.action.ReadValue<float>();
+        bool cliked = triggerButton.action.IsPressed() || gripButton.action.IsPressed();
+        bool clickedThisFrame = cliked && !wasClicked;
+        rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
+        bool isHitUI = rayInteractor.TryGetCurrentUIRaycastResult(out RaycastResult uiHit);
+        if (teleporting)
         {
-            rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit);
             if (hit.transform != null && hit.transform.gameObject.tag == "Hittable")
             {
-                rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = teleportValid;
+                lineVisual.invalidColorGradient = teleportAppropriate;
                 teleportationReticle.SetActive(true);
                 teleportationReticle.transform.position = hit.point;
 
@@ -333,20 +364,73 @@ public class HandSnap : MonoBehaviour
             }
             else
             {
-                rayInteractor.GetComponent<XRInteractorLineVisual>().invalidColorGradient = teleportInvalid;
+                lineVisual.invalidColorGradient = teleportInappropriate;
                 teleportationReticle.SetActive(false);
             }
         }
-        float currentWeight = handAnimator.GetLayerWeight(grabLayerIndex);
-        handAnimator.SetLayerWeight(grabLayerIndex, Mathf.Lerp(currentWeight, targetGrabWeight, Time.deltaTime * transitionSpeed));
-        float triggerValue = triggerButton.action.ReadValue<float>();
-        float gripValue = gripButton.action.ReadValue<float>();
-        float thumbValue = thumbButton.action.ReadValue<float>();
+        else
+        {
+            if (isHitUI && uiHit.gameObject != null)
+            {
+                UnityEngine.UI.Button hitButton = uiHit.gameObject.GetComponentInParent<UnityEngine.UI.Button>();
+                UnityEngine.UI.Toggle hitToggle = uiHit.gameObject.GetComponentInParent<UnityEngine.UI.Toggle>();
+                if (hitButton != null || hitToggle != null || uiHit.gameObject.CompareTag("UI"))
+                {
+                    if (cliked)
+                        lineVisual.validColorGradient = PressUI;
+                    else
+                        lineVisual.validColorGradient = HowerUI;
+
+                    if (clickedThisFrame && GameManager.Instance != null)
+                    {
+                        if (hitButton != null)
+                        {
+                            ToggleButtons toggleGroup = hitButton.GetComponentInParent<ToggleButtons>();
+
+                            if (toggleGroup != null && toggleGroup.currbutton == hitButton)
+                            {
+                                GameManager.Instance.PlayUIAlreadyActivated();
+                            }
+                            else
+                            {
+                                GameManager.Instance.PlayUIActivate();
+                            }
+                        }
+                        else if (hitToggle != null)
+                        {
+                            if (hitToggle.isOn)
+                            {
+                                GameManager.Instance.PlayUIAlreadyActivated();
+                            }
+                            else
+                            {
+                                GameManager.Instance.PlayUIActivate();
+                            }
+                        }
+                        else
+                        {
+                            GameManager.Instance.PlayUIActivate();
+                        }
+                    }
+                }
+            }
+            else if (hit.transform != null)
+            {
+                if (hit.transform.CompareTag("Window"))
+                {
+                    if (cliked)
+                        lineVisual.validColorGradient = PressWindow;
+                    else
+                        lineVisual.validColorGradient = HoverWindow;
+                }
+            }
+        }
         trigger = Mathf.Lerp(trigger, triggerValue, Time.deltaTime * transitionSpeed);
         grip = Mathf.Lerp(grip, gripValue, Time.deltaTime * transitionSpeed);
         thumb = Mathf.Lerp(thumb, thumbValue, Time.deltaTime * transitionSpeed);
         handAnimator.SetFloat("Trigger_Input", trigger);
         handAnimator.SetFloat("Grip_Input", grip);
         handAnimator.SetFloat("Thumb_Input", thumb);
+        wasClicked = cliked;
     }
 }

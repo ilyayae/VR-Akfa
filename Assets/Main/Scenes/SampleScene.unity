@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4195882}
   m_Layer: 6
   m_Name: Grab
-  m_TagString: Untagged
+  m_TagString: Window
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 48936093}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1201,7 +1201,7 @@ GameObject:
   - component: {fileID: 71655074}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1330,7 +1330,7 @@ GameObject:
   - component: {fileID: 77844879}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1403,7 +1403,7 @@ GameObject:
   - component: {fileID: 88786140}
   m_Layer: 5
   m_Name: Basic
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1527,7 +1527,7 @@ GameObject:
   - component: {fileID: 99677921}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1657,7 +1657,7 @@ GameObject:
   - component: {fileID: 102499906}
   m_Layer: 5
   m_Name: Turner Oak Malt
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2041,7 +2041,7 @@ GameObject:
   - component: {fileID: 141217716}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2290,7 +2290,7 @@ GameObject:
   - component: {fileID: 158517039}
   m_Layer: 5
   m_Name: MetBrushAnthrazite
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2423,7 +2423,7 @@ GameObject:
   - component: {fileID: 163064278}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2497,7 +2497,7 @@ GameObject:
   - component: {fileID: 164433642}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2627,7 +2627,7 @@ GameObject:
   - component: {fileID: 176408771}
   m_Layer: 5
   m_Name: MetBrushAnthrazite
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2762,7 +2762,7 @@ GameObject:
   - component: {fileID: 188471847}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2891,7 +2891,7 @@ GameObject:
   - component: {fileID: 205081231}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3005,7 +3005,7 @@ GameObject:
   - component: {fileID: 221718369}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 223618975}
   m_Layer: 5
   m_Name: 98
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3212,7 +3212,7 @@ GameObject:
   - component: {fileID: 223964579}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3562,6 +3562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &255002381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3638,7 +3639,7 @@ GameObject:
   - component: {fileID: 261255225}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3710,7 +3711,7 @@ GameObject:
   - component: {fileID: 261911701}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3783,7 +3784,7 @@ GameObject:
   - component: {fileID: 311796718}
   m_Layer: 5
   m_Name: MetalicAnthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3917,7 +3918,7 @@ GameObject:
   - component: {fileID: 316623839}
   m_Layer: 5
   m_Name: Both
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4052,7 +4053,7 @@ GameObject:
   - component: {fileID: 330366282}
   m_Layer: 5
   m_Name: Turner Oak Malt
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4187,7 +4188,7 @@ GameObject:
   - component: {fileID: 331186756}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4318,7 +4319,7 @@ GameObject:
   - component: {fileID: 340741877}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4447,7 +4448,7 @@ GameObject:
   - component: {fileID: 370304460}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4799,7 +4800,7 @@ GameObject:
   - component: {fileID: 380702256}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5118,7 +5119,7 @@ GameObject:
   - component: {fileID: 385101963}
   m_Layer: 5
   m_Name: RU
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5317,7 +5318,7 @@ GameObject:
   - component: {fileID: 396620470}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5522,7 +5523,7 @@ GameObject:
   - component: {fileID: 408321214}
   m_Layer: 5
   m_Name: SheffiedOakGrey
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5832,7 +5833,7 @@ GameObject:
   - component: {fileID: 464987493}
   m_Layer: 5
   m_Name: OakToffee
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5966,7 +5967,7 @@ GameObject:
   - component: {fileID: 473577584}
   m_Layer: 5
   m_Name: Swing-Tilt
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6176,7 +6177,7 @@ GameObject:
   - component: {fileID: 488774595}
   m_Layer: 5
   m_Name: 8000
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6311,7 +6312,7 @@ GameObject:
   - component: {fileID: 500658545}
   m_Layer: 5
   m_Name: SheffiedOakConcrete
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6797,7 +6798,7 @@ GameObject:
   - component: {fileID: 532049048}
   m_Layer: 5
   m_Name: OliveGray
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7148,7 +7149,7 @@ GameObject:
   - component: {fileID: 553171002}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7278,7 +7279,7 @@ GameObject:
   - component: {fileID: 561004869}
   m_Layer: 5
   m_Name: Energy Efficient
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7402,7 +7403,7 @@ GameObject:
   - component: {fileID: 564023614}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7608,7 +7609,7 @@ GameObject:
   - component: {fileID: 571351401}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7739,7 +7740,7 @@ GameObject:
   - component: {fileID: 600338351}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8150,6 +8151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!1 &626288366
 GameObject:
   m_ObjectHideFlags: 0
@@ -8592,7 +8594,7 @@ GameObject:
   - component: {fileID: 660545144}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8666,7 +8668,7 @@ GameObject:
   - component: {fileID: 664623514}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8795,7 +8797,7 @@ GameObject:
   - component: {fileID: 673128992}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9043,7 +9045,7 @@ GameObject:
   - component: {fileID: 701105878}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9468,7 +9470,7 @@ GameObject:
   - component: {fileID: 729673570}
   m_Layer: 5
   m_Name: MetBrushPlatin
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9678,7 +9680,7 @@ GameObject:
   - component: {fileID: 760620287}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10198,7 +10200,7 @@ GameObject:
   - component: {fileID: 809001817}
   m_Layer: 5
   m_Name: MetBrushAlluminium
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10508,7 +10510,7 @@ GameObject:
   - component: {fileID: 813714555}
   m_Layer: 5
   m_Name: GoNext
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10643,7 +10645,7 @@ GameObject:
   - component: {fileID: 814523414}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11013,7 +11015,7 @@ GameObject:
   - component: {fileID: 866667005}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11262,7 +11264,7 @@ GameObject:
   - component: {fileID: 873371021}
   m_Layer: 5
   m_Name: MetBrushPlatin
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16513,7 +16515,7 @@ GameObject:
   - component: {fileID: 931165209}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16714,7 +16716,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 71.65
+  m_fontSize: 66.85
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16818,7 +16820,7 @@ GameObject:
   - component: {fileID: 943372150}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16892,7 +16894,7 @@ GameObject:
   - component: {fileID: 944963289}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17198,7 +17200,7 @@ GameObject:
   - component: {fileID: 965413032}
   m_Layer: 5
   m_Name: Hoppe_Austin
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17332,7 +17334,7 @@ GameObject:
   - component: {fileID: 966343929}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17405,7 +17407,7 @@ GameObject:
   - component: {fileID: 969221383}
   m_Layer: 5
   m_Name: DeepGray
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17540,7 +17542,7 @@ GameObject:
   - component: {fileID: 969594157}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17672,7 +17674,7 @@ GameObject:
   - component: {fileID: 977763649}
   m_Layer: 6
   m_Name: Grab
-  m_TagString: Untagged
+  m_TagString: Window
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18076,7 +18078,7 @@ GameObject:
   - component: {fileID: 1029358160}
   m_Layer: 5
   m_Name: CharcoalOak
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18359,7 +18361,7 @@ GameObject:
   - component: {fileID: 1034499773}
   m_Layer: 5
   m_Name: Cremeweiss
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18493,7 +18495,7 @@ GameObject:
   - component: {fileID: 1048738904}
   m_Layer: 5
   m_Name: Alux Anthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18824,7 +18826,7 @@ GameObject:
   - component: {fileID: 1069066012}
   m_Layer: 5
   m_Name: Inside
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18959,7 +18961,7 @@ GameObject:
   - component: {fileID: 1084930254}
   m_Layer: 5
   m_Name: MetBrushQuarzgrau
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19498,7 +19500,7 @@ GameObject:
   - component: {fileID: 1102870361}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19628,7 +19630,7 @@ GameObject:
   - component: {fileID: 1108065628}
   m_Layer: 5
   m_Name: Cremeweiss
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19767,7 +19769,7 @@ GameObject:
   - component: {fileID: 1119614114}
   m_Layer: 5
   m_Name: SheffiedOakGrey
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19902,7 +19904,7 @@ GameObject:
   - component: {fileID: 1125205304}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20317,7 +20319,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.45
+  m_fontSize: 25.7
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -21300,7 +21302,7 @@ GameObject:
   - component: {fileID: 1185073564}
   m_Layer: 5
   m_Name: MetBrushQuarzgrau
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21611,7 +21613,7 @@ GameObject:
   - component: {fileID: 1217714096}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21741,7 +21743,7 @@ GameObject:
   - component: {fileID: 1218425474}
   m_Layer: 5
   m_Name: 105
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21951,7 +21953,7 @@ GameObject:
   - component: {fileID: 1237527076}
   m_Layer: 5
   m_Name: SheffiedOakAlpine
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22150,7 +22152,7 @@ GameObject:
   - component: {fileID: 1256755298}
   m_Layer: 5
   m_Name: Two
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22427,7 +22429,7 @@ GameObject:
   - component: {fileID: 1281898239}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22558,7 +22560,7 @@ GameObject:
   - component: {fileID: 1286903913}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23040,7 +23042,7 @@ GameObject:
   - component: {fileID: 1315492848}
   m_Layer: 5
   m_Name: SheffiedOakConcrete
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23174,7 +23176,7 @@ GameObject:
   - component: {fileID: 1318927368}
   m_Layer: 5
   m_Name: Three
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23622,7 +23624,7 @@ GameObject:
   - component: {fileID: 1337911503}
   m_Layer: 5
   m_Name: MetalicAnthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23757,7 +23759,7 @@ GameObject:
   - component: {fileID: 1346403599}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23886,7 +23888,7 @@ GameObject:
   - component: {fileID: 1353502991}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23960,7 +23962,7 @@ GameObject:
   - component: {fileID: 1364510475}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24089,7 +24091,7 @@ GameObject:
   - component: {fileID: 1373719865}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24244,13 +24246,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1932462836055177272, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 3686542472735388195, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5355341816866973176, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 5796587794098976383, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5796587794098976383, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
+      propertyPath: m_TagString
+      value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 6331754148754901720, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
       propertyPath: inputAndFunctionPairs.Array.data[0].OnActionTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -24280,6 +24294,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6920058223069694417, guid: aa7e16cf063bd1941b7326927d811dbc, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24299,7 +24317,7 @@ GameObject:
   - component: {fileID: 1387838287}
   m_Layer: 5
   m_Name: StaufereicheMocca
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24433,7 +24451,7 @@ GameObject:
   - component: {fileID: 1405884110}
   m_Layer: 5
   m_Name: MetBrushAlluminium
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24568,7 +24586,7 @@ GameObject:
   - component: {fileID: 1415095845}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24698,7 +24716,7 @@ GameObject:
   - component: {fileID: 1416808106}
   m_Layer: 5
   m_Name: DeepGray
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24831,7 +24849,7 @@ GameObject:
   - component: {fileID: 1437938425}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24904,7 +24922,7 @@ GameObject:
   - component: {fileID: 1442649856}
   m_Layer: 5
   m_Name: Outside
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25103,7 +25121,7 @@ GameObject:
   - component: {fileID: 1449720817}
   m_Layer: 5
   m_Name: WhiteAluminium
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25492,6 +25510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!1 &1460928751
 GameObject:
   m_ObjectHideFlags: 0
@@ -25506,7 +25525,7 @@ GameObject:
   - component: {fileID: 1460928753}
   m_Layer: 5
   m_Name: To interior
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25749,7 +25768,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.1
+  m_fontSize: 32.55
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -25925,7 +25944,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.25
+  m_fontSize: 26.45
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -26130,7 +26149,7 @@ GameObject:
   - component: {fileID: 1485846883}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26403,7 +26422,7 @@ GameObject:
   - component: {fileID: 1512451544}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26639,6 +26658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!1 &1517625198
 GameObject:
   m_ObjectHideFlags: 0
@@ -26653,7 +26673,7 @@ GameObject:
   - component: {fileID: 1517625200}
   m_Layer: 5
   m_Name: JuraPineNature
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26787,7 +26807,7 @@ GameObject:
   - component: {fileID: 1529599714}
   m_Layer: 5
   m_Name: EN
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26921,7 +26941,7 @@ GameObject:
   - component: {fileID: 1537812543}
   m_Layer: 5
   m_Name: MattexFango
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27055,7 +27075,7 @@ GameObject:
   - component: {fileID: 1537824970}
   m_Layer: 5
   m_Name: Alux Anthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27189,7 +27209,7 @@ GameObject:
   - component: {fileID: 1540473730}
   m_Layer: 5
   m_Name: SheffiedOakAlpine
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27333,7 +27353,7 @@ GameObject:
   - component: {fileID: 1548313576}
   m_Layer: 5
   m_Name: JuraPineNature
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27466,7 +27486,7 @@ GameObject:
   - component: {fileID: 1551647731}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27539,7 +27559,7 @@ GameObject:
   - component: {fileID: 1557343531}
   m_Layer: 5
   m_Name: GoNext
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28026,7 +28046,7 @@ GameObject:
   - component: {fileID: 1602772817}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28156,7 +28176,7 @@ GameObject:
   - component: {fileID: 1612368767}
   m_Layer: 5
   m_Name: Black Anthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28633,7 +28653,7 @@ GameObject:
   - component: {fileID: 1619148787}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28804,6 +28824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &1643247619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28881,7 +28902,7 @@ GameObject:
   - component: {fileID: 1655625548}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29812,7 +29833,7 @@ GameObject:
   - component: {fileID: 1719489517}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29942,7 +29963,7 @@ GameObject:
   - component: {fileID: 1723961870}
   m_Layer: 5
   m_Name: StaufereicheMocca
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30075,7 +30096,7 @@ GameObject:
   - component: {fileID: 1730641420}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30190,7 +30211,7 @@ GameObject:
   - component: {fileID: 1740542144}
   m_Layer: 5
   m_Name: Slide
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30638,7 +30659,7 @@ GameObject:
   - component: {fileID: 1761727517}
   m_Layer: 5
   m_Name: Swing
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30773,7 +30794,7 @@ GameObject:
   - component: {fileID: 1774551734}
   m_Layer: 5
   m_Name: 85
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30962,6 +30983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &1779575584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31265,7 +31287,7 @@ GameObject:
   - component: {fileID: 1807439481}
   m_Layer: 5
   m_Name: UZ
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31400,7 +31422,7 @@ GameObject:
   - component: {fileID: 1810857430}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31599,6 +31621,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7339174007536905567}
     m_Modifications:
+    - target: {fileID: 1452085133022539108, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 2301179348527774320, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
       propertyPath: m_Name
       value: InsideMenu
@@ -31687,13 +31713,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7186315534444214261, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 7516007681076299336, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7516007681076299336, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 7743530748699745384, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743530748699745384, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
+      propertyPath: m_TagString
+      value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 8849404446858844366, guid: fe84063b6e696904aadd3eb98cbc144f, type: 3}
       propertyPath: inputAndFunctionPairs.Array.data[0].OnActionTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -31735,7 +31773,7 @@ GameObject:
   - component: {fileID: 1822926207}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31864,7 +31902,7 @@ GameObject:
   - component: {fileID: 1836488132}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32156,7 +32194,7 @@ GameObject:
   - component: {fileID: 1843274213}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32862,7 +32900,7 @@ GameObject:
   - component: {fileID: 1871946869}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32935,7 +32973,7 @@ GameObject:
   - component: {fileID: 1883632222}
   m_Layer: 5
   m_Name: MattexFango
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33178,7 +33216,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.55
+  m_fontSize: 22.55
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33245,7 +33283,7 @@ GameObject:
   - component: {fileID: 1933329648}
   m_Layer: 5
   m_Name: One
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33380,7 +33418,7 @@ GameObject:
   - component: {fileID: 1945540178}
   m_Layer: 5
   m_Name: WhiteAluminium
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33623,7 +33661,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.7
+  m_fontSize: 22.9
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33866,7 +33904,7 @@ GameObject:
   - component: {fileID: 1959674628}
   m_Layer: 5
   m_Name: Black Anthrazit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34000,7 +34038,7 @@ GameObject:
   - component: {fileID: 1959994476}
   m_Layer: 5
   m_Name: CharcoalOak
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34310,7 +34348,7 @@ GameObject:
   - component: {fileID: 2000395276}
   m_Layer: 5
   m_Name: GoPrev
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34871,7 +34909,7 @@ GameObject:
   - component: {fileID: 2037779363}
   m_Layer: 5
   m_Name: GoPrev
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35282,7 +35320,7 @@ GameObject:
   - component: {fileID: 2057514897}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35411,7 +35449,7 @@ GameObject:
   - component: {fileID: 2058343023}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35485,7 +35523,7 @@ GameObject:
   - component: {fileID: 2065648277}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35942,7 +35980,7 @@ GameObject:
   - component: {fileID: 2108399006}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36208,7 +36246,7 @@ GameObject:
   - component: {fileID: 2117324645}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36431,7 +36469,7 @@ GameObject:
   - component: {fileID: 2145700714}
   m_Layer: 5
   m_Name: Master_Karma
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36708,7 +36746,7 @@ GameObject:
   - component: {fileID: 5541362743137951666}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36936,7 +36974,7 @@ GameObject:
   - component: {fileID: 755648213081904031}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37156,7 +37194,7 @@ GameObject:
   - component: {fileID: 6621711029173722929}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37174,7 +37212,7 @@ GameObject:
   - component: {fileID: 4904138608295460263}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37320,7 +37358,7 @@ GameObject:
   - component: {fileID: 7749996234509857706}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37388,7 +37426,7 @@ GameObject:
   - component: {fileID: 3261539885081152869}
   m_Layer: 5
   m_Name: RU
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37967,7 +38005,7 @@ GameObject:
   - component: {fileID: 4996233499593021372}
   m_Layer: 5
   m_Name: UZ
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38433,7 +38471,7 @@ GameObject:
   - component: {fileID: 2372807457927801141}
   m_Layer: 5
   m_Name: Style
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38451,7 +38489,7 @@ GameObject:
   - component: {fileID: 7302976706536880714}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38679,7 +38717,7 @@ GameObject:
   - component: {fileID: 4152771264650143841}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38843,7 +38881,7 @@ GameObject:
   - component: {fileID: 2895111079752182649}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39081,7 +39119,7 @@ GameObject:
   - component: {fileID: 7888443547687628404}
   m_Layer: 5
   m_Name: To interior
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39193,7 +39231,7 @@ GameObject:
   - component: {fileID: 6827613643097106221}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39967,7 +40005,7 @@ GameObject:
   - component: {fileID: 7164123952014404713}
   m_Layer: 5
   m_Name: Both
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40117,7 +40155,7 @@ GameObject:
   - component: {fileID: 7219420164660768698}
   m_Layer: 5
   m_Name: UZ
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40184,7 +40222,7 @@ GameObject:
   - component: {fileID: 3568468356524839977}
   m_Layer: 5
   m_Name: EN
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40305,7 +40343,7 @@ GameObject:
   - component: {fileID: 3319411819109673286}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40375,7 +40413,7 @@ GameObject:
   - component: {fileID: 7180857525531172522}
   m_Layer: 5
   m_Name: Office
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40479,7 +40517,7 @@ GameObject:
   - component: {fileID: 8343555003172474945}
   m_Layer: 5
   m_Name: Outside
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40744,7 +40782,7 @@ GameObject:
   - component: {fileID: 4056577304415245887}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41227,7 +41265,7 @@ GameObject:
   - component: {fileID: 7552500128343014547}
   m_Layer: 5
   m_Name: Classical
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41254,7 +41292,7 @@ GameObject:
   - component: {fileID: 7706547190351820150}
   m_Layer: 5
   m_Name: OliveGray
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41765,7 +41803,7 @@ GameObject:
   - component: {fileID: 7661652087271739437}
   m_Layer: 5
   m_Name: Inside
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42004,7 +42042,7 @@ GameObject:
   - component: {fileID: 8794570303907220961}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42690,7 +42728,7 @@ GameObject:
   - component: {fileID: 1762445148212895018}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43180,7 +43218,7 @@ GameObject:
   - component: {fileID: 5482563919846477891}
   m_Layer: 5
   m_Name: RU
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43362,7 +43400,7 @@ GameObject:
   - component: {fileID: 8654252232942390728}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43442,7 +43480,7 @@ GameObject:
   - component: {fileID: 8046309830834545118}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43758,7 +43796,7 @@ GameObject:
   - component: {fileID: 5677227915329302345}
   m_Layer: 5
   m_Name: Window
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44016,7 +44054,7 @@ GameObject:
   - component: {fileID: 3137826306453973230}
   m_Layer: 5
   m_Name: X-Ray
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44372,7 +44410,7 @@ GameObject:
   - component: {fileID: 4918378403554415107}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44618,7 +44656,7 @@ GameObject:
   - component: {fileID: 4858308200255344834}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44790,7 +44828,7 @@ GameObject:
   - component: {fileID: 4189843691018595705}
   m_Layer: 5
   m_Name: Exit
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45110,6 +45148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &6872376552658559780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45136,7 +45175,7 @@ GameObject:
   - component: {fileID: 2570038395202886365}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45333,7 +45372,7 @@ GameObject:
   - component: {fileID: 7336725323383919303}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45748,7 +45787,7 @@ GameObject:
   - component: {fileID: 7085720181619920726}
   m_Layer: 5
   m_Name: Brick
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45880,7 +45919,7 @@ GameObject:
   - component: {fileID: 5474312495488887104}
   m_Layer: 5
   m_Name: Stublina
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45979,6 +46018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &7164123952014404713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46113,7 +46153,7 @@ GameObject:
   - component: {fileID: 2397143145090569642}
   m_Layer: 5
   m_Name: Hoppe_Toulon
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46131,7 +46171,7 @@ GameObject:
   - component: {fileID: 9169417836724252384}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46372,7 +46412,7 @@ GameObject:
   - component: {fileID: 7745645872446198277}
   m_Layer: 0
   m_Name: Button Holders
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46951,6 +46991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &7749996234509857706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47266,7 +47307,7 @@ GameObject:
   - component: {fileID: 7941444436748089500}
   m_Layer: 5
   m_Name: Modern
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47407,6 +47448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &8052552110584561103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49079,6 +49121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &8764694856528064977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49105,7 +49148,7 @@ GameObject:
   - component: {fileID: 16385904804809463}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49286,7 +49329,7 @@ GameObject:
   - component: {fileID: 405058392024971756}
   m_Layer: 5
   m_Name: OakToffee
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49304,7 +49347,7 @@ GameObject:
   - component: {fileID: 8256144275580628800}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49402,6 +49445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!223 &9032771620845438753
 Canvas:
   m_ObjectHideFlags: 0
@@ -49538,7 +49582,7 @@ GameObject:
   - component: {fileID: 9097122118826443911}
   m_Layer: 5
   m_Name: EN
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49666,6 +49710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   darkenFactor: 0.75
+  currbutton: {fileID: 0}
 --- !u!114 &9169417836724252384
 MonoBehaviour:
   m_ObjectHideFlags: 0

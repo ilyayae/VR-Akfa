@@ -369,4 +369,29 @@ public class WindowDoor : MonoBehaviour
         myBody.jointVelocity = new ArticulationReducedSpace(0f);
 
     }
+
+    public void UpdateInitialTransform()
+    {
+        if (transform.parent != null)
+        {
+            initialLocalRotation = transform.localRotation;
+            initialLocalPosition = transform.localPosition;
+        }
+        else
+        {
+            initialLocalRotation = transform.rotation;
+            initialLocalPosition = transform.position;
+        }
+    }
+
+    // Forces the ArticulationBody to rebuild its anchors around the new position
+    public void ReapplyStateDirectly()
+    {
+        switch (state)
+        {
+            case doorState.SWING: SetJointSwingDirect(); break;
+            case doorState.TILT: SetJointTiltDirect(); break;
+            case doorState.SLIDE: SetJointSlideDirect(); break;
+        }
+    }
 }

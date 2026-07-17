@@ -10,7 +10,7 @@ public class ToggleButtons : MonoBehaviour
     private List<Button> myButtons = new List<Button>();
     private List<ColorBlock> originalButtonColors = new List<ColorBlock>();
 
-    void Start()
+    void Awake()
     {
         foreach (Transform child in transform)
         {
@@ -30,9 +30,11 @@ public class ToggleButtons : MonoBehaviour
             OnButtonClicked(0);
         }
     }
-
+    public Button currbutton;
     public void OnButtonClicked(int index)
     {
+        if (myButtons == null || myButtons.Count == 0 || index < 0 || index >= myButtons.Count)
+            return;
         for (int i = 0; i < myButtons.Count; i++)
         {
             if (i == index)
@@ -44,6 +46,7 @@ public class ToggleButtons : MonoBehaviour
                 myButtons[i].colors = originalButtonColors[i];
             }
         }
+        currbutton = myButtons[index];
     }
     private ColorBlock DarkenColorBlock(ColorBlock original, float factor)
     {

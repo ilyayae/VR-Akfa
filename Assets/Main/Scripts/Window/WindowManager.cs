@@ -123,6 +123,8 @@ public class WindowManager : MonoBehaviour
     int currentHandle = 0;
     public void SetHandleToId(int id)
     {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
         currentHandle = id;
         if (RightWindow != null && RightWindow.gameObject.activeSelf == true)
         {
@@ -135,10 +137,13 @@ public class WindowManager : MonoBehaviour
     }
     public void SetFrameToId(int id)
     {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
         StartCoroutine(FrameChangeSequence(id));
     }
     IEnumerator CloseRightWindow()
     {
+        GameManager.Instance.UngrabRight();
         if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
         {
             yield return StartCoroutine(RightWindow.myDoor.SetOpenedDegreeOfWindow(0f));
@@ -153,6 +158,7 @@ public class WindowManager : MonoBehaviour
 
     IEnumerator CloseLeftWindow()
     {
+        GameManager.Instance.UngrabLeft();
         if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
         {
             yield return StartCoroutine(LeftWindow.myDoor.SetOpenedDegreeOfWindow(0f));
@@ -204,73 +210,66 @@ public class WindowManager : MonoBehaviour
         }
 
         Physics.SyncTransforms();
-
         yield return new WaitForFixedUpdate();
+
+        door.UpdateInitialTransform();
+        door.ReapplyStateDirectly();
     }
+
+    private Coroutine activeModeRoutine;
 
     public void SetSingleWindowMode()
     {
         if (WindowMode == numberMode.One) return;
-        WindowMode = numberMode.One;
-
-        if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
-        {
-            LeftWindow.myDoor.ResetToClosedPosition();
-            if (LeftWindow.handleScript != null) LeftWindow.handleScript.ResetToClosedPosition();
-        }
-        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
-        {
-            RightWindow.myDoor.ResetToClosedPosition();
-            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
-        }
-        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
-
-        LeftWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(true);
-        SetFrameToId(currentSetId);
-        SetHandleToId(currentHandle);
+        if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
+        activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.One));
     }
 
     public void SetDualWindowMode()
     {
         if (WindowMode == numberMode.Two) return;
-        WindowMode = numberMode.Two;
-
-        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
-        {
-            RightWindow.myDoor.ResetToClosedPosition();
-            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
-        }
-
-        LeftWindow.gameObject.SetActive(true);
-        RightWindow.gameObject.SetActive(true);
-        SetFrameToId(currentSetId);
-        SetHandleToId(currentHandle);
-        LeftWindow.SetMechanism(RightWindow.currentMechanism);
+        if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
+        activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Two));
     }
 
     public void SetTripleWindowMode()
     {
         if (WindowMode == numberMode.Three) return;
-        WindowMode = numberMode.Three;
+        if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
+        activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Three));
+    }
 
+    private IEnumerator SwitchModeSequence(numberMode targetMode)
+    {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
+        WindowMode = targetMode;
+        yield return StartCoroutine(CloseRightWindow());
         if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
         {
+            yield return StartCoroutine(CloseLeftWindow());
+        }
+        if (targetMode == numberMode.One || targetMode == numberMode.Three)
+        {
+            LeftWindow.gameObject.SetActive(false);
+            RightWindow.gameObject.SetActive(true);
+        }
+        else if (targetMode == numberMode.Two)
+        {
+            LeftWindow.gameObject.SetActive(true);
+            RightWindow.gameObject.SetActive(true);
             LeftWindow.myDoor.ResetToClosedPosition();
             if (LeftWindow.handleScript != null) LeftWindow.handleScript.ResetToClosedPosition();
         }
-        if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
-        {
-            RightWindow.myDoor.ResetToClosedPosition();
-            if (RightWindow.handleScript != null) RightWindow.handleScript.ResetToClosedPosition();
-        }
-        Vector3 centerPos = new Vector3(-0.384f, -0.01400006f, 0.0219999f);
-
-        LeftWindow.gameObject.SetActive(false);
-        RightWindow.gameObject.SetActive(true);
-        SetFrameToId(currentSetId);
+        yield return new WaitForFixedUpdate();
+        yield return StartCoroutine(FrameChangeSequence(currentSetId));
         SetHandleToId(currentHandle);
+        if (targetMode == numberMode.Two)
+        {
+            LeftWindow.SetMechanism(RightWindow.currentMechanism);
+        }
+
+        activeModeRoutine = null;
     }
     private IEnumerator FrameChangeSequence(int id)
     {
@@ -437,6 +436,8 @@ public class WindowManager : MonoBehaviour
 
     public void setMechanismSwing()
     {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -445,6 +446,8 @@ public class WindowManager : MonoBehaviour
 
     public void setMechanismTilt()
     {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING_TILT);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -453,6 +456,8 @@ public class WindowManager : MonoBehaviour
 
     public void setMechanismSlide()
     {
+        GameManager.Instance.UngrabLeft();
+        GameManager.Instance.UngrabRight();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
