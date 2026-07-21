@@ -4,7 +4,8 @@ using UnityEngine;
 public class TextureChanger : MonoBehaviour
 {
     [SerializeField] private List<Renderer> whatToChange;
-
+    [SerializeField] private Material TransparentMat;
+    private bool X_Rayed = false;
     // The last material is always roomside, the first material is always inside, if there are three materials the one in the middle is always outside
     // inside and should not be changed. 
     public void ChangeTextureOutdoors(Material text)
@@ -24,6 +25,7 @@ public class TextureChanger : MonoBehaviour
 
     private void UpdateTextures(Material text, bool updateOutdoors, bool updateRoom)
     {
+        if (X_Rayed) return;
         foreach (Renderer r in whatToChange)
         {
             if (r == null || r.sharedMaterials.Length == 0) continue;
@@ -45,6 +47,37 @@ public class TextureChanger : MonoBehaviour
             {
                 r.materials = mats;
             }
+        }
+    }
+    private Dictionary<Renderer, Material[]> originalMaterials = new Dictionary<Renderer, Material[]>();
+    public void MakeXRayed()
+    {
+        if (X_Rayed) return;
+        originalMaterials.Clear();
+        X_Rayed = true;
+        foreach(var r in GetComponentsInChildren<Renderer>())
+        {
+            if(r.tag != "DontTouchMat")
+            {
+                originalMaterials.Add(r, r.sharedMaterials);
+                Material[] mats = r.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    mats[i] = TransparentMat;
+                }
+                r.sharedMaterials = mats;
+            }
+        }
+    }
+
+    public void UnmakeXRayed()
+    {
+        if (!X_Rayed) return;
+        X_Rayed = false;
+        foreach (KeyValuePair<Renderer, Material[]> kvp in originalMaterials)
+        {
+            if(kvp.Key != null)
+                kvp.Key.sharedMaterials = kvp.Value;
         }
     }
 }

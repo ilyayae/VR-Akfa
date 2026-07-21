@@ -42,6 +42,24 @@ public class WindowManager : MonoBehaviour
     {
         currSetting = set;
     }
+    private bool xray = false;
+    public void OnOffXRay()
+    {
+        if(xray)
+        {
+            xray = false;
+            currentInstantiatedFrame.GetComponentInChildren<TextureChanger>().UnmakeXRayed();
+            foreach (TextureChanger tchange in RightWindow.changers) tchange.UnmakeXRayed();
+            foreach (TextureChanger tchange in LeftWindow.changers) tchange.UnmakeXRayed();
+        }
+        else
+        {
+            xray = true;
+            currentInstantiatedFrame.GetComponentInChildren<TextureChanger>().MakeXRayed();
+            foreach (TextureChanger tchange in RightWindow.changers) tchange.MakeXRayed();
+            foreach (TextureChanger tchange in LeftWindow.changers) tchange.MakeXRayed();
+        }
+    }
     public void SetTextureToId(int id)
     {
         Material hingeMat = materials[id].windowsill;

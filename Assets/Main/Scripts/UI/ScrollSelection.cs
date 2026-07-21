@@ -63,7 +63,7 @@ public class ScrollSelection : MonoBehaviour
         StartCoroutine(SlidePrev());
         setAvtiveItems();
     }
-    int countOfActives = 8;
+    public int countOfActives = 8;
     private void setAvtiveItems()
     {
         int currentCount = 0;

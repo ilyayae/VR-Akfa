@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6886751303006387262}
   - component: {fileID: 407821017767099068}
   - component: {fileID: 4977780131272188599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5344861001801544354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LongArmTargetR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6855916988758244611}
   - component: {fileID: 3586814893582047486}
   - component: {fileID: 2358305409640901495}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,9 +222,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1543539724186403513}
   - component: {fileID: 2096865593899597541}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallArmR
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 1154973541406525449}
   - component: {fileID: 5352644557287712955}
   - component: {fileID: 3202182384642963694}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 7768924312820618266}
   - component: {fileID: 4692779747233968476}
   - component: {fileID: 9090019414905673445}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 98_2d_windowR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 8712745819897220486}
+  TransparentMat: {fileID: 2100000, guid: 6a913112f9b707444bd206394dca5aaa, type: 2}
 --- !u!1 &2775429460162402780
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 879518871803016135}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +478,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6133765178627473609}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_Frame_98_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,9 +524,9 @@ GameObject:
   - component: {fileID: 3093244655879983758}
   - component: {fileID: 2954103075309127888}
   - component: {fileID: 3481651053793551817}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Solid26.002
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -613,9 +614,9 @@ GameObject:
   - component: {fileID: 6026492876663249870}
   - component: {fileID: 1116454561394002823}
   - component: {fileID: 7140818361908223729}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mechanism.002
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -704,7 +705,7 @@ GameObject:
   - component: {fileID: 7616963644847087236}
   - component: {fileID: 2036225953957839779}
   - component: {fileID: 3660402238795054162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +795,7 @@ GameObject:
   - component: {fileID: 6889056856048509432}
   - component: {fileID: 304241623975121436}
   - component: {fileID: 3151105235445067626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -884,7 +885,7 @@ GameObject:
   - component: {fileID: 369468193576003346}
   - component: {fileID: 8182114910215855488}
   - component: {fileID: 9195362468152154660}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -974,7 +975,7 @@ GameObject:
   - component: {fileID: 4580419053529453269}
   - component: {fileID: 5747490494508827444}
   - component: {fileID: 278317755333683538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1064,7 +1065,7 @@ GameObject:
   - component: {fileID: 6899064564601991392}
   - component: {fileID: 9153291696122635712}
   - component: {fileID: 345533933334864897}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,7 +1155,7 @@ GameObject:
   - component: {fileID: 5513714515006416670}
   - component: {fileID: 1864649277190465390}
   - component: {fileID: 899699885842043201}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,9 +1245,9 @@ GameObject:
   - component: {fileID: 6149743939945726957}
   - component: {fileID: 4347750129307886521}
   - component: {fileID: 1908745523757960633}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_001
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1334,9 +1335,9 @@ GameObject:
   - component: {fileID: 5494310501594983381}
   - component: {fileID: 6541329964473270467}
   - component: {fileID: 5381858791254717518}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_008
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1424,9 +1425,9 @@ GameObject:
   - component: {fileID: 1640832123717904476}
   - component: {fileID: 5519253914624527541}
   - component: {fileID: 6005854627657909577}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder.011
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1514,7 +1515,7 @@ GameObject:
   - component: {fileID: 1811107677740340246}
   - component: {fileID: 6099209501222041207}
   - component: {fileID: 8712745819897220486}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1606,7 +1607,7 @@ GameObject:
   - component: {fileID: 5425609823407222175}
   - component: {fileID: 6853069316123936804}
   - component: {fileID: 8535658207212046062}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_98_R_007
   m_TagString: Untagged
   m_Icon: {fileID: 0}

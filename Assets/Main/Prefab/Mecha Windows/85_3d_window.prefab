@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6819372685347369870}
   - component: {fileID: 7471795185178450661}
   - component: {fileID: 8346395553273293503}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Solid26.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8016055770924095468}
   - component: {fileID: 8308871605626637169}
   - component: {fileID: 6958458104799926990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,9 +191,9 @@ GameObject:
   - component: {fileID: 1270263252948759335}
   - component: {fileID: 3128742655876742351}
   - component: {fileID: 8331356568205610743}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_017
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,7 +279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7266415317772177603}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_Frame_85_R.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5808141140105234582}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LongArmTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,9 +350,9 @@ GameObject:
   - component: {fileID: 4395623309696134445}
   - component: {fileID: 2267620875017982036}
   - component: {fileID: 6533500790097576487}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mechanism.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,9 +441,9 @@ GameObject:
   - component: {fileID: 1627957770256967898}
   - component: {fileID: 7520248596923816547}
   - component: {fileID: 7578925741405971209}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder.013
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 5781289924481288556}
   - component: {fileID: 2385241194760903270}
   - component: {fileID: 3445013434864026123}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 8747332422030824179}
   - component: {fileID: 364647686321913445}
   - component: {fileID: 6663881882568309813}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 8528046798248229291}
   - component: {fileID: 5783013275025492530}
   - component: {fileID: 3317472074794909773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 6824096805923496532}
   - component: {fileID: 7356937565749942773}
   - component: {fileID: 4572663427468474513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 4076127066251367097}
   - component: {fileID: 5092940079268270369}
   - component: {fileID: 1008498121933094382}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 85_3d_window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -961,6 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 4572663427468474513}
+  TransparentMat: {fileID: 2100000, guid: 6a913112f9b707444bd206394dca5aaa, type: 2}
 --- !u!1 &7680923037665521647
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,9 +973,9 @@ GameObject:
   - component: {fileID: 6671659114820816939}
   - component: {fileID: 6566334736872347579}
   - component: {fileID: 6095732882308760434}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_85_R_014
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,7 +1061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2581875793040385219}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Handle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,9 +1093,9 @@ GameObject:
   m_Component:
   - component: {fileID: 23178484201155217}
   - component: {fileID: 2213963881604054671}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallArm
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

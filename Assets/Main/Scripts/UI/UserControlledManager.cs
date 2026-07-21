@@ -27,13 +27,16 @@ public class UserControlledManager : MonoBehaviour
     [SerializeField] private Transform Outside_Right;
     [SerializeField] private Transform Inside_Left;
     [SerializeField] private Transform Inside_Right;
+    public bool isInside = false;
 
     [Header("Fade Settings")]
     public Image fadeImage;
     public float fadeDuration = 0.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static UserControlledManager Instance { get; private set; }
     void Start()
     {
+        Instance = this;
         ChangeFacadeById(0);
         SceneManager.LoadScene("Exterior", LoadSceneMode.Additive);
         SceneManager.LoadScene("Room", LoadSceneMode.Additive);
@@ -48,21 +51,24 @@ public class UserControlledManager : MonoBehaviour
         FacadeManager.Instance.SetActiveFacadeByID(id);
         currentFacadeID = id;
     }
+    
     public void goInside()
     {
+        isInside = true;
         StartCoroutine(TeleportTo(insideLocation.transform));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, outsideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, insideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, WindowSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, insideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, WindowSelection));
     }
     public void goOutside()
     {
+        isInside = false;
         StartCoroutine(TeleportTo(outsideLocation.transform));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
         StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, outsideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, insideMenu));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, insideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, WindowSelection));
     }
     public void ChangeLanguageByIndex(int localeIndex)
     {
@@ -108,6 +114,10 @@ public class UserControlledManager : MonoBehaviour
     // 0 = center, 1 = left, 2 = right
     int currentPlaceFacade = 0;
     int currentPlaceWindow = 0;
+    public void closeItFacade()
+    {
+        OpenAndCloseFacadeSelection(currentPlaceFacade);
+    }
     public void OpenAndCloseFacadeSelection(int place)
     {
         Vector3 pos;
@@ -143,6 +153,10 @@ public class UserControlledManager : MonoBehaviour
             scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
         }
         currentPlaceFacade = place;
+    }
+    public void closeItWindow()
+    {
+        OpenAndCloseWindowSelection(currentPlaceWindow);   
     }
     public void OpenAndCloseWindowSelection(int place)
     {

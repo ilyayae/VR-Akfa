@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3699628737089142243}
   - component: {fileID: 1917153647887592230}
   - component: {fileID: 6643930433829108871}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_85_010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,9 +101,9 @@ GameObject:
   - component: {fileID: 7397940537138591150}
   - component: {fileID: 3111718377599617474}
   - component: {fileID: 713515173829416978}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_7.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,9 +192,9 @@ GameObject:
   - component: {fileID: 5599338618860055887}
   - component: {fileID: 6483679763965359656}
   - component: {fileID: 6562582896394635687}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_10.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,9 +281,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8307673958156418156}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallArmTarget
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 5416254212726856894}
   - component: {fileID: 4246599573512499748}
   - component: {fileID: 1301500166457265298}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_85_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,9 +404,9 @@ GameObject:
   - component: {fileID: 3281415376690518764}
   - component: {fileID: 9220091129952054818}
   - component: {fileID: 3963624696663412831}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_9.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -495,9 +495,9 @@ GameObject:
   - component: {fileID: 2542287673355801951}
   - component: {fileID: 7394473314809525396}
   - component: {fileID: 4418456920374311216}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeTop
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 142548779225285151}
   - component: {fileID: 3570025007765300329}
   - component: {fileID: 4129421361995397269}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 85_1d_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,6 +661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 7641745070257024157}
+  TransparentMat: {fileID: 2100000, guid: 6a913112f9b707444bd206394dca5aaa, type: 2}
 --- !u!1 &3449748724311072340
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,9 +672,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6706572478209095113}
   - component: {fileID: 62752859656246933}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeAndLong
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -729,9 +730,9 @@ GameObject:
   - component: {fileID: 2166655999868515819}
   - component: {fileID: 4317972754631840006}
   - component: {fileID: 3402465322902624975}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_85_003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -818,9 +819,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3391620554005529894}
   - component: {fileID: 4513083540964296313}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LongArm
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -876,7 +877,7 @@ GameObject:
   - component: {fileID: 7296591055412751065}
   - component: {fileID: 4616530413419602591}
   - component: {fileID: 7641745070257024157}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_85_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -968,9 +969,9 @@ GameObject:
   - component: {fileID: 104347594538657163}
   - component: {fileID: 944920065780863639}
   - component: {fileID: 746191113360991456}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Solid27.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,7 +1061,7 @@ GameObject:
   - component: {fileID: 1053342254846086872}
   - component: {fileID: 6443640100016617814}
   - component: {fileID: 782238178941876919}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_85_009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1150,7 +1151,7 @@ GameObject:
   - component: {fileID: 7542304371835709545}
   - component: {fileID: 5711752962643655589}
   - component: {fileID: 1916324317186863626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_85_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1240,9 +1241,9 @@ GameObject:
   - component: {fileID: 609854531062154108}
   - component: {fileID: 5837055525312281622}
   - component: {fileID: 4406854105097988623}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeBottom
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1328,7 +1329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234925701134969025}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: extra_85
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,9 +1366,9 @@ GameObject:
   - component: {fileID: 7338408084421697559}
   - component: {fileID: 2116563219336538528}
   - component: {fileID: 7936637392937583523}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_85_004
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1455,7 +1456,7 @@ GameObject:
   - component: {fileID: 8897306003346613214}
   - component: {fileID: 793123642635442190}
   - component: {fileID: 95928740643258185}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_85_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1545,7 +1546,7 @@ GameObject:
   - component: {fileID: 8959886276321304639}
   - component: {fileID: 7827545193164313962}
   - component: {fileID: 5637436804463961479}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_85_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1635,9 +1636,9 @@ GameObject:
   - component: {fileID: 6459998728526734530}
   - component: {fileID: 5101044601116944767}
   - component: {fileID: 2702173604864578901}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hinge
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1725,9 +1726,9 @@ GameObject:
   - component: {fileID: 8342342960154429018}
   - component: {fileID: 1971527739915533774}
   - component: {fileID: 8521439475397622281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_8.003
-  m_TagString: Untagged
+  m_TagString: DontTouchMat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

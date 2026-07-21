@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 628988186607941549}
   - component: {fileID: 6410259257048449591}
   - component: {fileID: 1334744958073530645}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7905392836622891508}
   - component: {fileID: 8613866822347430876}
   - component: {fileID: 6429260668809043145}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 754284016731576092}
   - component: {fileID: 3366951707631023756}
   - component: {fileID: 681386267657224630}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1440135299017495535}
   - component: {fileID: 3063384209607343474}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Empty.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 4656224945150525860}
   - component: {fileID: 2500241758700784862}
   - component: {fileID: 5045571593257148004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 6474803312598485025}
   - component: {fileID: 9141413463920949494}
   - component: {fileID: 3772715114214937410}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_8.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 3433823740222146577}
   - component: {fileID: 1819879878799448440}
   - component: {fileID: 1812927740836560152}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +609,7 @@ GameObject:
   - component: {fileID: 8224860987314661886}
   - component: {fileID: 4363948426312862299}
   - component: {fileID: 3344223224241162599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 105_1d_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,6 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 533651989392015853}
+  TransparentMat: {fileID: 2100000, guid: 6a913112f9b707444bd206394dca5aaa, type: 2}
 --- !u!1 &2798369118129935906
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +696,7 @@ GameObject:
   - component: {fileID: 6592364807485142645}
   - component: {fileID: 6611947483331279272}
   - component: {fileID: 7275750440869390606}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1505735048992950735}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallArmTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +817,7 @@ GameObject:
   - component: {fileID: 7680536485701986884}
   - component: {fileID: 7946848368375937538}
   - component: {fileID: 9169494276499632208}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_10.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,7 +908,7 @@ GameObject:
   - component: {fileID: 4665734967337362029}
   - component: {fileID: 8234821553257934235}
   - component: {fileID: 6810087675565661023}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -997,7 +998,7 @@ GameObject:
   - component: {fileID: 8404983200556994544}
   - component: {fileID: 3049448192102508648}
   - component: {fileID: 879474341111031801}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1088,7 @@ GameObject:
   - component: {fileID: 5061182184342595751}
   - component: {fileID: 4431505291096988017}
   - component: {fileID: 7599606624900130796}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_9.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1178,7 +1179,7 @@ GameObject:
   - component: {fileID: 1716975793179635897}
   - component: {fileID: 3220419942729557290}
   - component: {fileID: 1243805496505825131}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_105_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1267,7 +1268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7802820455455349763}
   - component: {fileID: 6815178217099820194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HingeAndArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,7 +1324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4329516586827324782}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: extra_105
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,7 +1365,7 @@ GameObject:
   - component: {fileID: 5584987189424116631}
   - component: {fileID: 4064164131182331125}
   - component: {fileID: 6314462273930837875}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: petlya_7.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1455,7 +1456,7 @@ GameObject:
   - component: {fileID: 2067507846247807942}
   - component: {fileID: 8320831885080536363}
   - component: {fileID: 2253116244542244268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Solid27.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1546,7 +1547,7 @@ GameObject:
   - component: {fileID: 3629710167689735503}
   - component: {fileID: 8580087095537830989}
   - component: {fileID: 5148953078622069631}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1636,7 +1637,7 @@ GameObject:
   - component: {fileID: 4242871033716412604}
   - component: {fileID: 3634135909448412984}
   - component: {fileID: 6618825220513972815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_105_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1726,7 +1727,7 @@ GameObject:
   - component: {fileID: 7598768600603429961}
   - component: {fileID: 798296327192629715}
   - component: {fileID: 7463082090503685985}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1816,7 +1817,7 @@ GameObject:
   - component: {fileID: 4279750055811924264}
   - component: {fileID: 336265569995973675}
   - component: {fileID: 533651989392015853}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_105_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1908,7 +1909,7 @@ GameObject:
   - component: {fileID: 3650627552295122683}
   - component: {fileID: 5395943928959327706}
   - component: {fileID: 7408023858615606911}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Window_Frame_1_door_105_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1999,7 +2000,7 @@ GameObject:
   - component: {fileID: 8806529436379456652}
   - component: {fileID: 2633207761865733938}
   - component: {fileID: 6027407490398074513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_extra_105_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}

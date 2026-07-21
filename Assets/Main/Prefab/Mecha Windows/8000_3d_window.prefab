@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4447036069908523486}
   - component: {fileID: 5226443155929080251}
   - component: {fileID: 433384067942651972}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_8000_L_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8692333135921592096}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Empty.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 5375331451097247392}
   - component: {fileID: 1241017362363526611}
   - component: {fileID: 4703284243878993279}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Glass_L_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 5731305660806164545}
   - component: {fileID: 5998823839231849029}
   - component: {fileID: 2703732271679992228}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 8000_3d_window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureChanger
   whatToChange:
   - {fileID: 433384067942651972}
+  TransparentMat: {fileID: 2100000, guid: 6a913112f9b707444bd206394dca5aaa, type: 2}
 --- !u!1 &2027442032785749547
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +308,7 @@ GameObject:
   - component: {fileID: 2066159688266689797}
   - component: {fileID: 1669131100587429764}
   - component: {fileID: 75240843087215620}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Glass_L_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +398,7 @@ GameObject:
   - component: {fileID: 4757652771848304843}
   - component: {fileID: 7156514035229977977}
   - component: {fileID: 6166847912065342489}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Solid26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +488,7 @@ GameObject:
   - component: {fileID: 6870742052766960661}
   - component: {fileID: 1795230271896342699}
   - component: {fileID: 2818007822919565373}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_8000_L_007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +578,7 @@ GameObject:
   - component: {fileID: 110161798423393274}
   - component: {fileID: 3064677300676932984}
   - component: {fileID: 4129116292431290964}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Glass_L_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +668,7 @@ GameObject:
   - component: {fileID: 5548428703078056643}
   - component: {fileID: 9174567535432793394}
   - component: {fileID: 3915225614614772320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pasted__polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2782440209299708720}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -786,7 +787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5527095180850954515}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glass_L.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +821,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225072327139599519}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LongArmTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,7 +854,7 @@ GameObject:
   - component: {fileID: 7189703100785962278}
   - component: {fileID: 4050083935894531725}
   - component: {fileID: 8158252210096589364}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mechanism
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 516683053032113443}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mechanism
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +978,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7650216568070654465}
   - component: {fileID: 7636464969866353164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmallArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1035,7 @@ GameObject:
   - component: {fileID: 7439198325821626052}
   - component: {fileID: 6815205775695426078}
   - component: {fileID: 7966691817552659868}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_8000_L_008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1124,7 +1125,7 @@ GameObject:
   - component: {fileID: 639713930697918990}
   - component: {fileID: 1176028022372832676}
   - component: {fileID: 7664830714040257427}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SM_Door_Frame_8000_L_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1214,7 +1215,7 @@ GameObject:
   - component: {fileID: 3307822084318450563}
   - component: {fileID: 4822146000175324717}
   - component: {fileID: 1371260374462794147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pasted__Solid1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
