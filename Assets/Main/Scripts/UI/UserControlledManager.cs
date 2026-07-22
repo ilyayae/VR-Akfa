@@ -138,7 +138,7 @@ public class UserControlledManager : MonoBehaviour
             if (currentPlaceFacade == place)
             {
                 if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
+                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, FacadeSelection));
             }
             else
             {
@@ -150,7 +150,7 @@ public class UserControlledManager : MonoBehaviour
             FacadeSelection.transform.position = pos;
             FacadeSelection.SetActive(true);
             if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
+            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, FacadeSelection));
         }
         currentPlaceFacade = place;
     }
@@ -178,7 +178,7 @@ public class UserControlledManager : MonoBehaviour
             if (currentPlaceWindow == place)
             {
                 if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, WindowSelection));
+                scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, WindowSelection));
             }
             else
             {
@@ -190,17 +190,17 @@ public class UserControlledManager : MonoBehaviour
             WindowSelection.transform.position = pos;
             WindowSelection.SetActive(true);
             if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
-            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, WindowSelection));
+            scaleCoroutine = StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, WindowSelection));
         }
         currentPlaceWindow = place;
     }
     private IEnumerator AnimateCloseOpen(Vector3 position, GameObject toScale)
     {
-        yield return StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, toScale));
+        yield return StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, toScale));
         yield return null;
         toScale.transform.position = position;
         yield return null;
-        yield return StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, toScale));
+        yield return StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, toScale));
     }
     private IEnumerator AnimateScale(Vector3 targetScale, bool isOpening, GameObject toScale)
     {
