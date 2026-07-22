@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -8,6 +10,17 @@ public enum numberMode
     Two,
     One,
     Three
+}
+
+[System.Serializable]
+public class WindowSettingsData
+{
+    public string WindowType;
+    public string HandleType;
+    public string MaterialInsideType;
+    public string MaterialOutsideType;
+    public string MechanismType;
+    public string FrameType;
 }
 
 public class WindowManager : MonoBehaviour
@@ -38,6 +51,53 @@ public class WindowManager : MonoBehaviour
     int currentTextureINSIDE = 0;
     int currentTextureOUTSIDE = 0;
     int currSetting = 0;
+
+    string WindowType = "85";
+    string HandleType = "Hoppe_Toulon";
+    string MaterialInsideType = "OliveGrey";
+    string MaterialOutsideType = "OliveGrey";
+    string MechanismType = "Swing";
+    string FrameType = "Two";
+
+    private static string sessionFileName = null;
+
+    public void writeJsonSettings()
+    {
+        if (string.IsNullOrEmpty(sessionFileName))
+        {
+            sessionFileName = GenerateSessionFileName();
+        }
+
+        WindowSettingsData dataToSave = new WindowSettingsData
+        {
+            WindowType = this.WindowType,
+            HandleType = this.HandleType,
+            MaterialInsideType = this.MaterialInsideType,
+            MaterialOutsideType = this.MaterialOutsideType,
+            MechanismType = this.MechanismType,
+            FrameType = this.FrameType
+        };
+
+        string json = JsonUtility.ToJson(dataToSave, true);
+
+        string filePath = Path.Combine(Application.persistentDataPath, sessionFileName);
+        File.WriteAllText(filePath, json);
+
+        Debug.Log($"[JSON Saved] File updated at: {filePath}");
+    }
+    private string GenerateSessionFileName()
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        char[] randomChars = new char[6];
+        for (int i = 0; i < randomChars.Length; i++)
+        {
+            randomChars[i] = chars[UnityEngine.Random.Range(0, chars.Length)];
+        }
+        string randomString = new string(randomChars);
+        string dateString = DateTime.Now.ToString("yyyy_dd_M");
+        return $"settings_{randomString}_{dateString}.json";
+    }
+
     public void SetLaminationSettingState(int set)
     {
         currSetting = set;
@@ -96,9 +156,18 @@ public class WindowManager : MonoBehaviour
         int savedState = currSetting; 
         currSetting = 1;
         SetTextureToId(idOutside);
+        MaterialOutsideType = materials[idOutside].name;
         currSetting = 2;
         SetTextureToId(idInside);
+        MaterialInsideType = materials[idInside].name;
         currSetting = savedState;
+        writeJsonSettings();
+
+        if (xray)
+        {
+            OnOffXRay();
+            OnOffXRay();
+        }
     }
     private void ApplyToTextureChanger(TextureChanger changer, int id)
     {
@@ -152,12 +221,15 @@ public class WindowManager : MonoBehaviour
         {
             LeftWindow.NewHandle(handlesL[id]);
         }
+        HandleType = handlesR[id].name;
     }
     public void SetFrameToId(int id)
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
         StartCoroutine(FrameChangeSequence(id));
+        WindowType = sets[id].name;
+        writeJsonSettings();
     }
     IEnumerator CloseRightWindow()
     {
@@ -236,9 +308,29 @@ public class WindowManager : MonoBehaviour
 
     private Coroutine activeModeRoutine;
 
+    public void setMode(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                SetSingleWindowMode();
+                break;
+            case 2:
+                SetDualWindowMode();
+                break;
+            case 3:
+                SetTripleWindowMode();
+                break;
+            default:
+                break;
+        }
+    }
+
     public void SetSingleWindowMode()
     {
         if (WindowMode == numberMode.One) return;
+        FrameType = "One";
+        writeJsonSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.One));
     }
@@ -246,6 +338,8 @@ public class WindowManager : MonoBehaviour
     public void SetDualWindowMode()
     {
         if (WindowMode == numberMode.Two) return;
+        FrameType = "Two";
+        writeJsonSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Two));
     }
@@ -253,6 +347,8 @@ public class WindowManager : MonoBehaviour
     public void SetTripleWindowMode()
     {
         if (WindowMode == numberMode.Three) return;
+        FrameType = "Three";
+        writeJsonSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Three));
     }
@@ -451,11 +547,26 @@ public class WindowManager : MonoBehaviour
             LeftWindow.NewGlass(glass[id]);
         }
     }
-
+    public void setMecha(int i)
+    {
+        switch(i)
+        {
+            case 1:
+                setMechanismSwing();
+                break;
+            case 2:
+                setMechanismTilt();
+                break;
+            default:
+                break;
+        }
+    }
     public void setMechanismSwing()
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
+        MechanismType = "Swing";
+        writeJsonSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -466,6 +577,8 @@ public class WindowManager : MonoBehaviour
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
+        MechanismType = "Swing-Tilt";
+        writeJsonSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING_TILT);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -476,6 +589,8 @@ public class WindowManager : MonoBehaviour
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
+        MechanismType = "Slide";
+        writeJsonSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)

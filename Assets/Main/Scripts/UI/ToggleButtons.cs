@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ToggleButtons : MonoBehaviour
@@ -46,6 +47,19 @@ public class ToggleButtons : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+    }
+    public void obp(int i)
+    {
+        OnButtonClicked(i);
+    }
+    public void obpNext(int i)
+    {
+        int id = currentIndex + 1;
+        if (id >= myButtons.Count) id = 0;
+        OnButtonClicked(id);
+    }
     void LateUpdate()
     {
         if (!isSliding && currbutton != null && highlightImage != null)
@@ -53,6 +67,7 @@ public class ToggleButtons : MonoBehaviour
             highlightImage.position = currbutton.GetComponent<RectTransform>().position;
         }
     }
+
 
     public void OnButtonClicked(int index, bool instant = false)
     {

@@ -56,8 +56,8 @@ public class UserControlledManager : MonoBehaviour
     {
         isInside = true;
         StartCoroutine(TeleportTo(insideLocation.transform));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, FacadeSelection));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0f, 1f), false, outsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, FacadeSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, outsideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, insideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, WindowSelection));
     }
@@ -65,8 +65,8 @@ public class UserControlledManager : MonoBehaviour
     {
         isInside = false;
         StartCoroutine(TeleportTo(outsideLocation.transform));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, FacadeSelection));
-        StartCoroutine(AnimateScale(new Vector3(0.0005f, 0.0005f, 1f), true, outsideMenu));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, FacadeSelection));
+        StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, outsideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, insideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, WindowSelection));
     }

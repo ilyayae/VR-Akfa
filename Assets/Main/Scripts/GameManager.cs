@@ -1,6 +1,65 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+
+[System.Serializable]
+public class inputConfig
+{
+    public string inputName = "New Input Configuration";
+    public KeyCode holdKey = KeyCode.LeftShift;
+    public UnityEvent onKeyPressed;
+    public UnityEvent<int> onNumberSubmitted;
+
+    private string currentTypedString = "";
+    private bool isHolding = false;
+
+    public void ProcessInput()
+    {
+        if (Input.GetKeyDown(holdKey))
+        {
+            onKeyPressed?.Invoke();
+            isHolding = true;
+            currentTypedString = "";
+        }
+        if (isHolding)
+        {
+            CheckForNumberKeys();
+        }
+        if (Input.GetKeyUp(holdKey))
+        {
+            isHolding = false;
+
+            if (!string.IsNullOrEmpty(currentTypedString))
+            {
+                if (int.TryParse(currentTypedString, out int result))
+                {
+                    if (result - 1 >= 0)
+                        onNumberSubmitted?.Invoke(result - 1);
+                }
+                else
+                {
+                    Debug.LogWarning($"Number typed ({currentTypedString}) was too large for an integer!");
+                }
+
+                currentTypedString = "";
+            }
+        }
+    }
+
+    private void CheckForNumberKeys()
+    {
+        for (int i = 0; i <= 9; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i) || Input.GetKeyDown(KeyCode.Keypad0 + i))
+            {
+                currentTypedString += i.ToString();
+            }
+        }
+    }
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -31,7 +90,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource RightTeleportSource;
     [SerializeField] private AudioSource LeftHandSource;
     [SerializeField] private AudioSource RightHandSource;
-
+    [Space]
+    [Header("HOTKEY Config, dont touch without knowledge")]
+    public List<inputConfig> configs;
     public static GameManager Instance { get; private set; }
 
     private void Awake()
@@ -132,10 +193,11 @@ public class GameManager : MonoBehaviour
             interactor.enabled = true;
         }
     }
-
-// Update is called once per frame
-void Update()
+    void Update()
     {
-        
+        foreach (var config in configs)
+        {
+            config.ProcessInput();
+        }
     }
 }
