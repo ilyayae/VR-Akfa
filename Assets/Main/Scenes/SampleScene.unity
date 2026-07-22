@@ -14,8 +14,8 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.8235294, g: 0.94447315, b: 1, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -298,7 +298,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 1
-  m_ParentAnchorPosition: {x: -0.67, y: -0.000000057742, z: 0.00000010617077}
+  m_ParentAnchorPosition: {x: -0.67, y: -0.000000057742, z: -0.0000002514571}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
   m_AnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
@@ -27418,7 +27418,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 1
-  m_ParentAnchorPosition: {x: 0.67, y: -0.000000057742, z: 0.00000010617077}
+  m_ParentAnchorPosition: {x: 0.67, y: -0.000000057742, z: -0.0000002514571}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
   m_AnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
@@ -53284,6 +53284,7 @@ MonoBehaviour:
   Outside_Right: {fileID: 2276648759333029879}
   Inside_Left: {fileID: 8414172073414744402}
   Inside_Right: {fileID: 8137930716496876339}
+  isInside: 0
   fadeImage: {fileID: 8264235773590489279}
   fadeDuration: 0.5
 --- !u!114 &2694911166902924211
@@ -53605,7 +53606,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 0.0000001
-  m_ParentAnchorPosition: {x: -0.6615, y: -0.000000057742, z: 0.00000010617077}
+  m_ParentAnchorPosition: {x: -0.6615, y: -0.000000057742, z: -0.0000002514571}
   m_ParentAnchorRotation: {x: 0.49999994, y: -0.5, z: 0.49999997, w: 0.49999997}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
   m_AnchorRotation: {x: 0.49999994, y: -0.5, z: 0.49999997, w: 0.49999997}
@@ -53850,7 +53851,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 5
-  m_ParentAnchorPosition: {x: -0.007799983, y: -0.82313687, z: 0.030000106}
+  m_ParentAnchorPosition: {x: -0.007799983, y: -0.82313687, z: 0.029999748}
   m_ParentAnchorRotation: {x: 0.70710677, y: 0.70710677, z: -0.00000003090862, w: -0.00000003090862}
   m_AnchorPosition: {x: 0, y: -0.82313687, z: 0}
   m_AnchorRotation: {x: 0.70710677, y: 0.70710677, z: -0.00000003090862, w: -0.00000003090862}
@@ -54049,7 +54050,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 0.0000001
-  m_ParentAnchorPosition: {x: 0.6615, y: -0.000000057742, z: 0.00000010617077}
+  m_ParentAnchorPosition: {x: 0.6615, y: -0.000000057742, z: -0.0000002514571}
   m_ParentAnchorRotation: {x: 0.49999994, y: -0.5, z: 0.49999997, w: 0.49999997}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
   m_AnchorRotation: {x: 0.49999994, y: -0.5, z: 0.49999997, w: 0.49999997}
@@ -54600,7 +54601,7 @@ ArticulationBody:
   m_Enabled: 1
   serializedVersion: 6
   m_Mass: 5
-  m_ParentAnchorPosition: {x: 0.007799983, y: -0.8231368, z: 0.030000106}
+  m_ParentAnchorPosition: {x: 0.007799983, y: -0.8231368, z: 0.029999748}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: -0.000000042874166, y: -0.8231368, z: -0.00000001987738}
   m_AnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
