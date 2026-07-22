@@ -55048,6 +55048,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3528768954307631791, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3805809869046488618, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Color.a
       value: 0
@@ -55090,7 +55094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Cameras.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_RenderPostProcessing
@@ -55101,6 +55105,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1109066843}
     - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: m_TaaSettings.m_MipBias
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: m_TaaSettings.m_JitterScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_RequiresDepthTextureOption
       value: 1
       objectReference: {fileID: 0}
@@ -55110,7 +55122,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_TaaSettings.m_FrameInfluence
-      value: 0.100000024
+      value: 0.055000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252429845435090593, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: m_TaaSettings.m_VarianceClampScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4321372413795398639, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55206,7 +55222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6393112899664687269, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 727
+      value: 759
       objectReference: {fileID: 0}
     - target: {fileID: 6444862346610531208, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: m_Layer
