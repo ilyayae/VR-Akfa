@@ -218,6 +218,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LODOffset: -1
     - _LocalRandomWindOffset: 0.2
     - _LocalWindDirection: 0
     - _LocalWindPulse: 0.1
@@ -364,7 +365,7 @@ Material:
     m_Colors:
     - _AlphaRemap: {r: 0, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
-    - _BaseColor_1: {r: 2.5132809, g: 3.4415903, b: 2.2565143, a: 1}
+    - _BaseColor_1: {r: 2.0599082, g: 2.0599082, b: 2.0599082, a: 1}
     - _Color: {r: 1, g: 0.9663659, b: 0.8066038, a: 1}
     - _DiffusionProfileHash_Asset: {r: 0.083091006, g: -7.4132394e+12, b: -1.6097976e-26, a: -1.4300763e-24}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -373,7 +374,7 @@ Material:
     - _OcclusionStrengthAO: {r: 0, g: 0, b: 0, a: 0}
     - _Smoothness: {r: 0, g: 0.17443845, b: 0, a: 0}
     - _SmoothnessStrength: {r: 0, g: 0, b: 0, a: 0}
-    - _Specular: {r: 0.5023326, g: 0.5471698, b: 0.33294767, a: 1}
+    - _Specular: {r: 0.45122823, g: 0.509434, b: 0.24750803, a: 1}
     - _TranslucencyColor: {r: 0.78877014, g: 1, b: 0.514151, a: 1}
     - _TranslucencyTint: {r: 0.44257587, g: 0.7830189, b: 0, a: 1}
     - _TransmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
