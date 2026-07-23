@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -10,17 +11,6 @@ public enum numberMode
     Two,
     One,
     Three
-}
-
-[System.Serializable]
-public class WindowSettingsData
-{
-    public string WindowType;
-    public string HandleType;
-    public string MaterialInsideType;
-    public string MaterialOutsideType;
-    public string MechanismType;
-    public string FrameType;
 }
 
 public class WindowManager : MonoBehaviour
@@ -48,6 +38,7 @@ public class WindowManager : MonoBehaviour
         SetTextureToId(0);
         SetGlassToId(0);
     }
+
     int currentTextureINSIDE = 0;
     int currentTextureOUTSIDE = 0;
     int currSetting = 0;
@@ -59,53 +50,52 @@ public class WindowManager : MonoBehaviour
     string MechanismType = "Swing";
     string FrameType = "Two";
 
-    private static string sessionFileName = null;
+    // Removed the 'static' keyword so it resets every time you launch the game/exe
+    private string sessionFilePath = null;
 
-    public void writeJsonSettings()
+    public void writeExcelSettings()
     {
-        if (string.IsNullOrEmpty(sessionFileName))
+        if (string.IsNullOrEmpty(sessionFilePath))
         {
-            sessionFileName = GenerateSessionFileName();
+            sessionFilePath = GenerateSessionFilePath();
         }
 
-        WindowSettingsData dataToSave = new WindowSettingsData
-        {
-            WindowType = this.WindowType,
-            HandleType = this.HandleType,
-            MaterialInsideType = this.MaterialInsideType,
-            MaterialOutsideType = this.MaterialOutsideType,
-            MechanismType = this.MechanismType,
-            FrameType = this.FrameType
-        };
-
-        string json = JsonUtility.ToJson(dataToSave, true);
-
-        string filePath = Path.Combine(Application.persistentDataPath, sessionFileName);
-        File.WriteAllText(filePath, json);
-
-        Debug.Log($"[JSON Saved] File updated at: {filePath}");
+        StringBuilder sb = new StringBuilder();
+        string currentDateTime = DateTime.Now.ToString();
+        sb.AppendLine("Name,Phone,Time,WindowType,HandleType,MaterialInsideType,MaterialOutsideType,MechanismType,FrameType");
+        sb.AppendLine($", ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}");
+        File.WriteAllText(sessionFilePath, sb.ToString());
+        Debug.Log($"File updated at: {sessionFilePath}");
     }
-    private string GenerateSessionFileName()
+
+    private string GenerateSessionFilePath()
     {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char[] randomChars = new char[6];
-        for (int i = 0; i < randomChars.Length; i++)
+        // Path.GetDirectoryName gets the folder containing the .exe in builds
+        // In the Unity Editor, it gets the root folder of the project.
+        string exeFolder = Path.GetDirectoryName(Application.dataPath);
+
+        int fileIndex = 1;
+        string filePath;
+
+        // Loop to find the next available filename_X.csv
+        do
         {
-            randomChars[i] = chars[UnityEngine.Random.Range(0, chars.Length)];
-        }
-        string randomString = new string(randomChars);
-        string dateString = DateTime.Now.ToString("yyyy_dd_M");
-        return $"settings_{randomString}_{dateString}.json";
+            filePath = Path.Combine(exeFolder, $"filename_{fileIndex}.csv");
+            fileIndex++;
+        } while (File.Exists(filePath));
+
+        return filePath;
     }
 
     public void SetLaminationSettingState(int set)
     {
         currSetting = set;
     }
+
     private bool xray = false;
     public void OnOffXRay()
     {
-        if(xray)
+        if (xray)
         {
             xray = false;
             currentInstantiatedFrame.GetComponentInChildren<TextureChanger>().UnmakeXRayed();
@@ -120,6 +110,7 @@ public class WindowManager : MonoBehaviour
             foreach (TextureChanger tchange in LeftWindow.changers) tchange.MakeXRayed();
         }
     }
+
     public void SetTextureToId(int id)
     {
         Material hingeMat = materials[id].windowsill;
@@ -145,15 +136,31 @@ public class WindowManager : MonoBehaviour
             foreach (HingeChanger hchange in LeftWindow.hinges) ApplyToHingeChanger(hchange, hingeMat);
         }
 
-        if(currSetting == 0 || currSetting == 1)
+        if (currSetting == 0 || currSetting == 1)
         {
             FacadeManager.Instance.setMaterials(materials[id].window);
         }
+
+        // UPDATE TRACKING STRINGS AND SAVE EXCEL
+        switch (currSetting)
+        {
+            case 0:
+                MaterialInsideType = materials[id].name;
+                MaterialOutsideType = materials[id].name;
+                break;
+            case 1:
+                MaterialOutsideType = materials[id].name;
+                break;
+            case 2:
+                MaterialInsideType = materials[id].name;
+                break;
+        }
+        writeExcelSettings();
     }
 
     public void SetLaminationForWindow(int idInside, int idOutside)
     {
-        int savedState = currSetting; 
+        int savedState = currSetting;
         currSetting = 1;
         SetTextureToId(idOutside);
         MaterialOutsideType = materials[idOutside].name;
@@ -161,7 +168,7 @@ public class WindowManager : MonoBehaviour
         SetTextureToId(idInside);
         MaterialInsideType = materials[idInside].name;
         currSetting = savedState;
-        writeJsonSettings();
+        writeExcelSettings();
 
         if (xray)
         {
@@ -169,6 +176,7 @@ public class WindowManager : MonoBehaviour
             OnOffXRay();
         }
     }
+
     private void ApplyToTextureChanger(TextureChanger changer, int id)
     {
         if (changer == null) return;
@@ -207,6 +215,7 @@ public class WindowManager : MonoBehaviour
                 break;
         }
     }
+
     int currentHandle = 0;
     public void SetHandleToId(int id)
     {
@@ -221,16 +230,21 @@ public class WindowManager : MonoBehaviour
         {
             LeftWindow.NewHandle(handlesL[id]);
         }
+
+        // UPDATE TRACKING STRING AND SAVE EXCEL
         HandleType = handlesR[id].name;
+        writeExcelSettings();
     }
+
     public void SetFrameToId(int id)
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
         StartCoroutine(FrameChangeSequence(id));
         WindowType = sets[id].name;
-        writeJsonSettings();
+        writeExcelSettings();
     }
+
     IEnumerator CloseRightWindow()
     {
         GameManager.Instance.UngrabRight();
@@ -266,7 +280,6 @@ public class WindowManager : MonoBehaviour
         ArticulationBody body = door.myBody;
         Transform t = door.transform;
 
-        // Force snap before doing any articulation hierarchy rebuilds
         door.ResetToClosedPosition();
         WindowBrain brain = door.GetComponentInParent<WindowBrain>();
         if (brain != null && brain.handleScript != null)
@@ -330,7 +343,7 @@ public class WindowManager : MonoBehaviour
     {
         if (WindowMode == numberMode.One) return;
         FrameType = "One";
-        writeJsonSettings();
+        writeExcelSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.One));
     }
@@ -339,7 +352,7 @@ public class WindowManager : MonoBehaviour
     {
         if (WindowMode == numberMode.Two) return;
         FrameType = "Two";
-        writeJsonSettings();
+        writeExcelSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Two));
     }
@@ -348,7 +361,7 @@ public class WindowManager : MonoBehaviour
     {
         if (WindowMode == numberMode.Three) return;
         FrameType = "Three";
-        writeJsonSettings();
+        writeExcelSettings();
         if (activeModeRoutine != null) StopCoroutine(activeModeRoutine);
         activeModeRoutine = StartCoroutine(SwitchModeSequence(numberMode.Three));
     }
@@ -385,6 +398,7 @@ public class WindowManager : MonoBehaviour
 
         activeModeRoutine = null;
     }
+
     private IEnumerator FrameChangeSequence(int id)
     {
         Coroutine rightWindowCoroutine = StartCoroutine(CloseRightWindow());
@@ -547,9 +561,10 @@ public class WindowManager : MonoBehaviour
             LeftWindow.NewGlass(glass[id]);
         }
     }
+
     public void setMecha(int i)
     {
-        switch(i)
+        switch (i)
         {
             case 1:
                 setMechanismSwing();
@@ -561,12 +576,13 @@ public class WindowManager : MonoBehaviour
                 break;
         }
     }
+
     public void setMechanismSwing()
     {
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
         MechanismType = "Swing";
-        writeJsonSettings();
+        writeExcelSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -578,7 +594,7 @@ public class WindowManager : MonoBehaviour
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
         MechanismType = "Swing-Tilt";
-        writeJsonSettings();
+        writeExcelSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SWING_TILT);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
@@ -590,29 +606,10 @@ public class WindowManager : MonoBehaviour
         GameManager.Instance.UngrabLeft();
         GameManager.Instance.UngrabRight();
         MechanismType = "Slide";
-        writeJsonSettings();
+        writeExcelSettings();
         if (RightWindow != null && RightWindow.gameObject.activeSelf)
             RightWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
         if (LeftWindow != null && LeftWindow.gameObject.activeSelf)
             LeftWindow.SetMechanism(WindowBrain.WindowMechanism.SLIDE);
     }
-
-    private void Update()
-    {
-        
-    }
-    /*
-     * This manager will be the core of the modular window editing system of this project
-     * it will store the two window states (for one window and dual window showcase)
-     * Each state will hold information about how the window is currently opened - 
-     * the degree of the handle, the degree to which the window is opened, how it is opened etc.
-     * The WindowManager will also hold the state of the window parts, which are selected. 
-     * it will be key to replacing parts of the modular window editor
-     * 
-     * Thus we need the transform of the window to replace the entire frame, 
-     * the transform of the glass pane that will move with the window door,
-     * the transform of the knob for opening the window
-     * references to all moving parts and parts that can change their material if the user chooses.
-     * The window itself should know where its hinges at, all of them for multi-hige designs, as well as paths for sliding design.
-     */
 }

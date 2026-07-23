@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
         rightSnap.setGradient();
     }
 
+    // Update One-Shot methods to pass the volume and check for .clip instead of the object itself
     public void PlayUIActivate()
     {
         if (UI_Activate.clip != null && SpecialEffectsSource != null)

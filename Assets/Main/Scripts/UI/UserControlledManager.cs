@@ -13,12 +13,11 @@ public class UserControlledManager : MonoBehaviour
     [SerializeField] private GameObject outsideMenu;
     [SerializeField] private GameObject insideMenu;
     public float scaleDuration = 0.3f;
-    private bool FacadeSelectionOpened = false;
     private Coroutine scaleCoroutine;
 
     [SerializeField] private Transform insideLocation;
     [SerializeField] private Transform outsideLocation;
-    [SerializeField] private GameObject GameManager; //Move it to teleport the player
+    [SerializeField] private GameObject GameManager;
     private int currentFacadeID;
 
 
