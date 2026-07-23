@@ -61,6 +61,13 @@ public class inputConfig
     }
 }
 
+[System.Serializable]
+public struct AudioData
+{
+    public AudioClip clip;
+    public float volume;
+}
+
 public class GameManager : MonoBehaviour
 {
     [Header("Laser Settings")]
@@ -75,13 +82,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandSnap rightSnap;
     [Space]
     [Header("Audio Settings")]
-    [SerializeField] private AudioClip AmbientClip;
-    [SerializeField] private AudioClip UI_Activate;
-    [SerializeField] private AudioClip UI_AlreadyActivated;
-    [SerializeField] private AudioClip TP_Teleport;
-    [SerializeField] private AudioClip TP_CantTeleport;
-    [SerializeField] private AudioClip TP_TeleportHumm; //Continious loop of sound
-    [SerializeField] private AudioClip Grab_Object;
+    [SerializeField] private AudioData AmbientClip = new AudioData { volume = 1f };
+    [SerializeField] private AudioData UI_Activate = new AudioData { volume = 1f };
+    [SerializeField] private AudioData UI_AlreadyActivated = new AudioData { volume = 1f };
+    [SerializeField] private AudioData TP_Teleport = new AudioData { volume = 1f };
+    [SerializeField] private AudioData TP_CantTeleport = new AudioData { volume = 1f };
+    [SerializeField] private AudioData TP_TeleportHumm = new AudioData { volume = 1f }; // Continuous loop of sound
+    [SerializeField] private AudioData Grab_Object = new AudioData { volume = 1f };
     [Space]
     [Header("Audio Sources")]
     [SerializeField] private AudioSource AmbientSource;
@@ -99,14 +106,23 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
-
     void Start()
     {
-        AmbientSource.clip = AmbientClip;
-        LeftTeleportSource.clip = TP_TeleportHumm;
-        RightTeleportSource.clip = TP_TeleportHumm;
-        LeftHandSource.clip = Grab_Object;
-        RightHandSource.clip = Grab_Object;
+        // Apply both the clip and the specific volume to persistent AudioSources
+        AmbientSource.clip = AmbientClip.clip;
+        AmbientSource.volume = AmbientClip.volume;
+
+        LeftTeleportSource.clip = TP_TeleportHumm.clip;
+        LeftTeleportSource.volume = TP_TeleportHumm.volume;
+
+        RightTeleportSource.clip = TP_TeleportHumm.clip;
+        RightTeleportSource.volume = TP_TeleportHumm.volume;
+
+        LeftHandSource.clip = Grab_Object.clip;
+        LeftHandSource.volume = Grab_Object.volume;
+
+        RightHandSource.clip = Grab_Object.clip;
+        RightHandSource.volume = Grab_Object.volume;
 
         leftSnap.Normal = LaserColor_Normal;
         leftSnap.HowerUI = LaserColor_HowerUI;
@@ -116,6 +132,7 @@ public class GameManager : MonoBehaviour
         leftSnap.teleportAppropriate = LaserColor_TeleportAppropriate;
         leftSnap.teleportInappropriate = LaserColor_TeleportInapropriate;
         leftSnap.setGradient();
+
         rightSnap.Normal = LaserColor_Normal;
         rightSnap.HowerUI = LaserColor_HowerUI;
         rightSnap.PressUI = LaserColor_PressUI;
@@ -128,26 +145,26 @@ public class GameManager : MonoBehaviour
 
     public void PlayUIActivate()
     {
-        if (UI_Activate != null && SpecialEffectsSource != null)
-            SpecialEffectsSource.PlayOneShot(UI_Activate);
+        if (UI_Activate.clip != null && SpecialEffectsSource != null)
+            SpecialEffectsSource.PlayOneShot(UI_Activate.clip, UI_Activate.volume);
     }
 
     public void PlayUIAlreadyActivated()
     {
-        if (UI_AlreadyActivated != null && SpecialEffectsSource != null)
-            SpecialEffectsSource.PlayOneShot(UI_AlreadyActivated);
+        if (UI_AlreadyActivated.clip != null && SpecialEffectsSource != null)
+            SpecialEffectsSource.PlayOneShot(UI_AlreadyActivated.clip, UI_AlreadyActivated.volume);
     }
 
     public void PlayTeleport()
     {
-        if (TP_Teleport != null && SpecialEffectsSource != null)
-            SpecialEffectsSource.PlayOneShot(TP_Teleport);
+        if (TP_Teleport.clip != null && SpecialEffectsSource != null)
+            SpecialEffectsSource.PlayOneShot(TP_Teleport.clip, TP_Teleport.volume);
     }
 
     public void PlayCantTeleport()
     {
-        if (TP_CantTeleport != null && SpecialEffectsSource != null)
-            SpecialEffectsSource.PlayOneShot(TP_CantTeleport);
+        if (TP_CantTeleport.clip != null && SpecialEffectsSource != null)
+            SpecialEffectsSource.PlayOneShot(TP_CantTeleport.clip, TP_CantTeleport.volume);
     }
 
     public void UngrabRight()

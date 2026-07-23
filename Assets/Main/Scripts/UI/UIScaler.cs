@@ -27,10 +27,12 @@ public class UIScaler : MonoBehaviour
         }
         if (isOpen)
         {
+            isOpen = false;
             scaleX = 0.0f;
         }
         else
         {
+            isOpen = true;
             scaleX = 1.0f;
         }
         animCr = StartCoroutine(anim());
