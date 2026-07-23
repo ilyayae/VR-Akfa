@@ -95,8 +95,10 @@ public class UserControlledManager : MonoBehaviour
         }
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
-        GameManager.transform.position = targetTransform.position;
         GameManager.transform.rotation = targetTransform.rotation;
+        Vector3 cameraLocalPos = Camera.main.transform.localPosition;
+        cameraLocalPos.y = 0f; // Keep the player at floor level
+        GameManager.transform.position = targetTransform.position - (GameManager.transform.rotation * cameraLocalPos);
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
         while (timer < fadeDuration)

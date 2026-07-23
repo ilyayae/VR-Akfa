@@ -51,41 +51,38 @@ public class WindowManager : MonoBehaviour
     string FrameType = "Two";
 
     // Removed the 'static' keyword so it resets every time you launch the game/exe
-    private string sessionFilePath = null;
+    private string filePath = "";
+    private int ID = -1;
+    private bool isFirstWrite = true;
 
     public void writeExcelSettings()
     {
-        if (string.IsNullOrEmpty(sessionFilePath))
+        if(filePath == "")
+            filePath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "SavedWindowConfigs.csv");
+        if (!File.Exists(filePath))
         {
-            sessionFilePath = GenerateSessionFilePath();
+            string header = "ID,Name,Phone,Time,WindowType,HandleType,MaterialInsideType,MaterialOutsideType,MechanismType,FrameType\n";
+            File.WriteAllText(filePath, header);
         }
-
-        StringBuilder sb = new StringBuilder();
-        string currentDateTime = DateTime.Now.ToString();
-        sb.AppendLine("Name,Phone,Time,WindowType,HandleType,MaterialInsideType,MaterialOutsideType,MechanismType,FrameType");
-        sb.AppendLine($", ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}");
-        File.WriteAllText(sessionFilePath, sb.ToString());
-        Debug.Log($"File updated at: {sessionFilePath}");
-    }
-
-    private string GenerateSessionFilePath()
-    {
-        // Path.GetDirectoryName gets the folder containing the .exe in builds
-        // In the Unity Editor, it gets the root folder of the project.
-        string exeFolder = Path.GetDirectoryName(Application.dataPath);
-
-        int fileIndex = 1;
-        string filePath;
-
-        // Loop to find the next available filename_X.csv
-        do
+        string[] lines = File.ReadAllLines(filePath);
+        if (isFirstWrite)
         {
-            filePath = Path.Combine(exeFolder, $"filename_{fileIndex}.csv");
-            fileIndex++;
-        } while (File.Exists(filePath));
-
-        return filePath;
+            ID = Mathf.Max(0, lines.Length - 1);
+            string currentDateTime = DateTime.Now.ToString();
+            string newLine = $"{ID}, , ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}";
+            File.AppendAllText(filePath, newLine + "\n");
+            isFirstWrite = false;
+        }
+        else
+        {
+            string currentDateTime = DateTime.Now.ToString();
+            string updatedLine = $"{ID}, , ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}";
+            lines[lines.Length - 1] = updatedLine;
+            File.WriteAllLines(filePath, lines);
+        }
+        Debug.Log($"File updated at: {filePath}");
     }
+
 
     public void SetLaminationSettingState(int set)
     {

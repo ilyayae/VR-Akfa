@@ -4458,13 +4458,27 @@ MonoBehaviour:
     m_NumAlphaKeys: 3
   leftSnap: {fileID: 7422156177927290382}
   rightSnap: {fileID: 4902100271088893645}
-  AmbientClip: {fileID: 8300000, guid: 3636a18c6579b964ab4b4ce8caaadfa0, type: 3}
-  UI_Activate: {fileID: 8300000, guid: 62c67e5addcc07849a92d0932c54975d, type: 3}
-  UI_AlreadyActivated: {fileID: 8300000, guid: aeea147215a121f448c4e91047ac6380, type: 3}
-  TP_Teleport: {fileID: 8300000, guid: 9c9ea42720ed3ae4bbe8367773f6a015, type: 3}
-  TP_CantTeleport: {fileID: 8300000, guid: bd00489574f4ad7488f370c1ab0a7a4a, type: 3}
-  TP_TeleportHumm: {fileID: 8300000, guid: 48200f4c89377ed4ca7eedab73ab77a5, type: 3}
-  Grab_Object: {fileID: 8300000, guid: b1c24f915c4bb0b4f94ac544c5c6319a, type: 3}
+  AmbientClip:
+    clip: {fileID: 0}
+    volume: 1
+  UI_Activate:
+    clip: {fileID: 0}
+    volume: 1
+  UI_AlreadyActivated:
+    clip: {fileID: 0}
+    volume: 1
+  TP_Teleport:
+    clip: {fileID: 0}
+    volume: 1
+  TP_CantTeleport:
+    clip: {fileID: 0}
+    volume: 1
+  TP_TeleportHumm:
+    clip: {fileID: 0}
+    volume: 1
+  Grab_Object:
+    clip: {fileID: 0}
+    volume: 1
   AmbientSource: {fileID: 3259577814031659850}
   SpecialEffectsSource: {fileID: 3312561076695757179}
   LeftTeleportSource: {fileID: 1955163919549738997}
