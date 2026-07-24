@@ -561,12 +561,13 @@ public class WindowManager : MonoBehaviour
 
     public void setMecha(int i)
     {
+        Debug.Log("Set mecha to " + i);
         switch (i)
         {
-            case 1:
+            case 0:
                 setMechanismSwing();
                 break;
-            case 2:
+            case 1:
                 setMechanismTilt();
                 break;
             default:
