@@ -25,14 +25,22 @@ public class TextureChanger : MonoBehaviour
 
     private void UpdateTextures(Material text, bool updateOutdoors, bool updateRoom)
     {
-        if (X_Rayed) return;
         foreach (Renderer r in whatToChange)
         {
             if (r == null || r.sharedMaterials.Length == 0) continue;
+            Material[] mats;
+            if (X_Rayed && originalMaterials.ContainsKey(r))
+            {
+                mats = originalMaterials[r];
+            }
+            else
+            {
+                mats = r.materials;
+            }
 
-            Material[] mats = r.materials;
             int length = mats.Length;
             bool materialsChanged = false;
+
             if (updateOutdoors && length >= 3)
             {
                 mats[1] = text;
@@ -43,9 +51,17 @@ public class TextureChanger : MonoBehaviour
                 mats[length - 1] = text;
                 materialsChanged = true;
             }
+
             if (materialsChanged)
             {
-                r.materials = mats;
+                if (X_Rayed && originalMaterials.ContainsKey(r))
+                {
+                    originalMaterials[r] = mats;
+                }
+                else
+                {
+                    r.materials = mats;
+                }
             }
         }
     }

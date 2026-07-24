@@ -110,12 +110,6 @@ public class WindowManager : MonoBehaviour
 
     public void SetTextureToId(int id)
     {
-        bool beenXRayed = false;
-        if (xray)
-        {
-            beenXRayed = true;
-            OnOffXRay();
-        }
         Material hingeMat = materials[id].windowsill;
         if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf)
         {
@@ -157,20 +151,10 @@ public class WindowManager : MonoBehaviour
                 break;
         }
         writeExcelSettings();
-        if (beenXRayed)
-        {
-            OnOffXRay();
-        }
     }
 
     public void SetLaminationForWindow(int idInside, int idOutside)
     {
-        bool beenXRayed = false;
-        if (xray)
-        {
-            beenXRayed = true;
-            OnOffXRay();
-        }
         int savedState = currSetting;
         currSetting = 1;
         SetTextureToId(idOutside);
@@ -180,11 +164,6 @@ public class WindowManager : MonoBehaviour
         MaterialInsideType = materials[idInside].name;
         currSetting = savedState;
         writeExcelSettings();
-
-        if (beenXRayed)
-        {
-            OnOffXRay();
-        }
     }
 
     private void ApplyToTextureChanger(TextureChanger changer, int id)
@@ -240,8 +219,6 @@ public class WindowManager : MonoBehaviour
         {
             LeftWindow.NewHandle(handlesL[id]);
         }
-
-        // UPDATE TRACKING STRING AND SAVE EXCEL
         HandleType = handlesR[id].name;
         writeExcelSettings();
     }
@@ -557,6 +534,24 @@ public class WindowManager : MonoBehaviour
                 hc.BigHandL.constraintActive = true;
             }
 
+        }
+        if (xray)
+        {
+            if (currentInstantiatedFrame != null)
+            {
+                TextureChanger frameChanger = currentInstantiatedFrame.GetComponentInChildren<TextureChanger>();
+                if (frameChanger != null) frameChanger.MakeXRayed();
+            }
+
+            if (RightWindow != null && RightWindow.gameObject.activeInHierarchy)
+            {
+                foreach (TextureChanger tchange in RightWindow.changers) tchange.MakeXRayed();
+            }
+
+            if (LeftWindow != null && LeftWindow.gameObject.activeInHierarchy)
+            {
+                foreach (TextureChanger tchange in LeftWindow.changers) tchange.MakeXRayed();
+            }
         }
     }
 
