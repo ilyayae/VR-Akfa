@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Rendering.ShadowCascadeGUI;
 
 public class FacadeManager : MonoBehaviour
 {

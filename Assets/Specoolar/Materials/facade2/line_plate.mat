@@ -26,11 +26,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 3deec2fce9673434280ddd36009c74cc, type: 3}
+        m_Texture: {fileID: 2800000, guid: b191ee87545cea74d8aea319def05413, type: 3}
         m_Scale: {x: 12, y: 12}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: d80b495a2080c944fb3dda84bdba053c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b370842239d549641a786a1f4d9cc27d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -129,6 +129,7 @@ Material:
     - _BaseColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
     - _Color: {r: 0.42138353, g: 0.42138353, b: 0.42138353, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindowPadding: {r: 0.2, g: 0.2, b: 0.2, a: 0}
     - _WindowPaddingInside: {r: 0.1, g: 0.1, b: 0.1, a: 0}
