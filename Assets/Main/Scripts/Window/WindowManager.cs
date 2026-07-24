@@ -110,6 +110,12 @@ public class WindowManager : MonoBehaviour
 
     public void SetTextureToId(int id)
     {
+        bool beenXRayed = false;
+        if (xray)
+        {
+            beenXRayed = true;
+            OnOffXRay();
+        }
         Material hingeMat = materials[id].windowsill;
         if (currentInstantiatedFrame != null && currentInstantiatedFrame.gameObject.activeSelf)
         {
@@ -137,8 +143,6 @@ public class WindowManager : MonoBehaviour
         {
             FacadeManager.Instance.setMaterials(materials[id].window);
         }
-
-        // UPDATE TRACKING STRINGS AND SAVE EXCEL
         switch (currSetting)
         {
             case 0:
@@ -153,10 +157,20 @@ public class WindowManager : MonoBehaviour
                 break;
         }
         writeExcelSettings();
+        if (beenXRayed)
+        {
+            OnOffXRay();
+        }
     }
 
     public void SetLaminationForWindow(int idInside, int idOutside)
     {
+        bool beenXRayed = false;
+        if (xray)
+        {
+            beenXRayed = true;
+            OnOffXRay();
+        }
         int savedState = currSetting;
         currSetting = 1;
         SetTextureToId(idOutside);
@@ -167,9 +181,8 @@ public class WindowManager : MonoBehaviour
         currSetting = savedState;
         writeExcelSettings();
 
-        if (xray)
+        if (beenXRayed)
         {
-            OnOffXRay();
             OnOffXRay();
         }
     }
