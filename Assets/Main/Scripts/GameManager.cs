@@ -211,8 +211,24 @@ public class GameManager : MonoBehaviour
             interactor.enabled = true;
         }
     }
+
+    float maxESCtimer = 1.0f;
+    float currESCtimer = 0.0f;
+
     void Update()
     {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            currESCtimer += Time.deltaTime;
+            if(currESCtimer > maxESCtimer )
+            {
+                Application.Quit();
+            }
+        }
+        else
+        {
+            currESCtimer = 0.0f;
+        }
         foreach (var config in configs)
         {
             config.ProcessInput();
