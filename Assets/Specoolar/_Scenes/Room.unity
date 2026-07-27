@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 3
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 1cc6fecafd2ce504fa920fb05f92ce67, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 56ca867504b144643b35063aa92f17a0, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -545,7 +545,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &55863975
 Transform:
@@ -587,9 +587,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
+  - {fileID: 2100000, guid: aba560390fdbd9248af640c3f4ba994d, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -727,7 +727,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &149108033
 Transform:
@@ -769,9 +769,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
+  - {fileID: 2100000, guid: aba560390fdbd9248af640c3f4ba994d, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8323,7 +8323,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1246991787
 Transform:
@@ -8365,9 +8365,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
-  - {fileID: 2100000, guid: 0abba36ad390d114cb1182b509248d96, type: 2}
+  - {fileID: 2100000, guid: aba560390fdbd9248af640c3f4ba994d, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
+  - {fileID: 2100000, guid: 63660a51ee5755d4bb157b3b0e7ce0bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8934,7 +8934,7 @@ MonoBehaviour:
   globalVolume: 0
   mode: 2
   size: {x: 34.342464, y: 5.444766, z: 29.064335}
-  overrideRendererFilters: 1
+  overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
     serializedVersion: 2
@@ -8942,25 +8942,25 @@ MonoBehaviour:
   lowestSubdivLevelOverride: 0
   highestSubdivLevelOverride: 3
   overridesSubdivLevels: 0
-  mightNeedRebaking: 1
+  mightNeedRebaking: 0
   cachedTransform:
     e00: 1
     e01: 0
     e02: 0
-    e03: 0.31780648
+    e03: -8.448477
     e10: 0
     e11: 1
     e12: 0
-    e13: -1.4198598
+    e13: -1.1524768
     e20: 0
     e21: 0
     e22: 1
-    e23: -7.503168
+    e23: -0.3959999
     e30: 0
     e31: 0
     e32: 0
     e33: 1
-  cachedHashCode: -1335048964
+  cachedHashCode: 1647155608
   fillEmptySpaces: 0
 --- !u!4 &1324256138
 Transform:
@@ -10315,7 +10315,7 @@ ReflectionProbe:
   m_TimeSlicingMode: 0
   m_Resolution: 128
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 4.1, y: 2.7, z: 5.6}
+  m_BoxSize: {x: 4.1, y: 2.7, z: 6}
   m_BoxOffset: {x: 0, y: 0, z: 0}
   m_NearClip: 0.01
   m_FarClip: 1000
@@ -10331,7 +10331,7 @@ ReflectionProbe:
   m_BoxProjection: 1
   m_RenderDynamicObjects: 0
   m_UseOcclusionCulling: 1
-  m_Importance: 0
+  m_Importance: 4
   m_CustomBakedTexture: {fileID: 0}
 --- !u!4 &1586526507
 Transform:
@@ -14912,7 +14912,7 @@ Light:
   serializedVersion: 13
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 4
+  m_Intensity: 8
   m_Range: 10
   m_SpotAngle: 68.28323
   m_InnerSpotAngle: 0
@@ -14955,7 +14955,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 8901
+  m_ColorTemperature: 6076
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -14974,13 +14974,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089209098}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.94500667, y: -0.024504218, z: 0.07284434, w: 0.31789258}
+  m_LocalRotation: {x: 0.96528393, y: -0.019243702, z: 0.07440988, w: 0.24963939}
   m_LocalPosition: {x: -0.725, y: 2.432, z: 6.929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 142.815, y: -8.815979, z: 0}
+  m_LocalEulerAnglesHint: {x: 151, y: -8.815979, z: 0}
 --- !u!1 &2090545340
 GameObject:
   m_ObjectHideFlags: 0
@@ -15319,7 +15319,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 0
 --- !u!4 &2115212401
 Transform:
