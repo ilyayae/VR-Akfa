@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 23_nero cc plus
+  m_Name: 21_beigegrau
   m_Shader: {fileID: -6465566751694194690, guid: 9593003e89928ee4287a7e9b41582205, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -98,7 +98,7 @@ Material:
     - _BaseMapGamma: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _Brightness: 1
+    - _Brightness: 0.3
     - _BumpScale: 1
     - _CastShadows: 1
     - _ClearCoatMask: 0
@@ -142,7 +142,7 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 0.01886791, g: 0.01886791, b: 0.01886791, a: 1}
+    - _BaseColor: {r: 0.21383637, g: 0.144298, b: 0.093469344, a: 1}
     - _BaseColor_1: {r: 0.12317551, g: 0.1509434, b: 0.13099134, a: 1}
     - _BaseColor_2: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -153,10 +153,10 @@ Material:
     - _SecondaryColor: {r: 1, g: 1, b: 1, a: 1}
     - _SmoothnessFrom: {r: 0.2, g: 1, b: 0, a: 0}
     - _SmoothnessRemap: {r: 0.66, g: 1.05, b: 0, a: 0}
-    - _SmoothnessTo: {r: 0.09, g: 0.38, b: 0, a: 0}
+    - _SmoothnessTo: {r: 0.09, g: 0.34, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecFrom: {r: 0.75, g: 0.9, b: 0, a: 0}
-    - _SpecTo: {r: 0.05, g: 0.26, b: 0, a: 0}
+    - _SpecTo: {r: 0.05, g: 0.06, b: 0, a: 0}
     - _Specular: {r: 0.41509426, g: 0.41509426, b: 0.41509426, a: 1}
     - _Tset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
