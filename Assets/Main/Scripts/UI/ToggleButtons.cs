@@ -50,16 +50,19 @@ public class ToggleButtons : MonoBehaviour
     private void OnDisable()
     {
     }
+
     public void obp(int i)
     {
         OnButtonClicked(i);
     }
+
     public void obpNext(int i)
     {
         int id = currentIndex + 1;
         if (id >= myButtons.Count) id = 0;
         OnButtonClicked(id);
     }
+
     void LateUpdate()
     {
         if (!isSliding && currbutton != null && highlightImage != null)
@@ -67,7 +70,6 @@ public class ToggleButtons : MonoBehaviour
             highlightImage.position = currbutton.GetComponent<RectTransform>().position;
         }
     }
-
 
     public void OnButtonClicked(int index, bool instant = false)
     {
@@ -77,9 +79,23 @@ public class ToggleButtons : MonoBehaviour
         currentIndex = index;
         currbutton = myButtons[index];
 
+        // FIX: If the object is inactive, force instant changes to avoid Coroutine crashes
+        if (!gameObject.activeInHierarchy)
+        {
+            instant = true;
+        }
+
         if (select != null)
         {
-            SlideToButton(myButtons[index], instant);
+            if (instant)
+            {
+                isSliding = false; // FIX: Ensure we reset the sliding boolean flag
+                highlightImage.position = myButtons[index].transform.position;
+            }
+            else
+            {
+                SlideToButton(myButtons[index], instant);
+            }
         }
         else
         {
@@ -99,7 +115,10 @@ public class ToggleButtons : MonoBehaviour
 
     public void SlideToButton(Button targetButton, bool instant = false)
     {
-        if (slideCoroutine != null)
+        // FIX: Secondary safety catch for being inactive
+        if (!gameObject.activeInHierarchy) instant = true;
+
+        if (slideCoroutine != null && gameObject.activeInHierarchy)
         {
             StopCoroutine(slideCoroutine);
         }
