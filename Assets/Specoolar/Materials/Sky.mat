@@ -35,6 +35,8 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
+  - SHADOWCASTER
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -65,7 +67,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _CUSTOMHORIZONCOLOR: 0
-    - _CastShadows: 1
+    - _CastShadows: 0
     - _Cull: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
@@ -80,8 +82,8 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _ZTest: 4
-    - _ZWrite: 1
-    - _ZWriteControl: 1
+    - _ZWrite: 0
+    - _ZWriteControl: 2
     m_Colors:
     - _AdditiveSkyColor: {r: 0, g: 0, b: 0, a: 1}
     - _HorizonColor: {r: 0.6037736, g: 0.36040288, b: 0.26486287, a: 1}

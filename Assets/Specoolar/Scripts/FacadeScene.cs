@@ -36,6 +36,6 @@ public class FacadeScene : MonoBehaviour
 
     public void LoadLighting()
     {
-        ProbeReferenceVolume.instance.SetActiveBakingSet(bakingSet);
+        //ProbeReferenceVolume.instance.SetActiveBakingSet(bakingSet);
     }
 }
