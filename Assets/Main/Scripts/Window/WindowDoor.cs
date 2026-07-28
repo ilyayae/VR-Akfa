@@ -56,6 +56,7 @@ public class WindowDoor : MonoBehaviour
         SetJointSwingDirect();
         if (isHandleLocked) SetJointLocked();
     }
+
     public void SetHandleLockedState(bool locked)
     {
         isHandleLocked = locked;
@@ -68,10 +69,7 @@ public class WindowDoor : MonoBehaviour
                 SetJointLocked();
             }
         }
-        else
-        {
-            BlockWindowFromClosing();
-        }
+        // Removed override blocking from occurring here
     }
 
     private IEnumerator TransitionStateRoutine(doorState newState)
@@ -99,7 +97,7 @@ public class WindowDoor : MonoBehaviour
         {
             float degreeToReopen = Mathf.Max(previousOpenDegree, openDegree);
             yield return StartCoroutine(SetOpenedDegreeOfWindow(degreeToReopen));
-            BlockWindowFromClosing();
+            // Removed override blocking from occurring here
         }
     }
 
@@ -195,14 +193,13 @@ public class WindowDoor : MonoBehaviour
 
         float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
 
-        // 1. EARLY EXIT: If already at the target value, skip the delay entirely!
         if (Mathf.Abs(currentVal - targetVal) < 0.01f)
         {
             ArticulationDrive d = myBody.xDrive;
             d.target = targetVal;
             myBody.xDrive = d;
             UnlockDrive();
-            yield break; // Instantly finish the Coroutine
+            yield break;
         }
 
         ArticulationDrive drive = myBody.xDrive;
@@ -210,12 +207,11 @@ public class WindowDoor : MonoBehaviour
         drive.damping = 10000f;
         myBody.xDrive = drive;
 
-        // 2. SCALE DURATION: Proportional to the distance it needs to travel
         float maxVal = (state == doorState.SLIDE) ? maxSlideDistance : (state == doorState.TILT ? maxTiltAngle : maxSwingAngle);
         float travelRatio = maxVal > 0f ? Mathf.Clamp01(Mathf.Abs(currentVal - targetVal) / maxVal) : 0f;
 
         float elapsedTime = 0f;
-        float duration = (1f / speedOfAnim) * travelRatio; // Shrinks duration if it's mostly closed
+        float duration = (1f / speedOfAnim) * travelRatio;
 
         while (elapsedTime < duration)
         {
@@ -238,13 +234,27 @@ public class WindowDoor : MonoBehaviour
     public void SetJointLocked()
     {
         float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
+
+        // Force closed absolute alignment to prevent float desyncing causing window locking open slightly
+        if (GetOpenedDegreeOfWindow() < openDegree)
+        {
+            currentVal = 0f;
+        }
+
         SetLimits(currentVal, currentVal);
+
+        if (state == doorState.SLIDE)
+            myBody.linearLockX = ArticulationDofLock.LockedMotion;
+        else
+            myBody.twistLock = ArticulationDofLock.LockedMotion;
 
         ArticulationDrive drive = myBody.xDrive;
         drive.stiffness = 100000f;
         drive.damping = 10000f;
         drive.target = currentVal;
         myBody.xDrive = drive;
+
+
     }
 
     [ContextMenu("Run SetJointUnlocked")]
@@ -259,7 +269,7 @@ public class WindowDoor : MonoBehaviour
         }
         SetLimits(0f, highLimit);
         UnlockDrive();
-        if (!isHandleLocked) BlockWindowFromClosing();
+        // Removed override blocking from occurring here
     }
 
     public void BlockWindowFromClosing()
@@ -384,7 +394,6 @@ public class WindowDoor : MonoBehaviour
         }
     }
 
-    // Forces the ArticulationBody to rebuild its anchors around the new position
     public void ReapplyStateDirectly()
     {
         switch (state)

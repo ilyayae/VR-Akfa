@@ -31,6 +31,7 @@ public class WindowBrain : MonoBehaviour
         {
             grabCollider = myGrab.GetComponent<BoxCollider>();
         }
+        EvaluateWindowState();
     }
     private void ClearChildren(Transform parent)
     {
@@ -91,7 +92,7 @@ public class WindowBrain : MonoBehaviour
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
 
-        isTransitioningMechanism = false; // Unlock evaluation
+        isTransitioningMechanism = false;
         EvaluateWindowState();
         mechanismTransitionRoutine = null;
     }
@@ -165,7 +166,7 @@ public class WindowBrain : MonoBehaviour
         HingeChanger[] newHinges = Door.GetComponentsInChildren<HingeChanger>();
         hinges.AddRange(newHinges);
 
-        if(smallHandTarget != null)
+        if (smallHandTarget != null)
         {
             ConstraintSource newSource = new ConstraintSource();
             newSource.sourceTransform = smallHandTarget;
@@ -279,6 +280,8 @@ public class WindowBrain : MonoBehaviour
         if (grabCollider != null) grabCollider.enabled = false;
 
         yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0));
+
+        myDoor.ResetToClosedPosition();
         myDoor.SetJointLocked();
         isCurrentlyBlocked = false;
     }
