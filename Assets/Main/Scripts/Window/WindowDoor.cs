@@ -34,7 +34,8 @@ public class WindowDoor : MonoBehaviour
     private Vector3 initialLocalPosition;
 
     float speedOfAnim = 3f;
-
+    [HideInInspector]
+    public bool isTransitioningState = false;
     void Awake()
     {
         if (myBody == null) myBody = GetComponent<ArticulationBody>();
@@ -56,7 +57,6 @@ public class WindowDoor : MonoBehaviour
         SetJointSwingDirect();
         if (isHandleLocked) SetJointLocked();
     }
-
     public void SetHandleLockedState(bool locked)
     {
         isHandleLocked = locked;
@@ -69,11 +69,16 @@ public class WindowDoor : MonoBehaviour
                 SetJointLocked();
             }
         }
-        // Removed override blocking from occurring here
+        else
+        {
+            BlockWindowFromClosing();
+        }
     }
 
     private IEnumerator TransitionStateRoutine(doorState newState)
     {
+        isTransitioningState = true;
+
         float previousOpenDegree = GetOpenedDegreeOfWindow();
         float targetCloseDegree = isHandleLocked ? 0f : openDegree;
         if (previousOpenDegree > targetCloseDegree)
@@ -89,6 +94,7 @@ public class WindowDoor : MonoBehaviour
             case doorState.SLIDE: SetJointSlideDirect(); break;
         }
         yield return new WaitForFixedUpdate();
+
         if (isHandleLocked)
         {
             SetJointLocked();
@@ -97,8 +103,10 @@ public class WindowDoor : MonoBehaviour
         {
             float degreeToReopen = Mathf.Max(previousOpenDegree, openDegree);
             yield return StartCoroutine(SetOpenedDegreeOfWindow(degreeToReopen));
-            // Removed override blocking from occurring here
+            BlockWindowFromClosing();
         }
+
+        isTransitioningState = false;
     }
 
     [ContextMenu("Run SetJointSwing")] public void SetJointSwing() => SwitchState(doorState.SWING);
@@ -107,7 +115,7 @@ public class WindowDoor : MonoBehaviour
 
     public void SwitchState(doorState newState)
     {
-        if (state == newState) return;
+        if (state == newState || isTransitioningState) return;
         StartCoroutine(TransitionStateRoutine(newState));
     }
 
@@ -233,28 +241,20 @@ public class WindowDoor : MonoBehaviour
     [ContextMenu("Run SetJointLocked")]
     public void SetJointLocked()
     {
-        float currentVal = (state == doorState.SLIDE) ? GetCurrentDistance() : GetCurrentAngle();
-
-        // Force closed absolute alignment to prevent float desyncing causing window locking open slightly
-        if (GetOpenedDegreeOfWindow() < openDegree)
-        {
-            currentVal = 0f;
-        }
-
-        SetLimits(currentVal, currentVal);
-
-        if (state == doorState.SLIDE)
-            myBody.linearLockX = ArticulationDofLock.LockedMotion;
-        else
-            myBody.twistLock = ArticulationDofLock.LockedMotion;
+        SetLimits(0f, 0f);
 
         ArticulationDrive drive = myBody.xDrive;
         drive.stiffness = 100000f;
         drive.damping = 10000f;
-        drive.target = currentVal;
+
+        drive.target = 0f;
         myBody.xDrive = drive;
 
-
+        if (myBody.jointPosition.dofCount > 0)
+        {
+            myBody.jointPosition = new ArticulationReducedSpace(0f);
+            myBody.jointVelocity = new ArticulationReducedSpace(0f);
+        }
     }
 
     [ContextMenu("Run SetJointUnlocked")]
@@ -269,7 +269,7 @@ public class WindowDoor : MonoBehaviour
         }
         SetLimits(0f, highLimit);
         UnlockDrive();
-        // Removed override blocking from occurring here
+        if (!isHandleLocked) BlockWindowFromClosing();
     }
 
     public void BlockWindowFromClosing()
@@ -357,13 +357,22 @@ public class WindowDoor : MonoBehaviour
         if (myBody == null) myBody = GetComponent<ArticulationBody>();
         if (myBody != null)
         {
-
             myBody.jointPosition = new ArticulationReducedSpace(0f);
             myBody.jointVelocity = new ArticulationReducedSpace(0f);
 
             ArticulationDrive drive = myBody.xDrive;
             drive.target = 0f;
             myBody.xDrive = drive;
+            if (transform.parent != null)
+            {
+                transform.localPosition = initialLocalPosition;
+                transform.localRotation = initialLocalRotation;
+            }
+            else
+            {
+                transform.position = initialLocalPosition;
+                transform.rotation = initialLocalRotation;
+            }
         }
     }
 
@@ -394,6 +403,7 @@ public class WindowDoor : MonoBehaviour
         }
     }
 
+    // Forces the ArticulationBody to rebuild its anchors around the new position
     public void ReapplyStateDirectly()
     {
         switch (state)
@@ -401,6 +411,10 @@ public class WindowDoor : MonoBehaviour
             case doorState.SWING: SetJointSwingDirect(); break;
             case doorState.TILT: SetJointTiltDirect(); break;
             case doorState.SLIDE: SetJointSlideDirect(); break;
+        }
+        if (isHandleLocked)
+        {
+            SetJointLocked();
         }
     }
 }

@@ -24,14 +24,14 @@ public class WindowBrain : MonoBehaviour
     // Protection flags for safe mechanism transitioning
     private bool isTransitioningMechanism = false;
     private Coroutine mechanismTransitionRoutine;
-    private BoxCollider grabCollider;
+    private BoxCollider grabCollider; 
+    private bool isClosingSequence = false;
     private void Start()
     {
         if (myGrab != null)
         {
             grabCollider = myGrab.GetComponent<BoxCollider>();
         }
-        EvaluateWindowState();
     }
     private void ClearChildren(Transform parent)
     {
@@ -92,7 +92,7 @@ public class WindowBrain : MonoBehaviour
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
 
-        isTransitioningMechanism = false;
+        isTransitioningMechanism = false; // Unlock evaluation
         EvaluateWindowState();
         mechanismTransitionRoutine = null;
     }
@@ -166,7 +166,7 @@ public class WindowBrain : MonoBehaviour
         HingeChanger[] newHinges = Door.GetComponentsInChildren<HingeChanger>();
         hinges.AddRange(newHinges);
 
-        if (smallHandTarget != null)
+        if(smallHandTarget != null)
         {
             ConstraintSource newSource = new ConstraintSource();
             newSource.sourceTransform = smallHandTarget;
@@ -210,7 +210,7 @@ public class WindowBrain : MonoBehaviour
 
     public void EvaluateWindowState()
     {
-        if (myDoor == null || handleScript == null || isTransitioningMechanism) return;
+        if (myDoor == null || handleScript == null || isTransitioningMechanism || isClosingSequence || myDoor.isTransitioningState) return;
 
         float doorOpenDeg = myDoor.GetOpenedDegreeOfWindow();
         bool isPracticallyClosed = doorOpenDeg < (myDoor.openDegree * 0.9f);
@@ -220,9 +220,15 @@ public class WindowBrain : MonoBehaviour
             if (currentMechanism == WindowMechanism.SWING_TILT)
             {
                 if (lastHandleState == WindowHandle.HandleState.TILT && myDoor.state != doorState.TILT)
+                {
                     myDoor.SwitchState(doorState.TILT);
+                    return;
+                }
                 else if (lastHandleState == WindowHandle.HandleState.SWING && myDoor.state != doorState.SWING)
+                {
                     myDoor.SwitchState(doorState.SWING);
+                    return;
+                }
             }
         }
 
@@ -244,7 +250,8 @@ public class WindowBrain : MonoBehaviour
                 if (myDoor.isHandleLocked)
                 {
                     myDoor.SetHandleLockedState(false);
-                    myDoor.SetJointUnlocked();
+                    myDoor.SetOpenedDegreeOfWindow(0);
+                    isCurrentlyBlocked = true;
                 }
             }
         }
@@ -275,14 +282,16 @@ public class WindowBrain : MonoBehaviour
 
     public IEnumerator closeSequence()
     {
+        isClosingSequence = true;
         myDoor.SetHandleLockedState(true);
 
         if (grabCollider != null) grabCollider.enabled = false;
 
         yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0));
-
-        myDoor.ResetToClosedPosition();
         myDoor.SetJointLocked();
         isCurrentlyBlocked = false;
+
+        isClosingSequence = false;
+        EvaluateWindowState();
     }
 }
