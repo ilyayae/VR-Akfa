@@ -52548,7 +52548,7 @@ Transform:
   m_GameObject: {fileID: 7120433996219270072}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00032028556}
-  m_LocalPosition: {x: -0.00032025576, y: -0.5, z: 0.5}
+  m_LocalPosition: {x: -0.00032025576, y: -0.5, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54077,7 +54077,7 @@ PrefabInstance:
     - target: {fileID: 2798534143602229924, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: AmbientClip.clip
       value: 
-      objectReference: {fileID: 8300000, guid: 9a17dae6639e593439bcd8508565d795, type: 3}
+      objectReference: {fileID: 8300000, guid: 8b1f339e4cf5599459ac35ceec9c37bb, type: 3}
     - target: {fileID: 2798534143602229924, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: Grab_Object.clip
       value: 
@@ -54102,6 +54102,10 @@ PrefabInstance:
       propertyPath: TP_CantTeleport.clip
       value: 
       objectReference: {fileID: 8300000, guid: 886bd138e7982974685ce703bd53d1b5, type: 3}
+    - target: {fileID: 2798534143602229924, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
+      propertyPath: TP_TeleportHumm.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: fe1ffc4e321692e4dbc5d232d3434499, type: 3}
     - target: {fileID: 2798534143602229924, guid: 74b0d205ebe32ee41a3ecfd71f803a58, type: 3}
       propertyPath: UI_AlreadyActivated.clip
       value: 
