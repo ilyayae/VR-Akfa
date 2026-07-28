@@ -82,7 +82,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: -7489501515894910311, guid: f03645e5682ac684f85da883b818c728, type: 3}
+      objectReference: {fileID: 2100000, guid: f03e0fa5276c13847b417878e74b5dd4, type: 2}
     - target: {fileID: -7511558181221131132, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -90,7 +90,7 @@ PrefabInstance:
     - target: {fileID: -6055919292055011045, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: -7489501515894910311, guid: f03645e5682ac684f85da883b818c728, type: 3}
+      objectReference: {fileID: 2100000, guid: f03e0fa5276c13847b417878e74b5dd4, type: 2}
     - target: {fileID: -6055919292055011045, guid: b6b11c707f1649f42b0f69ed4d7de54f, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -175,7 +175,7 @@ ArticulationBody:
   m_GameObject: {fileID: 3009792341624653019}
   m_Enabled: 1
   serializedVersion: 6
-  m_Mass: 0.0000001
+  m_Mass: 1
   m_ParentAnchorPosition: {x: 0, y: -0.000000029802322, z: -0.000000044703484}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}

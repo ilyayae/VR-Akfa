@@ -79,6 +79,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8366661256537596026, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f03e0fa5276c13847b417878e74b5dd4, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f03e0fa5276c13847b417878e74b5dd4, type: 2}
     - target: {fileID: -6404206229873849875, guid: 7cecb126e520f594c9e7cd19aab3c3e4, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -357,7 +365,7 @@ ArticulationBody:
   m_GameObject: {fileID: 7580730518778037026}
   m_Enabled: 1
   serializedVersion: 6
-  m_Mass: 0.0000001
+  m_Mass: 1
   m_ParentAnchorPosition: {x: 0, y: -0.000000029802322, z: -0.000000044703484}
   m_ParentAnchorRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   m_AnchorPosition: {x: 0, y: 0, z: 0}
