@@ -30,9 +30,10 @@ public class WindowManager : MonoBehaviour
     private numberMode WindowMode = numberMode.Two;
     private int currentSetId = 0;
     private GameObject currentInstantiatedFrame;
-
+    public static WindowManager Instance;
     private void Start()
     {
+        Instance = this;
         SetHandleToId(0);
         SetFrameToId(0);
         SetTextureToId(0);
@@ -89,7 +90,7 @@ public class WindowManager : MonoBehaviour
         currSetting = set;
     }
 
-    private bool xray = false;
+    public bool xray = false;
     public void OnOffXRay()
     {
         if (xray)

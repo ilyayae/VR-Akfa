@@ -68,6 +68,10 @@ public class UserControlledManager : MonoBehaviour
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0.001f, 1f), true, outsideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, insideMenu));
         StartCoroutine(AnimateScale(new Vector3(0.001f, 0f, 1f), false, WindowSelection));
+        if(WindowManager.Instance != null && WindowManager.Instance.xray)
+        {
+            WindowManager.Instance.OnOffXRay();
+        }
     }
     public void ChangeLanguageByIndex(int localeIndex)
     {

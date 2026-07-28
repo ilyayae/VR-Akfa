@@ -24,7 +24,14 @@ public class WindowBrain : MonoBehaviour
     // Protection flags for safe mechanism transitioning
     private bool isTransitioningMechanism = false;
     private Coroutine mechanismTransitionRoutine;
-
+    private BoxCollider grabCollider;
+    private void Start()
+    {
+        if (myGrab != null)
+        {
+            grabCollider = myGrab.GetComponent<BoxCollider>();
+        }
+    }
     private void ClearChildren(Transform parent)
     {
         for (int i = parent.childCount - 1; i >= 0; i--)
@@ -218,18 +225,13 @@ public class WindowBrain : MonoBehaviour
             }
         }
 
-        bool handleMatchesState = false;
+        bool shouldBlock = false;
         if (currentMechanism == WindowMechanism.SWING_TILT)
         {
-            if (myDoor.state == doorState.SWING && lastHandleState == WindowHandle.HandleState.SWING) handleMatchesState = true;
-            if (myDoor.state == doorState.TILT && lastHandleState == WindowHandle.HandleState.TILT) handleMatchesState = true;
-        }
-        else
-        {
-            if (lastHandleState != WindowHandle.HandleState.CLOSED) handleMatchesState = true;
+            if (myDoor.state == doorState.SWING && lastHandleState == WindowHandle.HandleState.TILT) shouldBlock = true;
+            if (myDoor.state == doorState.TILT && lastHandleState == WindowHandle.HandleState.SWING) shouldBlock = true;
         }
 
-        if (lastHandleState == WindowHandle.HandleState.CLOSED) handleMatchesState = false;
         if (isPracticallyClosed)
         {
             if (lastHandleState == WindowHandle.HandleState.CLOSED)
@@ -247,7 +249,7 @@ public class WindowBrain : MonoBehaviour
         }
         else
         {
-            if (!handleMatchesState)
+            if (shouldBlock)
             {
                 if (!isCurrentlyBlocked)
                 {
@@ -264,11 +266,18 @@ public class WindowBrain : MonoBehaviour
                 }
             }
         }
+        if (grabCollider != null)
+        {
+            grabCollider.enabled = !myDoor.isHandleLocked;
+        }
     }
 
     public IEnumerator closeSequence()
     {
         myDoor.SetHandleLockedState(true);
+
+        if (grabCollider != null) grabCollider.enabled = false;
+
         yield return StartCoroutine(myDoor.SetOpenedDegreeOfWindow(0));
         myDoor.SetJointLocked();
         isCurrentlyBlocked = false;
