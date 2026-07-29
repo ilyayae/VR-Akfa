@@ -168,9 +168,10 @@ public class HandSnap : MonoBehaviour
         cancelCallbacks.Clear();
     }
 
-
+    bool Grabbed = false;
     private void OnHandGrab(SelectEnterEventArgs args)
     {
+        Grabbed = true;
         GameObject interactedObj = args.interactableObject.transform.gameObject;
         Transform targetTransform = null;
 
@@ -218,6 +219,7 @@ public class HandSnap : MonoBehaviour
 
     private void OnHandRelease(SelectExitEventArgs args)
     {
+        Grabbed = false;
         AnimateHandTo(originalParent, originalLocalPosition, originalLocalRotation);
         handAnimator.SetInteger("GrabPoseID", 0);
         targetGrabWeight = 0f;
@@ -255,7 +257,7 @@ public class HandSnap : MonoBehaviour
 
         handVisual.localPosition = targetLocalPos;
         handVisual.localRotation = targetLocalRot;
-        source.Play();
+        if(Grabbed) source.Play();
         animationCoroutine = null;
     }
 
