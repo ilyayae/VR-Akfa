@@ -46,6 +46,33 @@ public class VRViewResetter : MonoBehaviour
             reloadAction.action.Disable();
         }
     }
+    public void goHorizontal(float howmuch)
+    {
+        StartCoroutine(animTranslate(howmuch, 0));
+    }
+
+    public void goVertical(float howmuch)
+    {
+        StartCoroutine(animTranslate(0, howmuch));
+    }
+
+    private float duration = 0.25f;
+
+    private IEnumerator animTranslate(float xDistance, float zDistance)
+    {
+        float timer = 0f;
+
+        float speedX = xDistance / duration;
+        float speedZ = zDistance / duration;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            Vector3 movement = new Vector3(speedX, 0, speedZ) * Time.deltaTime;
+            transform.Translate(movement, Space.Self);
+            yield return null;
+        }
+    }
 
     private void TriggerReset(InputAction.CallbackContext context)
     {
