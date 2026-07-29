@@ -124,7 +124,7 @@ public class VRViewResetter : MonoBehaviour
             if (fadeTimer < fadeMaxTimer)
             {
                 fadeTimer += Time.deltaTime;
-                foreach(Transform t in allcircles) 
+                foreach (Transform t in allcircles)
                 {
                     Image img = t.GetComponent<Image>();
                     Color c = img.color;
@@ -160,7 +160,7 @@ public class VRViewResetter : MonoBehaviour
                 Color c = img.color;
                 img.color = new Color(c.r, c.g, c.b, fadeTimer / fadeMaxTimer);
             }
-            if(fadeTimer <= 0)
+            if (fadeTimer <= 0)
             {
                 fillInCircle.fillAmount = 0;
                 fadeTimer = 0;
@@ -230,12 +230,14 @@ public class VRViewResetter : MonoBehaviour
             }
         }
     }
+
     [SerializeField] Image fadeImage;
     [SerializeField] float fadeDuration = 0.5f;
     public void startTeleport(Transform transform)
     {
         StartCoroutine(TeleportTo(transform));
     }
+
     public IEnumerator TeleportTo(Transform targetTransform)
     {
         float timer = 0f;
@@ -250,6 +252,7 @@ public class VRViewResetter : MonoBehaviour
 
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
+
         Vector3 flatForward = targetTransform.forward;
         flatForward.y = 0f;
         if (flatForward.sqrMagnitude > 0.001f)
@@ -260,9 +263,13 @@ public class VRViewResetter : MonoBehaviour
         {
             xrOrigin.MatchOriginUpCameraForward(Vector3.up, transform.forward);
         }
+
         Vector3 cameraLocalPos = xrOrigin.Camera.transform.localPosition;
         cameraLocalPos.y = 0f;
-        xrOrigin.transform.position = targetTransform.position - (xrOrigin.transform.rotation * cameraLocalPos);
+        Vector3 newOriginPos = targetTransform.position - (xrOrigin.transform.rotation * cameraLocalPos);
+        newOriginPos.y = xrOrigin.transform.position.y;
+
+        xrOrigin.transform.position = newOriginPos;
 
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
