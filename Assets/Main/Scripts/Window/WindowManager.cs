@@ -69,14 +69,14 @@ public class WindowManager : MonoBehaviour
         if (isFirstWrite)
         {
             ID = Mathf.Max(0, lines.Length - 1);
-            string currentDateTime = DateTime.Now.ToString();
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string newLine = $"{ID}, , ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}";
             File.AppendAllText(filePath, newLine + "\n");
             isFirstWrite = false;
         }
         else
         {
-            string currentDateTime = DateTime.Now.ToString();
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string updatedLine = $"{ID}, , ,{currentDateTime},{WindowType},{HandleType},{MaterialInsideType},{MaterialOutsideType},{MechanismType},{FrameType}";
             lines[lines.Length - 1] = updatedLine;
             File.WriteAllLines(filePath, lines);

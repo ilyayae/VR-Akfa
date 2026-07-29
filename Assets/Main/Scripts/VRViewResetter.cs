@@ -263,6 +263,7 @@ public class VRViewResetter : MonoBehaviour
         Vector3 cameraLocalPos = xrOrigin.Camera.transform.localPosition;
         cameraLocalPos.y = 0f;
         xrOrigin.transform.position = targetTransform.position - (xrOrigin.transform.rotation * cameraLocalPos);
+
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
         while (timer < fadeDuration)
@@ -275,5 +276,24 @@ public class VRViewResetter : MonoBehaviour
 
         fadeColor.a = 0f;
         fadeImage.color = fadeColor;
+    }
+
+    public void AlignToTeleportTarget(Transform targetTransform)
+    {
+        if (xrOrigin == null)
+        {
+            Debug.LogWarning("XR Origin is not assigned in VRViewResetter!");
+            return;
+        }
+        Vector3 flatForward = targetTransform.forward;
+        flatForward.y = 0f;
+
+        if (flatForward.sqrMagnitude > 0.001f)
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, flatForward.normalized);
+        else
+            xrOrigin.MatchOriginUpCameraForward(Vector3.up, targetTransform.forward);
+        float forcedStandingHeight = 1.7f;
+        Vector3 headTargetPosition = targetTransform.position + new Vector3(0f, forcedStandingHeight, 0f);
+        xrOrigin.MoveCameraToWorldLocation(headTargetPosition);
     }
 }
