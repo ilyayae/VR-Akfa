@@ -103,6 +103,11 @@ public class UserControlledManager : MonoBehaviour
         Vector3 cameraLocalPos = Camera.main.transform.localPosition;
         cameraLocalPos.y = 0f; // Keep the player at floor level
         GameManager.transform.position = targetTransform.position - (GameManager.transform.rotation * cameraLocalPos);
+        VRViewResetter reset = GameManager.GetComponent<VRViewResetter>();
+        if (reset != null)
+        {
+            reset.AlignToTeleportTarget(targetTransform);
+        }
         yield return new WaitForSeconds(0.1f);
         timer = 0f;
         while (timer < fadeDuration)
